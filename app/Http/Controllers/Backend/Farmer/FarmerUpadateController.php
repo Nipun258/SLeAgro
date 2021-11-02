@@ -12,6 +12,7 @@ use App\Models\District;
 use App\Models\City;
 use App\Models\Bank;
 use App\Models\Branch;
+use App\Models\Farmer;
 use Auth;
 use Illuminate\Support\Facades\DB; //query builder in here
 
