@@ -77,16 +77,19 @@ class FarmerUpadateController extends Controller
          $data->ccentre_id = $request->ccenter;
          $data->ecentre_id = $request->ecenter;
 
-         if ($request->file('image')) {
-         	
-         	$file = $request->file('image');
-         	@unlink(public_path('upload/user_images'.$data->image));
-         	$filename = date('YmdHi').$file->getClientOriginalName();
-         	$file->move(public_path('upload/user_images'),$filename);
-         	$data['image'] = $filename;
-
-         }
          $data->save();
+
+         // if ($request->file('image')) {
+         	
+         // 	$file = $request->file('image');
+         // 	@unlink(public_path('upload/user_images'.$data->image));
+         // 	$filename = date('YmdHi').$file->getClientOriginalName();
+         // 	$file->move(public_path('upload/user_images'),$filename);
+         // 	$data['image'] = $filename;
+
+         // }
+
+         
 
          $notification = array(
            'message' => 'User profile update Successfully',
