@@ -277,13 +277,13 @@ Route::prefix('centres')->group(function(){
 
    Route::prefix('farmers')->group(function(){
 
-    Route::get('/farmer/update',[FarmerUpadateController::class, 'FarmerEdit'])->name('farmer.edit');
+	Route::get('/farmer/setup',[FarmerUpadateController::class, 'FarmerSetup'])->name('farmer.setup');
 
-	Route::post('farmer/store',[FarmerUpadateController::class, 'FarmerStore'])->name('farmer.update');
+     Route::get('/farmer/edit',[FarmerUpadateController::class, 'FarmerEdit'])->name('farmer.edit');
 
-	//Route::get('/fruit/edit/{id}',[FarmerUpadateController::class, 'FruitEdit'])->name('fruit.edit');
+	Route::post('farmer/store',[FarmerUpadateController::class, 'FarmerStore'])->name('farmer.store');
 
-    //Route::post('/fruit/update/{id}',[FarmerUpadateController::class, 'FruitUpdate'])->name('fruit.update');
+     Route::post('/farmer/update/',[FarmerUpadateController::class, 'FarmerUpdate'])->name('farmer.update');
 
 	//Route::get('/fruit/delete/{id}',[FarmerUpadateController::class, 'FruitDelete'])->name('fruit.delete');  
 

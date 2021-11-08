@@ -15,7 +15,7 @@
 			<!-- /.box-header -->
 			<div class="box-body wizard-content">
 
-				<form method="POST" action="{{ route('farmer.update') }}" class="contact-form" enctype="multipart/form-data">
+				<form method="POST" action="{{ route('farmer.store') }}" class="contact-form" enctype="multipart/form-data">
 					@csrf
 	                  <div class="form-section">
 	                  	<h4 class="title text-warning ">Personal Information</h4>
@@ -64,7 +64,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="nic">NIC Number <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="nic" id="nic" value="{{ $farmer->nic }}"> </div>
+									<input type="text" class="form-control" name="nic" id="nic" value="{{ old('nic') }}"> </div>
 									<span class="text-danger">@error('nic'){{$message}}@enderror</span>
 							</div>
 						</div>
@@ -85,13 +85,9 @@
 								<div class="form-group">
 									<label for="ecentre">Nearest Economic Centre </label><span class="text-danger">*</span>
 									<select class="custom-select form-control" name="ecentre" id="ecentre-dd">
-										<option value="" selected="" disabled="">Select Economic Centre</option>
+										<option value="" selected="" >Select Economic Centre</option>
 										@foreach($ecenter as $ecenter)
-                              @if($ecenter->id == $editData->ecentre_id)
-				              <option value="{{ $ecenter->id }}" selected="">{{$ecenter->centre_name }} </option>
-				               @else
 				               <option value="{{ $ecenter->id }}">{{$ecenter->centre_name }} </option>
-				               @endif
 		                      @endforeach
 									</select>
 								</div>
@@ -115,11 +111,7 @@
 				<select  id="province-dd" name="province" class="form-control">
 					<option value="" selected="" disabled="">Select Province</option>
 					@foreach($province as $province)
-					@if($province->id == $farmer->province_id)
-				<option value="{{ $province->id }}" selected="">{{$province->name_en }} </option>
-				@else
                 <option value="{{ $province->id }}" >{{$province->name_en }} </option>
-				@endif
 					@endforeach
 					
 				</select>
@@ -164,7 +156,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="pass_name">Name in Passbook <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="pass_name" id="pass_name" value="{{ $farmer->pass_name }}"> </div>
+									<input type="text" class="form-control" name="pass_name" id="pass_name" value="{{ old('pass_name') }}"> </div>
 									<span class="text-danger">@error('pass_name'){{$message}}@enderror</span>
 								</div>
 								
@@ -172,7 +164,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="account_number">Account Number <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="account_number" id="account_number" value="{{ $farmer->account_number }}"> </div>
+									<input type="text" class="form-control" name="account_number" id="account_number" value="{{ old('account_number') }}"> </div>
 									<span class="text-danger">@error('account_number'){{$message}}@enderror</span>
 								</div>
 								
@@ -185,11 +177,7 @@
 									<select class="custom-select form-control" name="bank" id="bank-dd">
 									<option value="" selected="" disabled="">Select Bank Name</option>
 					@foreach($bank as $bank)
-					@if($bank->strBankCode == $farmer->bank_id)
-				<option value="{{ $bank->strBankCode }}" selected="">{{ucfirst($bank->strBankName) }} </option>
-				@else
                 <option value="{{ $bank->strBankCode }}">{{ucfirst($bank->strBankName) }} </option>
-				@endif
 				
 					@endforeach
 									</select>
@@ -214,12 +202,12 @@
 	 <input type="file" name="image" class="form-control" id="image" >  </div>
 	 </div>
 
-     <div class="form-group">
+     {{-- <div class="form-group">
 		<div class="controls">
-	<img id="showImage" src="{{ (!empty($farmer->image))? url('upload/bank_pass_book/'.$farmer->image):url('upload/images.png')}}" style="width: 300px; width: 300px; border: 3px solid #000000;"> 
+	<img id="showImage" src="{{ (!empty($farmer->image))? url('upload/bank_pass_book'.$farmer->image):url('upload/images.png')}}" style="width: 100px; width: 100px; border: 1px solid #000000;"> 
 
 	 </div>
-	 </div> 
+	 </div>  --}}
 
 
 	</div><!-- End Col Md-6 -->
@@ -295,37 +283,6 @@
 
    $(document).ready(function(){
       
-	$('#province-dd option').each(function() {
-              if (this.selected){
-               var idProvince = this.value;
-               $("#district-dd").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-districts')}}",
-                    type: "POST",
-                    data: {
-                        province_id: idProvince,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (result) {
-                        $('#district-dd').html('<option value="" selected="" disabled="">Select District</option>');
-                        var cur_district = <?php echo $farmer->district_id; ?>;
-                        $.each(result.districts, function (key, value) {
-                        	
-                            if (cur_district == value.id) {
-                            	$("#district-dd").append('<option selected="" value="' + value
-                                .id + '">' + value.name_en + ' </option>');
-                            }else{
-                            $("#district-dd").append('<option value="' + value
-                                .id + '">' + value.name_en + '</option>');
-                            }
-                        });
-                        $('#city-dd').html('<option value="" selected="" disabled="">Select City</option>');
-                    }
-                });
-              }
-           });
-
       /*************************************************************/
 
      $('#province-dd').on('change', function () {
@@ -371,36 +328,7 @@
                     }
                 });
             });
-      /********************************************************************************/
-	  $('#ecentre-dd option').each(function() {
-              if (this.selected){
-				var idCollectionCentre = this.value;
-               $("#ccentre-dd").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-collection_centres')}}",
-                    type: "POST",
-                    data: {
-                        economic_centre_id: idCollectionCentre,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (result) {
-                        $('#ccentre-dd').html('<option value="" selected="" disabled="">Select Collection Center</option>');
-                        var cur_ccenter = <?php echo $editData->ccentre_id; ?>;
-                        $.each(result.collection_centres, function (key, value) {
-                        	
-                            if (cur_ccenter == value.id) {
-                            	$("#ccentre-dd").append('<option selected="" value="' + value
-                                .id + '">' + value.centre_name + ' </option>');
-                            }else{
-                            $("#ccentre-dd").append('<option value="' + value
-                                .id + '">' + value.centre_name + '</option>');
-                            }
-                        });
-                    }
-                });
-              }
-           });
+
 
 		   /****************************************************************************/
           $('#ecentre-dd').on('change', function () {
@@ -423,36 +351,7 @@
                     }
                 });
         });
-     /**************************************************************************/
-	 $('#bank-dd option').each(function() {
-              if (this.selected){
-				var bankCode = this.value;
-               $("#branch-dd").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-bank_branches')}}",
-                    type: "POST",
-                    data: {
-						bank_code : bankCode,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (result) {
-                        $('#branch-dd').html('<option value="" selected="" disabled="">Select Bank Branch</option>');
-                        var cur_branch = <?php echo $farmer->branch_id; ?>;
-                        $.each(result.bank_branches, function (key, value) {
-                        	
-                            if (cur_branch == value.strBranchCode) {
-                            	$("#branch-dd").append('<option selected="" value="' + value
-                                .strBranchCode + '">' + value.strBranchLocation + ' </option>');
-                            }else{
-                            $("#branch-dd").append('<option value="' + value
-                                .strBranchCode + '">' + value.strBranchLocation + '</option>');
-                            }
-                        });
-                    }
-                });
-              }
-           });
+
 
 	/**************************************************************************************************/
      $('#bank-dd').on('change', function () {

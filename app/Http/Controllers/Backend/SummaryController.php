@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Models\Branch;
 use App\Models\CollectionCentre;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Farmer;
 
 class SummaryController extends Controller
 {  
@@ -148,19 +150,22 @@ class SummaryController extends Controller
 
     function test(){
         
-        $data = DB::select('SELECT vegitables.name
-     , vegitables.image
-     , vegitables.catagory
-     , AVG(old_veg_prices.price_wholesale) AS avgwholesale
-     , SUM(CASE WHEN old_veg_prices.price_date = CURRENT_DATE - INTERVAL 1 DAY THEN old_veg_prices.price_wholesale END) AS yesterday
-     , SUM(CASE WHEN old_veg_prices.price_date = CURRENT_DATE THEN old_veg_prices.price_wholesale END) AS today
-FROM vegitables
-INNER JOIN old_veg_prices ON vegitables.id = old_veg_prices.veg_id
-WHERE old_veg_prices.price_date IN (CURRENT_DATE - INTERVAL 1 DAY, CURRENT_DATE)
-GROUP BY vegitables.id');
-   
+        $data = DB::table('vegitables')
+    ->Join('old_veg_prices', 'old_veg_prices.veg_id', '=', 'vegitables.id')
+    ->whereRaw('old_veg_prices.price_date IN (CURRENT_DATE - INTERVAL 1 DAY, CURRENT_DATE)')
+    ->select(
+        'vegitables.name',
+        'vegitables.image',
+        'vegitables.catagory',
+        DB::raw('AVG(old_veg_prices.price_wholesale) AS avgwholesale'),
+        DB::raw('SUM(CASE WHEN old_veg_prices.price_date = CURRENT_DATE - INTERVAL 1 DAY THEN old_veg_prices.price_wholesale END) AS yesterday'),
+        DB::raw('SUM(CASE WHEN old_veg_prices.price_date = CURRENT_DATE THEN old_veg_prices.price_wholesale END) AS today')
+    )
+    ->groupBy('vegitables.id','vegitables.name','vegitables.image','vegitables.catagory')
+    ->get();
 
+
+    
         return $data;
-    	
     }
 }

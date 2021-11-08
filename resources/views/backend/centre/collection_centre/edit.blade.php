@@ -19,7 +19,7 @@
 								@csrf
 								<div class="row">
 									<div class="col-12">
-										
+
     <div class="row">
 	<div class="col-md-6" >
 
@@ -49,13 +49,13 @@
                  <option value="{{ $ecenter->id }}">{{$ecenter->centre_name }} </option>
 			  @endif
 				@endif
-		      @endforeach	 
+		      @endforeach
 		</select>
 		<span class="text-danger">@error('ecenter'){{$message}}@enderror</span>
 	 </div>
           </div>
 	</div> <!-- End Col Md-6 -->
-	
+
 
 </div> <!-- End Row -->
 
@@ -75,7 +75,7 @@
                 <option value="{{ $province->id }}" >{{$province->name_en }} </option>
 				@endif
 		      @endforeach
-			 
+
 		</select>
 		<span class="text-danger">@error('province'){{$message}}@enderror</span>
 	 </div>
@@ -100,19 +100,19 @@
 	<h5>City <span class="text-danger">*</span></h5>
 	<div class="controls">
 	 <select id="city-dd" name="city" class="form-control ">
-			 
+
 		</select>
 		<span class="text-danger">@error('city'){{$message}}@enderror</span>
 	 </div>
           </div>
 	</div> <!-- End Col Md-4 -->
-	
+
 
 </div> <!-- End Row -->
 
-												
-												
-												
+
+
+
 												<div class="text-xs-right">
 													<input type="submit" class="btn btn-rounded btn-info mb-5" value="Update">
 												</div>
@@ -126,7 +126,7 @@
 							</div>
 							<!-- /.box -->
 						</section>
-						
+
 					</div>
 				</div>
     <script>
@@ -147,7 +147,7 @@
                         $('#district-dd').html('<option value="" selected="" disabled="">Select District</option>');
                         var cur_district = <?php echo $editData->district_id; ?>;
                         $.each(result.districts, function (key, value) {
-                        	
+
                             if (cur_district == value.id) {
                             	$("#district-dd").append('<option value="' + value
                                 .id + '">' + value.name_en + '</option>');

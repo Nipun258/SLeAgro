@@ -162,8 +162,17 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('farmer.edit') }}"><i class="ti-more"></i>Account SetUp </a></li>
-            <li><a href="{{ route('farmer.edit') }}"><i class="ti-more"></i>Crop Detials Update</a></li>
+            @php
+             $farmer = DB::table('farmers')
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
+            @endphp
+            @if(!isset($farmer))
+            <li><a href="{{ route('farmer.setup') }}"><i class="ti-more"></i>Account SetUp </a></li>
+            @elseif(isset($farmer))
+            <li><a href="{{ route('farmer.edit') }}"><i class="ti-more"></i>Account Update</a></li>
+            @endif
+            <li><a href="{{ route('farmer.setup') }}"><i class="ti-more"></i>Crop Detials Update</a></li>
           </ul>
         </li> 
         @endif
