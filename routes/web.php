@@ -66,6 +66,9 @@ Route::get('/dashboard',[SummaryController::class, 'getVegData'])->name('dashboa
 
 /*****************************user mangement ***********************/
 
+
+Route::group(['middleware' => 'admin'],function(){
+
 Route::prefix('users')->group(function(){
 
 	Route::get('/view',[UserController::class, 'UserView'])->name('user.view');
@@ -80,8 +83,9 @@ Route::prefix('users')->group(function(){
 
 	Route::get('/delete/{id}',[UserController::class, 'UserDelete'])->name('user.delete');
 
-});
+   });//user controller route list
 
+});
 /*****************************user profile and change the password***********************/
 
 Route::prefix('profile')->group(function(){
@@ -97,6 +101,8 @@ Route::prefix('profile')->group(function(){
 	Route::post('/password/update',[ProfileController::class, 'PasswordUpdate'])->name('password.update');
 
 });
+
+Route::group(['middleware' => 'admin'],function(){
 
 Route::prefix('centres')->group(function(){
 
@@ -126,8 +132,10 @@ Route::prefix('centres')->group(function(){
 
 	Route::get('collection/centre/delete/{id}',[CollectionCentreController::class, 'CollectionCentreDelete'])->name('collection.centre.delete');
 
+   });//economic centre and collection centre routes
+
 });
-     /***************************************************************************************/
+     /******************************Dynamic drop down data fetch***********************************/
 	 Route::post('api/fetch-districts', [EconomicCenterController::class, 'fetchDistrict']);
 
      Route::post('api/fetch-cities', [EconomicCenterController::class, 'fetchCity']);
@@ -137,6 +145,7 @@ Route::prefix('centres')->group(function(){
      Route::post('api/fetch-bank_branches', [FarmerUpadateController::class, 'fetchBankBranch']);
 
      /**************************************************************************************/
+Route::group(['middleware' => 'admin'],function(){
 
    Route::prefix('setups')->group(function(){
 
@@ -188,8 +197,12 @@ Route::prefix('centres')->group(function(){
 
 	Route::get('/question/delete/{id}',[QuestionController::class, 'QuestionDelete'])->name('question.delete');
 
+     });//font end setting controlling route list
+
 });
 /*************************************************************************************/
+Route::group(['middleware' => 'admin'],function(){
+
    Route::prefix('messages')->group(function(){
 
     Route::get('/contact/message/view',[ContactFormController::class, 'ContactMessageView'])->name('contact.message.view');
@@ -198,9 +211,11 @@ Route::prefix('centres')->group(function(){
 
     Route::get('/contact/message/{id}',[ContactFormController::class, 'ContactMessageDelete'])->name('contact.message.delete');
 
-   });
+   });//contact message controlling route
 
+});
    /*************************************************************************************/
+Route::group(['middleware' => 'admin'],function(){
 
     Route::prefix('products')->group(function(){
 
@@ -243,10 +258,9 @@ Route::prefix('centres')->group(function(){
 
 	Route::get('/fruit/delete/{id}',[FruitController::class, 'FruitDelete'])->name('fruit.delete');
 
-	
+   });//vegitable and fruits detials and price controlling route list
 
-   });
-
+});
    Route::prefix('calculator')->group(function(){
 
    	/****************************************Fruit Price***********************************/
@@ -276,6 +290,8 @@ Route::prefix('centres')->group(function(){
 
    });
 
+Route::group(['middleware' => 'farmer'],function(){
+
    Route::prefix('farmers')->group(function(){
      
      /*****************************************Farmer Profile Update********************************/
@@ -303,8 +319,12 @@ Route::prefix('centres')->group(function(){
 	Route::get('/farmer/land/delete/{id}',[FarmerCropController::class, 'FarmerLandDelete'])->name('farmer.land.delete');
 
 
-   });
-   
+   });//farmer accout setup and update /crop data update controlling route list
+
+});
+
+Route::group(['middleware' => 'buyer'],function(){
+
    Route::prefix('buyers')->group(function(){
      
      /*****************************************Buyer Profile Update********************************/
@@ -332,7 +352,9 @@ Route::prefix('centres')->group(function(){
 	Route::get('/buyer/product/delete/{id}',[BuyerProductController::class, 'BuyerProductDelete'])->name('buyer.product.delete');
 
 
-   });
+   });//buyer account setup update and product requirement data controlling route list
+
+});
 
     });//end auth middeleware check
 
