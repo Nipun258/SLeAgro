@@ -14,7 +14,7 @@
 							</div>
 							<div>
 								<p class="text-mute mt-20 mb-0 font-size-16">Registered Farmer</p>
-								<h3 class="text-white mb-0 font-weight-500"> {{ $farmercount }} <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small></h3>
+								<h2 class="text-success mb-0 font-weight-500"> {{ $farmercount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
@@ -27,7 +27,7 @@
 							</div>
 							<div>
 								<p class="text-mute mt-20 mb-0 font-size-16">Available Vegetables</p>
-								<h3 class="text-white mb-0 font-weight-500">{{ $vegitable }} <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small></h3>
+								<h2 class="text-success mb-0 font-weight-500">{{ $vegitable }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
@@ -53,7 +53,7 @@
 							</div>
 							<div>
 								<p class="text-mute mt-20 mb-0 font-size-16">Economic Center</p>
-								<h3 class="text-white mb-0 font-weight-500">{{ $ecentre }} <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small></h3>
+								<h2 class="text-success mb-0 font-weight-500">{{ $ecentre }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
@@ -66,7 +66,7 @@
 							</div>
 							<div>
 								<p class="text-mute mt-20 mb-0 font-size-16">Registered Staff</p>
-								<h3 class="text-white mb-0 font-weight-500">{{ $staffcount }} <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small></h3>
+								<h2 class="text-success mb-0 font-weight-500">{{ $staffcount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
@@ -80,25 +80,12 @@
 							</div>
 							<div>
 								<p class="text-mute mt-20 mb-0 font-size-16">Contact Message</p>
-								<h3 class="text-white mb-0 font-weight-500">{{ $message }} <small class="text-success"><i class="fa fa-caret-up"></i> +25%</small></h3>
+								<h2 class="text-success mb-0 font-weight-500">{{ $message }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +25%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
 				@endif
-{{-- 				<div class="col-xl-3 col-6">
-					<div class="box overflow-hidden pull-up">
-						<div class="box-body">							
-							<div class="icon bg-danger-light rounded w-60 h-60">
-								<i class="text-danger mr-0 font-size-24 mdi mdi-calendar"></i>
-							</div>
-							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Avalable Vegetable</p>
-								<h3 class="text-white mb-0 font-weight-500">$1,250 <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small></h3>
-							</div>
-						</div>
-					</div>
-				</div> --}}
 				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
@@ -107,7 +94,7 @@
 							</div>
 							<div>
 								<p class="text-mute mt-20 mb-0 font-size-16">Collection Center</p>
-								<h3 class="text-white mb-0 font-weight-500">{{ $ccentre }} <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small></h3>
+								<h2 class="text-success mb-0 font-weight-500">{{ $ccentre }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
