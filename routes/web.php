@@ -18,6 +18,9 @@ use App\Http\Controllers\Backend\Product\FruitController;
 use App\Http\Controllers\Backend\Product\FruitPriceController;
 use App\Http\Controllers\Backend\Product\CalculaorController;
 use App\Http\Controllers\Backend\Farmer\FarmerUpadateController;
+use App\Http\Controllers\Backend\Farmer\FarmerCropController;
+use App\Http\Controllers\Backend\Buyer\BuyerUpdateController;
+use App\Http\Controllers\Backend\Buyer\BuyerProductController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
@@ -244,8 +247,6 @@ Route::prefix('centres')->group(function(){
 
    });
 
-   /******************************************************************************************/
-
    Route::prefix('calculator')->group(function(){
 
    	/****************************************Fruit Price***********************************/
@@ -276,6 +277,8 @@ Route::prefix('centres')->group(function(){
    });
 
    Route::prefix('farmers')->group(function(){
+     
+     /*****************************************Farmer Profile Update********************************/
 
 	Route::get('/farmer/setup',[FarmerUpadateController::class, 'FarmerSetup'])->name('farmer.setup');
 
@@ -285,10 +288,51 @@ Route::prefix('centres')->group(function(){
 
      Route::post('/farmer/update/',[FarmerUpadateController::class, 'FarmerUpdate'])->name('farmer.update');
 
-	//Route::get('/fruit/delete/{id}',[FarmerUpadateController::class, 'FruitDelete'])->name('fruit.delete');  
+     /*****************************************Farmer Crop add**************************************/ 
+    
+    Route::get('/farmer/land/view',[FarmerCropController::class, 'FarmerLandView'])->name('farmer.land.view');
+
+	Route::get('/farmer/land/add',[FarmerCropController::class, 'FarmerLandAdd'])->name('farmer.land.add');
+
+	Route::post('farmer/land/store',[FarmerCropController::class, 'FarmerLandStore'])->name('farmer.land.store');
+
+	Route::get('/farmer/land/edit/{id}',[FarmerCropController::class, 'FarmerLandEdit'])->name('farmer.land.edit');
+
+    Route::post('/farmer/land/update/{id}',[FarmerCropController::class, 'FarmerLandUpdate'])->name('farmer.land.update');
+
+	Route::get('/farmer/land/delete/{id}',[FarmerCropController::class, 'FarmerLandDelete'])->name('farmer.land.delete');
+
 
    });
+   
+   Route::prefix('buyers')->group(function(){
+     
+     /*****************************************Buyer Profile Update********************************/
+
+	Route::get('/buyers/setup',[BuyerUpdateController::class, 'BuyerSetup'])->name('buyer.setup');
+
+     Route::get('/buyers/edit',[BuyerUpdateController::class, 'BuyerEdit'])->name('buyer.edit');
+
+	Route::post('buyers/store',[BuyerUpdateController::class, 'BuyerStore'])->name('buyer.store');
+
+     Route::post('/buyers/update/',[BuyerUpdateController::class, 'BuyerUpdate'])->name('buyer.update');
+
+     /*****************************************Buyer Product add**************************************/ 
     
+    Route::get('/buyer/product/view',[BuyerProductController::class, 'BuyerProductView'])->name('buyer.product.view');
+
+	Route::get('/buyer/product/add',[BuyerProductController::class, 'BuyerProductAdd'])->name('buyer.product.add');
+
+	Route::post('buyer/product/store',[BuyerProductController::class, 'BuyerProductStore'])->name('buyer.product.store');
+
+	Route::get('/buyer/product/edit/{id}',[BuyerProductController::class, 'BuyerProductEdit'])->name('buyer.product.edit');
+
+    Route::post('/buyer/product/update/{id}',[BuyerProductController::class, 'BuyerProductUpdate'])->name('buyer.product.update');
+
+	Route::get('/buyer/product/delete/{id}',[BuyerProductController::class, 'BuyerProductDelete'])->name('buyer.product.delete');
+
+
+   });
 
     });//end auth middeleware check
 

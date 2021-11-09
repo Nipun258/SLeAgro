@@ -9,6 +9,28 @@
 			<div class="box">
 				<div class="box-header with-border">
 					<h4 class="box-title">Manage Profle</h4>
+					@php
+                  $buyer = DB::table('buyers')
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
+                   $farmer = DB::table('farmers')
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
+                   @endphp
+                   @if(Auth::user()->role =='Farmer-Buyer' || Auth::user()->role =='Farmer') 
+                   @if(!isset($farmer))
+					<a href="{{ route('farmer.setup') }}" style="float: right; margin:5px;" class="btn btn-success mb-2">Farmer Setup</a>
+				   @elseif(isset($farmer))
+				   <a href="{{ route('farmer.edit') }}" style="float: right; margin:5px;" class="btn btn-danger mb-2">Farmer Update</a>
+				   @endif
+				  @endif
+				  @if(Auth::user()->role =='Farmer-Buyer' || Auth::user()->role =='Buyer') 
+                   @if(!isset($buyer))
+					<a href="{{ route('buyer.setup') }}" style="float: right; margin:5px;" class="btn btn-success mb-2">Buyer Setup</a>
+				   @elseif(isset($buyer))
+				   <a href="{{ route('buyer.edit') }}" style="float: right; margin:5px;" class="btn btn-danger mb-2">Buyer Update</a>
+				   @endif
+				  @endif
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">

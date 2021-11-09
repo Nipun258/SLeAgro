@@ -22,7 +22,8 @@ class SummaryController extends Controller
     public function getVegData(){
 
 
-    $farmer = DB::table('users')->where('usertype','Farmer')
+    $farmer = DB::table('users')
+              ->whereIn('usertype',['Farmer','Farmer-Buyer'])
               ->select(DB::raw('COUNT(id) as value'))->get();
     $maxValue=json_decode($farmer,true);
     $farmercount=$maxValue[0]["value"];
@@ -163,7 +164,6 @@ class SummaryController extends Controller
     )
     ->groupBy('vegitables.id','vegitables.name','vegitables.image','vegitables.catagory')
     ->get();
-
 
     
         return $data;

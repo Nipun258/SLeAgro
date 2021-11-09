@@ -123,7 +123,7 @@
           </ul>
         </li> 
         @endif
-        @if(Auth::user()->role =='Admin' || Auth::user()->role =='EC-Officer' || Auth::user()->role =='RC-Officer' || Auth::user()->role =='FD-Officer')
+
         <li class="treeview {{ ($prefix == '/calculator')?'active':'' }}">
           <a href="#">
             <i data-feather="calendar"></i>
@@ -137,7 +137,7 @@
             <li><a href="{{ route('price.calculator.view') }}"><i class="ti-more"></i>Price Calculator</a></li>
           </ul>
         </li> 
-        @endif
+
         @if(Auth::user()->role =='Admin')
         <li class="treeview {{ ($prefix == '/messages')?'active':'' }}">
           <a href="#">
@@ -172,7 +172,65 @@
             @elseif(isset($farmer))
             <li><a href="{{ route('farmer.edit') }}"><i class="ti-more"></i>Account Update</a></li>
             @endif
-            <li><a href="{{ route('farmer.setup') }}"><i class="ti-more"></i>Crop Detials Update</a></li>
+            <li><a href="{{ route('farmer.land.view') }}"><i class="ti-more"></i>Product Setup</a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Buyer')
+        <li class="treeview {{ ($prefix == '/buyers')?'active':'' }}">
+          <a href="#">
+            <i data-feather="save"></i>
+            <span>Buyer Setup </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @php
+             $buyer = DB::table('buyers')
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
+            @endphp
+            @if(!isset($buyer))
+            <li><a href="{{ route('buyer.setup') }}"><i class="ti-more"></i>Account SetUp </a></li>
+            @elseif(isset($buyer))
+            <li><a href="{{ route('buyer.edit') }}"><i class="ti-more"></i>Account Update</a></li>
+            @endif
+            <li><a href="{{ route('buyer.product.view') }}"><i class="ti-more"></i>Product Requirement</a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Farmer-Buyer')
+        <li class="treeview {{ ($prefix == '/buyers' || $prefix == '/farmers')?'active':'' }}">
+          <a href="#">
+            <i data-feather="save"></i>
+            <span>Farmer/Buyer Setup </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @php
+            $buyer = DB::table('buyers')
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
+            $farmer = DB::table('farmers')
+                       ->where('user_id', Auth::user()->id)
+                       ->first();
+            @endphp
+            @if(!isset($farmer))
+            <li><a href="{{ route('farmer.setup') }}"><i class="ti-more"></i>Farmer Account SetUp </a></li>
+            @elseif(isset($farmer))
+            <li><a href="{{ route('farmer.edit') }}"><i class="ti-more"></i>Farmer Account Update</a></li>
+            @endif
+            <li><a href="{{ route('farmer.land.view') }}"><i class="ti-more"></i>Farmer Product Setup</a></li>
+            @if(!isset($buyer))
+            <li><a href="{{ route('buyer.setup') }}"><i class="ti-more"></i>Buyer Account SetUp </a></li>
+            @elseif(isset($buyer))
+            <li><a href="{{ route('buyer.edit') }}"><i class="ti-more"></i>Buyer Account Update</a></li>
+            @endif
+            <li><a href="{{ route('buyer.product.view') }}"><i class="ti-more"></i>Buyer Product Request</a></li>
+            
           </ul>
         </li> 
         @endif
