@@ -52,6 +52,12 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        // add your own disk to the project
+        // 'localBackup' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/backup') // your folder,
+        // ],
+
     ],
 
     /*
