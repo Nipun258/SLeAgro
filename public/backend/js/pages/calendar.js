@@ -9,7 +9,7 @@
 
     var CalendarApp = function() {
         this.$body = $("body")
-        this.$calendar = $('#calendar'),
+        this.$calendar = $('#full_calendar_events'),
         this.$event = ('#external-events div.external-event'),
         this.$categoryForm = $('#add-new-events form'),
         this.$extEvents = $('#external-events'),

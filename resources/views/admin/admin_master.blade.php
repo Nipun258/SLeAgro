@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="csrf-token" content="content">
+    <!-- <meta name="csrf-token" content="content"> -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -75,18 +75,25 @@
 	<script src="{{ asset('../assets/vendor_components/easypiechart/dist/jquery.easypiechart.js')}}"></script>
 	<script src="{{ asset('../assets/vendor_components/apexcharts-bundle/irregular-data-series.js')}}"></script>
 	<script src="{{ asset('../assets/vendor_components/apexcharts-bundle/dist/apexcharts.js')}}"></script>
-	
+	@php
+   $name = Route::currentRouteName();
+   @endphp
+   @if($name != "calendar")
 	<!--datatable-->
 	<script src="{{ asset('../assets/vendor_components/datatable/datatables.min.js')}}"></script>
 	<script src="{{ asset('backend/js/pages/data-table.js')}}"></script>
-
+   @endif
    
 
 	<!-- Sunny Admin App -->
 	<script src="{{ asset('backend/js/template.js')}}"></script>
 	<script src="{{ asset('backend/js/pages/dashboard.js')}}"></script>
 
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+   <script src="{{ asset('../assets/vendor_components/fullcalendar/lib/moment.min.js')}}"></script>
+   <script src="{{ asset('../assets/vendor_components/fullcalendar/fullcalendar.min.js')}}"></script>
+
 	
   <script type="text/javascript">
      $(function(){

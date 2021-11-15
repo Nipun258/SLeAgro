@@ -40,10 +40,10 @@
                                                                  <select name="price_location" id="price_location" class="form-control">
                                                                   <option value="" selected="" disabled="">Select Price Location</option>
                                                                   <option {{ old('price_location') == "0" ? "selected" : "" }} value="0">All Island</option>
-                                                                  <option {{ old('price_location') == "1" ? "selected" : "" }} value="1"> Pettah
+                                                                  <!-- <option {{ old('price_location') == "1" ? "selected" : "" }} value="1"> Pettah
                                                                   </option>
                                                                   <option {{ old('price_location') == "1" ? "selected" : "" }} value="2"> Dambulla
-                                                                  </option> 
+                                                                  </option>  -->
                                                                  </select>
                                                                       <span class="text-danger">@error('price_location'){{$message}}@enderror</span> 
                                                                  </div>

@@ -234,6 +234,20 @@
           </ul>
         </li> 
         @endif
+        @if(Auth::user()->role =='RC-Officer')
+        <li class="treeview {{ ($prefix == '/messages')?'active':'' }}">
+          <a href="#">
+            <i data-feather="check-circle"></i>
+            <span>Appointment</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('contact.message.view') }}"><i class="ti-more"></i>Contact Message </a></li>
+          </ul>
+        </li> 
+        @endif
 <!-- {{--         <li class="treeview">
           <a href="#">
             <i data-feather="file"></i>
@@ -471,10 +485,10 @@
 	
 	<div class="sidebar-footer">
 		<!-- item-->
-		<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Settings" aria-describedby="tooltip92529"><i class="ti-settings"></i></a>
+		<a href="{{ route('log-viewer::dashboard')}}" class="link" data-toggle="tooltip" title="" data-original-title="System logs" aria-describedby="tooltip92529" target="_blank"><i class="ti-settings"></i></a>
 		<!-- item-->
-		<a href="mailbox_inbox.html" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>
+		<a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>
 		<!-- item-->
-		<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ti-lock"></i></a>
+		<a href="{{ route('admin.logout') }}" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ti-lock"></i></a>
 	</div>
   </aside>

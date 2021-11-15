@@ -21,9 +21,11 @@ use App\Http\Controllers\Backend\Farmer\FarmerUpadateController;
 use App\Http\Controllers\Backend\Farmer\FarmerCropController;
 use App\Http\Controllers\Backend\Buyer\BuyerUpdateController;
 use App\Http\Controllers\Backend\Buyer\BuyerProductController;
+use App\Http\Controllers\Backend\CalenderController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +44,17 @@ Route::get('/', function () {
 
 	$abouts = DB::table('about_us')->first();
 	$contacts = DB::table('contact_us')->first();
+	$message = "Welcome SLeAgro System";
+
+        Log::emergency($message);
+        Log::alert($message    );
+        Log::critical($message);
+        Log::error($message);
+        Log::warning($message);
+        Log::notice($message);
+        Log::info($message);
+        Log::debug($message);
+
     return view('layouts.master_home',compact('abouts','contacts'));
 
 })->name('home');
@@ -63,6 +76,12 @@ Route::get('/admin/logout',[ AdminController::class, 'Logout'])->name('admin.log
 
 
 Route::get('/dashboard',[SummaryController::class, 'getVegData'])->name('dashboard');
+
+//Route::get('/calender',[SummaryController::class, 'ShowCalender'])->name('calendar');
+
+Route::get('calendar-event', [CalenderController::class, 'calendarIndex'])->name('calendar');
+
+Route::post('calendar-crud-ajax', [CalenderController::class, 'calendarEvents'])->name('calendar.store');
 
 /*****************************user mangement ***********************/
 

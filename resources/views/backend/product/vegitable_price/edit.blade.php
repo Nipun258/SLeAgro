@@ -44,8 +44,8 @@
                                                                  <select name="price_location" id="price_location" class="form-control">
                                                                   <option value="" selected="" disabled="">Select Price Location</option>
                                                                   <option value="0" {{ ($editData->price_location == "0" ? "selected": "") }}  >All Island</option>
-                                                                  <option value="1" {{ ($editData->price_location == "1" ? "selected": "") }} >Pettah</option>
-                                                                  <option value="2" {{ ($editData->price_location == "2" ? "selected": "") }} >Dambulla</option>
+                                                                 <!--  <option value="1" {{ ($editData->price_location == "1" ? "selected": "") }} >Pettah</option>
+                                                                  <option value="2" {{ ($editData->price_location == "2" ? "selected": "") }} >Dambulla</option> -->
                                                                  </select>
                                                                       <span class="text-danger">@error('price_location'){{$message}}@enderror</span> 
                                                                  </div>

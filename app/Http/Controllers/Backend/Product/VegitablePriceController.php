@@ -9,6 +9,7 @@ use App\Models\OldVegPrice;
 use App\Models\Vegitable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;//use query builder in here
+use Illuminate\Support\Facades\Log;
 
 class VegitablePriceController extends Controller
 {
@@ -18,7 +19,10 @@ class VegitablePriceController extends Controller
                         ->Join('vegitables','vegitable_prices.veg_id','=','vegitables.id')
                         ->select('vegitable_prices.id','vegitable_prices.price_wholesale','vegitable_prices.price_location','vegitable_prices.price_retial','vegitables.name','vegitable_prices.price_date')
                         ->get();
-
+                        
+        Log::info('Vegitable price list ->get VegitablePriceView');
+        log::info('Vegitable price list ->vegitable price count -' .$data['vegitable_prices']->count());
+        log::info('Vegitable price list ->get VegitablePriceView Ended');
         return view('backend.product.vegitable_price.index',$data);
     }
 
@@ -32,7 +36,7 @@ class VegitablePriceController extends Controller
     public function VegitablePriceStore(Request $request){
 
         $validatedData = $request->validate([
-            'veg_id' => 'required',
+            'veg_id' => 'required|unique:vegitable_prices',
             'price_wholesale' => 'required',
             'price_retial' => 'required',
             'price_location' => 'required',

@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FruitPrice;
 use App\Models\Fruit;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;//use query builder in here
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PriceSet;
 
 class FruitPriceController extends Controller
 {
@@ -31,7 +34,7 @@ class FruitPriceController extends Controller
     public function FruitPriceStore(Request $request){
 
         $validatedData = $request->validate([
-            'fruit_id' => 'required',
+            'fruit_id' => 'required|unique:fruit_prices',
             'price_wholesale' => 'required',
             'price_retial' => 'required',
             'price_location' => 'required',
@@ -45,7 +48,21 @@ class FruitPriceController extends Controller
             'price_date' => Carbon::today(),
             'created_at' => Carbon::now()
         ]);
+
+        /**************************************************/
+
+        $farmer = User::where('usertype','Farmer')->get();
+
+        $priceData = 
+              [
+                'body' => 'New Vegitable added to system',
+                'discription' => 'you can sell your vegitable product using SleAgro platform',
+                'url' => url('/')
+              ];
+         //$farmer->notify(new PriceSet($priceData));
+        Notification::send($farmer, new PriceSet($priceData));
          
+         /******************************************************************/
         $notification = array(
            'message' => 'New Fruit Price Set Successfully',
            'alert-type' => 'success'

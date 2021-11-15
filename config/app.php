@@ -177,6 +177,7 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Spatie\Backup\BackupServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
 
 
 
