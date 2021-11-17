@@ -235,7 +235,7 @@
         </li> 
         @endif
         @if(Auth::user()->role =='RC-Officer')
-        <li class="treeview {{ ($prefix == '/messages')?'active':'' }}">
+        <li class="treeview {{ ($prefix == '/appointments')?'active':'' }}">
           <a href="#">
             <i data-feather="check-circle"></i>
             <span>Appointment</span>
@@ -244,7 +244,23 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('contact.message.view') }}"><i class="ti-more"></i>Contact Message </a></li>
+            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Setup </a></li>
+            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Check </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Farmer')
+        <li class="treeview {{ ($prefix == '/bookings')?'active':'' }}">
+          <a href="#">
+            <i data-feather="check-circle"></i>
+            <span>Booking</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('booking.view') }}"><i class="ti-more"></i>Make Booking </a></li>
+            <li><a href="{{ route('booking.list') }}"><i class="ti-more"></i>Booking List </a></li>
           </ul>
         </li> 
         @endif

@@ -13,20 +13,19 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\BackupCron::class,
     ];
 
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
-    // protected function schedule(Schedule $schedule)
-    // {
-    //     // $schedule->command('inspire')->hourly();
-    // }
-
+     protected function schedule(Schedule $schedule)
+   {
+     
+     $schedule->command('backup:clean')->daily();
+     $schedule->command('backup:run')->daily();
+    /*************************************************/
+     $schedule->command('backup:cron')
+                 ->everyMinute()
+                 ->appendOutputTo('scheduler.log');
+   }
     /**
      * Register the commands for the application.
      *
@@ -39,10 +38,5 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 
-    protected function schedule(Schedule $schedule)
-   {
-     
-     $schedule->command('backup:clean')->daily()->at('01:00');
-     $schedule->command('backup:run')->daily()->at('02:00');
-   }
+    
 }

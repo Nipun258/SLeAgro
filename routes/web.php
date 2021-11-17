@@ -22,6 +22,8 @@ use App\Http\Controllers\Backend\Farmer\FarmerCropController;
 use App\Http\Controllers\Backend\Buyer\BuyerUpdateController;
 use App\Http\Controllers\Backend\Buyer\BuyerProductController;
 use App\Http\Controllers\Backend\CalenderController;
+use App\Http\Controllers\Backend\Booking\AppointmentController;
+use App\Http\Controllers\Backend\Booking\BookingController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
@@ -346,7 +348,7 @@ Route::group(['middleware' => 'buyer'],function(){
 
    Route::prefix('buyers')->group(function(){
      
-     /*****************************************Buyer Profile Update********************************/
+     /*********************************Buyer Profile Update********************************/
 
 	Route::get('/buyers/setup',[BuyerUpdateController::class, 'BuyerSetup'])->name('buyer.setup');
 
@@ -356,7 +358,7 @@ Route::group(['middleware' => 'buyer'],function(){
 
      Route::post('/buyers/update/',[BuyerUpdateController::class, 'BuyerUpdate'])->name('buyer.update');
 
-     /*****************************************Buyer Product add**************************************/ 
+     /*****************************************Buyer Product add*******************************/ 
     
     Route::get('/buyer/product/view',[BuyerProductController::class, 'BuyerProductView'])->name('buyer.product.view');
 
@@ -372,6 +374,45 @@ Route::group(['middleware' => 'buyer'],function(){
 
 
    });//buyer account setup update and product requirement data controlling route list
+
+});
+
+Route::group(['middleware' => 'admin'],function(){
+
+   Route::prefix('appointments')->group(function(){
+     
+     /*******************appointment setup *******************/
+
+	Route::get('/appointment/setup',[AppointmentController::class, 'AppSetup'])->name('app.setup');
+
+	Route::post('appointment/store',[AppointmentController::class, 'AppStore'])->name('app.store');
+
+	Route::get('/appointment/check/view',[AppointmentController::class, 'AppCheckView'])->name('app.check.view');
+
+     Route::post('appointment/check',[AppointmentController::class, 'AppCheck'])->name('app.check');
+
+     Route::post('appointment/update',[AppointmentController::class, 'AppTimeUpdate'])->name('app.time.update');
+
+
+   });//regional center officer appointment setup data controlling route list
+
+});
+
+Route::group(['middleware' => 'farmer'],function(){
+
+   Route::prefix('bookings')->group(function(){
+     
+     /*******************booking setup *******************/
+
+ Route::get('booking/view',[BookingController::class, 'BookingView'])->name('booking.view');
+
+ Route::get('/booking/time/{id}',[BookingController::class, 'BookingTimeView'])->name('booking.time.view');
+
+ Route::post('book/appointment',[BookingController::class, 'BookingApp'])->name('booking.app');
+
+ Route::get('/mybooking',[BookingController::class, 'BookingList'])->name('booking.list');
+
+   });//regional center officer appointment setup data controlling route list
 
 });
 
