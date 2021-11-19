@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '04ccc1b908890cb4dc3b0abde96fc86e84992877',
+        'reference' => 'c6409d3e38956f03a014981788c15f792165d2da',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -490,7 +490,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '04ccc1b908890cb4dc3b0abde96fc86e84992877',
+            'reference' => 'c6409d3e38956f03a014981788c15f792165d2da',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -601,6 +601,15 @@
             'reference' => 'fd4380d6fc37626e2f799f29d91195040137eba9',
             'dev_requirement' => false,
         ),
+        'mpdf/mpdf' => array(
+            'pretty_version' => 'v8.0.15',
+            'version' => '8.0.15.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mpdf/mpdf',
+            'aliases' => array(),
+            'reference' => 'd8a5294a6cc2e814c4157aecc8d7ac25014b18ed',
+            'dev_requirement' => false,
+        ),
         'mtdowling/cron-expression' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -614,7 +623,7 @@
             'install_path' => __DIR__ . '/../myclabs/deep-copy',
             'aliases' => array(),
             'reference' => '776f831124e9c62e1a2c601ecc52e776d8bb7220',
-            'dev_requirement' => true,
+            'dev_requirement' => false,
             'replaced' => array(
                 0 => '1.10.2',
             ),
@@ -655,6 +664,15 @@
             'reference' => '50953a2691a922aa1769461637869a0a2faa3f53',
             'dev_requirement' => false,
         ),
+        'niklasravnsborg/laravel-pdf' => array(
+            'pretty_version' => 'v4.1.0',
+            'version' => '4.1.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../niklasravnsborg/laravel-pdf',
+            'aliases' => array(),
+            'reference' => 'a5f5c22dd5e10d8f536102cec01c21282e18ebae',
+            'dev_requirement' => false,
+        ),
         'nunomaduro/collision' => array(
             'pretty_version' => 'v5.10.0',
             'version' => '5.10.0.0',
@@ -680,6 +698,15 @@
             'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
             'aliases' => array(),
             'reference' => 'f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c',
+            'dev_requirement' => false,
+        ),
+        'paragonie/random_compat' => array(
+            'pretty_version' => 'v9.99.100',
+            'version' => '9.99.100.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/random_compat',
+            'aliases' => array(),
+            'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
             'dev_requirement' => false,
         ),
         'phar-io/manifest' => array(
@@ -1099,6 +1126,15 @@
             'aliases' => array(),
             'reference' => 'c6c1022351a901512170118436c764e473f6de8c',
             'dev_requirement' => true,
+        ),
+        'setasign/fpdi' => array(
+            'pretty_version' => 'v2.3.6',
+            'version' => '2.3.6.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../setasign/fpdi',
+            'aliases' => array(),
+            'reference' => '6231e315f73e4f62d72b73f3d6d78ff0eed93c31',
+            'dev_requirement' => false,
         ),
         'spatie/db-dumper' => array(
             'pretty_version' => '2.21.1',

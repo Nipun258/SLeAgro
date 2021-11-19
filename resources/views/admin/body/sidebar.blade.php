@@ -264,6 +264,35 @@
           </ul>
         </li> 
         @endif
+        @if(Auth::user()->role =='RC-Officer')
+        <li class="treeview {{ ($prefix == '/farmerapps')?'active':'' }}">
+          <a href="#">
+            <i data-feather="filter"></i>
+            <span>Farmer App List</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('app.list.today') }}"><i class="ti-more"></i>Today Appointment </a></li>
+            <li><a href="{{ route('app.list') }}"><i class="ti-more"></i>All Appointment </a></li>
+          </ul>
+        </li>
+        <li class="treeview {{ ($prefix == '/inventory')?'active':'' }}">
+          <a href="#">
+            <i data-feather="home"></i>
+            <span>Inventory</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('booking.lists') }}"><i class="ti-more"></i>Add New Products(RU) </a></li>
+            <li><a href="{{ route('product.add.normal.view') }}"><i class="ti-more"></i>Add New Products(N) </a></li>
+            <li><a href="{{ route('product.summary')}}"><i class="ti-more"></i>Invetory Summary </a></li>
+          </ul>
+        </li>
+        @endif
 <!-- {{--         <li class="treeview">
           <a href="#">
             <i data-feather="file"></i>
@@ -505,6 +534,25 @@
 		<!-- item-->
 		<a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>
 		<!-- item-->
-		<a href="{{ route('admin.logout') }}" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ti-lock"></i></a>
+		<a type="button" data-original-title="Logout" data-toggle="modal" data-target="#modal-center"><i class="ti-lock"></i></a>
 	</div>
   </aside>
+  <div class="modal center-modal fade " id="modal-center" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+          <div class="modal-header">
+            <h5 class="modal-title">User Logout</h5>
+            <a type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          </div>
+          <div class="modal-body">
+            <p>Are realy want to logout?</p>
+          </div>
+          <div class="modal-footer modal-footer-uniform">
+            <a type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Cancel</a>
+            <a type="submit" href="{{ route('admin.logout') }}"  class="btn btn-rounded btn-success float-right">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>

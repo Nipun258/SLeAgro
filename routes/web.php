@@ -24,6 +24,8 @@ use App\Http\Controllers\Backend\Buyer\BuyerProductController;
 use App\Http\Controllers\Backend\CalenderController;
 use App\Http\Controllers\Backend\Booking\AppointmentController;
 use App\Http\Controllers\Backend\Booking\BookingController;
+use App\Http\Controllers\Backend\Booking\FarmerListController;
+use App\Http\Controllers\Backend\Inventory\ProductAddController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
@@ -70,6 +72,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 //test query 
 Route::get('/test',[SummaryController::class, 'test'])->name('test');
+
+Route::post('/contact/message/store',[ContactFormController::class, 'ContactMessageStore'])->name('contact.message.store');
 
 Route::group(['middleware' => 'auth'],function(){
 
@@ -228,7 +232,7 @@ Route::group(['middleware' => 'admin'],function(){
 
     Route::get('/contact/message/view',[ContactFormController::class, 'ContactMessageView'])->name('contact.message.view');
 
-    Route::post('/contact/message/store',[ContactFormController::class, 'ContactMessageStore'])->name('contact.message.store');
+    
 
     Route::get('/contact/message/{id}',[ContactFormController::class, 'ContactMessageDelete'])->name('contact.message.delete');
 
@@ -416,6 +420,51 @@ Route::group(['middleware' => 'farmer'],function(){
 
 });
 
+Route::group(['middleware' => 'admin'],function(){
+
+   Route::prefix('farmerapps')->group(function(){
+     
+     /*******************booking mangement setup *******************/
+
+	Route::get('/appointment/list',[FarmerListController::class, 'AppList'])->name('app.list');
+
+	Route::get('/appointment/list/today',[FarmerListController::class, 'AppListToday'])->name('app.list.today');
+
+	Route::get('/appointment/filter',[FarmerListController::class, 'AppFilter'])->name('app.filter');
+
+	Route::get('/status/update/{id}',[FarmerListController::class, 'ToggleStatus'])->name('update.status');
+
+
+   });
+
+   Route::prefix('inventory')->group(function(){
+     
+     /*******************inventory mangement setup *******************/
+
+	Route::get('/booking/today/list',[ProductAddController::class, 'BookingList'])->name('booking.lists');
+
+     Route::get('/product/add/view/{id}',[ProductAddController::class, 'ProductAddView'])->name('product.add.view');
+	
+	Route::post('booking/product/store',[ProductAddController::class, 'BookingProductStore'])->name('booking.product.store');
+
+	Route::get('/product/add/view/normal/user',[ProductAddController::class, 'ProductAddNormalView'])->name('product.add.normal.view');
+
+	Route::post('normal/product/store',[ProductAddController::class, 'NormalProductStore'])->name('normal.product.store');
+    
+     Route::get('/normal/invoice',[ProductAddController::class, 'NormalInvoiceGen'])->name('normal.invoice');
+
+     Route::get('/booking/invoice',[ProductAddController::class, 'BookingInvoiceGen'])->name('booking.invoice');
+
+     Route::get('/product/summary',[ProductAddController::class, 'ProductSummary'])->name('product.summary');
+
+     Route::get('/product/list/filter',[ProductAddController::class, 'ProductListFilter'])->name('product.list.filter');
+
+   });
+
+});
+
+
     });//end auth middeleware check
 
 });//end middelware cheack
+

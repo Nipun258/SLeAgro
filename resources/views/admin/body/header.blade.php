@@ -115,7 +115,7 @@
 				 <a class="dropdown-item" href="#"><i class="ti-wallet text-muted mr-2"></i> My Wallet</a>
 				 <a class="dropdown-item" href="#"><i class="ti-settings text-muted mr-2"></i> Settings</a>
 				 <div class="dropdown-divider"></div>
-				 <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="ti-lock text-muted mr-2"></i> Logout</a>
+				 <a type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-center"><i class="ti-lock text-muted mr-2"></i> Logout</a>
 			  </li>
 			</ul>
           </li>	
@@ -129,3 +129,22 @@
       </div>
     </nav>
   </header>
+  <div class="modal center-modal fade " id="modal-center" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+          <div class="modal-header">
+            <h5 class="modal-title">User Logout</h5>
+            <a type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </a>
+          </div>
+          <div class="modal-body">
+            <p>Are realy want to logout?</p>
+          </div>
+          <div class="modal-footer modal-footer-uniform">
+            <a type="button" class="btn btn-rounded btn-danger" data-dismiss="modal">Cancel</a>
+            <a type="submit" href="{{ route('admin.logout') }}"  class="btn btn-rounded btn-success float-right">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>

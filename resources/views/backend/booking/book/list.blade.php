@@ -41,8 +41,10 @@
                 <td>
                   @if($booking->status == 0)
                   <button class="btn btn-danger btn-sm">Not Visited</button>
+                  @elseif($booking->status == 1)
+                  <button class="btn btn-info btn-sm">Checked</button>
                   @else
-                  <button class="btn btn-success">Checked</button>
+                   <button class="btn btn-success btn-sm">Product Sold</button>
                   @endif
                 </td>
               </tr>

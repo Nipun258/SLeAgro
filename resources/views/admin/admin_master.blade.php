@@ -78,7 +78,7 @@
 	@php
    $name = Route::currentRouteName();
    @endphp
-   @if($name != "calendar")
+   @if($name != "calendar" || $name != "app.filter")
 	<!--datatable-->
 	<script src="{{ asset('../assets/vendor_components/datatable/datatables.min.js')}}"></script>
 	<script src="{{ asset('backend/js/pages/data-table.js')}}"></script>
@@ -93,6 +93,8 @@
 
    <script src="{{ asset('../assets/vendor_components/fullcalendar/lib/moment.min.js')}}"></script>
    <script src="{{ asset('../assets/vendor_components/fullcalendar/fullcalendar.min.js')}}"></script>
+   <script src="{{ asset('../assets/vendor_plugins/JqueryPrintArea/demo/jquery.PrintArea.js')}}"></script>
+   <script src="{{ asset('backend/js/pages/invoice.js')}}"></script>
 
 	
   <script type="text/javascript">

@@ -9,11 +9,11 @@ use Illuminate\Support\Carbon;
 
 class ContactFormController extends Controller
 {  
-    public function __construct(){
+    // public function __construct(){
       
-      $this->middleware('auth');
+    //   $this->middleware('auth');
 
-    }
+    // }
     
      public function ContactMessageView()
     {

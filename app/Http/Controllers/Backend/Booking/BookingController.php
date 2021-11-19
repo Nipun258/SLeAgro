@@ -67,7 +67,7 @@ class BookingController extends Controller
            'alert-type' => 'warning'
         );
 
-        return redirect()->route('booking.view')->with($notification);
+        return redirect()->route('booking.list')->with($notification);
         }
         $booking = Booking::create([
              'user_id' => auth()->user()->id,
@@ -103,7 +103,7 @@ class BookingController extends Controller
            'alert-type' => 'success'
         );
 
-        return redirect()->route('booking.view')->with($notification);
+        return redirect()->route('booking.list')->with($notification);
 
     }
     public function CheckBookingTimeInterval()
