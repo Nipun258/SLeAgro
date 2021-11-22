@@ -24,8 +24,11 @@ use App\Http\Controllers\Backend\Buyer\BuyerProductController;
 use App\Http\Controllers\Backend\CalenderController;
 use App\Http\Controllers\Backend\Booking\AppointmentController;
 use App\Http\Controllers\Backend\Booking\BookingController;
+use App\Http\Controllers\Backend\Booking\BuyerListController;
 use App\Http\Controllers\Backend\Booking\FarmerListController;
 use App\Http\Controllers\Backend\Inventory\ProductAddController;
+use App\Http\Controllers\Backend\Inventory\SellesController;
+use App\Http\Controllers\Backend\Inventory\ProductiTransferController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
@@ -437,7 +440,7 @@ Route::group(['middleware' => 'admin'],function(){
 
    });
 
-   Route::prefix('inventory')->group(function(){
+   Route::prefix('cinventory')->group(function(){
      
      /*******************inventory mangement setup *******************/
 
@@ -458,6 +461,51 @@ Route::group(['middleware' => 'admin'],function(){
      Route::get('/product/summary',[ProductAddController::class, 'ProductSummary'])->name('product.summary');
 
      Route::get('/product/list/filter',[ProductAddController::class, 'ProductListFilter'])->name('product.list.filter');
+
+     Route::get('/product/summary/report',[ProductAddController::class, 'ProductSummaryReport'])->name('product.summary.report');
+
+     Route::get('/product/month/summary/report',[ProductAddController::class, 'ProductMonthSummaryReport'])->name('product.month.summary.report');
+
+     /***************************************************************************/
+     
+     Route::get('/product/transfer/ecentre/view',[ProductiTransferController::class, 'ProductTransferEcenterView'])->name('product.transfer.ecenter.view');
+
+     Route::post('normal/transfer/ecenter/store',[ProductiTransferController::class, 'ProductTransferEcenterStore'])->name('product.transfer.ecenter.store');
+
+     Route::get('/transfer/invoice',[ProductiTransferController::class, 'TransferInvoiceGen'])->name('transfer.invoice');
+   });
+
+    Route::prefix('buyerreqs')->group(function(){
+     
+     /*******************buyer booking mangement setup *******************/
+
+	Route::get('/product/request/list',[BuyerListController::class, 'ProductReqList'])->name('product.request.list');
+
+	Route::get('/product/request/list/today',[BuyerListController::class, 'ProductReqListToday'])->name('product.request.list.today');
+
+	Route::get('/product/request/filter',[BuyerListController::class, 'ProductReqFilter'])->name('product.request.filter');
+
+	Route::get('/product/request/status/update/{id}',[BuyerListController::class, 'ProductReqToggleStatus'])->name('product.request.update.status');
+
+
+   });
+
+    Route::prefix('einventory')->group(function(){
+     
+     /*******************inventory mangement setup *******************/
+
+     Route::get('/product/sell/normal/view',[SellesController::class, 'ProductSellNormalView'])->name('product.sell.normal.view');
+
+     Route::post('normal/sell/store',[SellesController::class, 'NormalSellStore'])->name('normal.sell.store');
+
+     Route::get('/normal/sell/invoice',[SellesController::class, 'NormalSellInvoiceGen'])->name('normal.sell.invoice');
+
+     Route::get('/product/summary',[SellesController::class, 'ProductSummaryEcentre'])->name('product.summary.ecentre');
+
+     Route::get('/product/list/filter',[SellesController::class, 'ProductListFilterEcentre'])->name('product.list.ecentre.filter');
+
+      Route::get('/product/summary/report',[SellesController::class, 'ProductSummaryReportEcentre'])->name('product.summary.ecenre.report');
+     
 
    });
 

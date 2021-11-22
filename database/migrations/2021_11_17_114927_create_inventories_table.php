@@ -18,7 +18,8 @@ class CreateInventoriesTable extends Migration
             $table->string('order_id');
             $table->string('invoice_id');
             $table->integer('user_id')->nullable();
-            $table->integer('ccentre_id');
+            $table->integer('ccentre_id')->nullable();
+            $table->integer('ecentre_id')->nullable();
             $table->string('date');
             $table->integer('veg_id');
             $table->double('quntity');

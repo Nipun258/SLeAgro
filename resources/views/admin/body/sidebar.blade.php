@@ -278,7 +278,7 @@
             <li><a href="{{ route('app.list') }}"><i class="ti-more"></i>All Appointment </a></li>
           </ul>
         </li>
-        <li class="treeview {{ ($prefix == '/inventory')?'active':'' }}">
+        <li class="treeview {{ ($prefix == '/cinventory')?'active':'' }}">
           <a href="#">
             <i data-feather="home"></i>
             <span>Inventory</span>
@@ -289,7 +289,36 @@
           <ul class="treeview-menu">
             <li><a href="{{ route('booking.lists') }}"><i class="ti-more"></i>Add New Products(RU) </a></li>
             <li><a href="{{ route('product.add.normal.view') }}"><i class="ti-more"></i>Add New Products(N) </a></li>
+            <li><a href="{{ route('product.transfer.ecenter.view') }}"><i class="ti-more"></i>Transfer Products </a></li>
             <li><a href="{{ route('product.summary')}}"><i class="ti-more"></i>Invetory Summary </a></li>
+          </ul>
+        </li>
+        @endif
+        @if(Auth::user()->role =='EC-Officer')
+        <li class="treeview {{ ($prefix == '/buyerreqs')?'active':'' }}">
+          <a href="#">
+            <i data-feather="filter"></i>
+            <span>Buyer Request List</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('product.request.list.today') }}"><i class="ti-more"></i>Today Request </a></li>
+            <li><a href="{{ route('product.request.list') }}"><i class="ti-more"></i>All Request List </a></li>
+          </ul>
+        </li>
+        <li class="treeview {{ ($prefix == '/einventory')?'active':'' }}">
+          <a href="#">
+            <i data-feather="home"></i>
+            <span>Inventory</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('product.sell.normal.view') }}"><i class="ti-more"></i>Sell Products Buyer(N) </a></li>
+            <li><a href="{{ route('product.summary.ecentre')}}"><i class="ti-more"></i>Invetory Summary </a></li>
           </ul>
         </li>
         @endif
@@ -530,7 +559,9 @@
 	
 	<div class="sidebar-footer">
 		<!-- item-->
+    @if(Auth::user()->role =='Admin')
 		<a href="{{ route('log-viewer::dashboard')}}" class="link" data-toggle="tooltip" title="" data-original-title="System logs" aria-describedby="tooltip92529" target="_blank"><i class="ti-settings"></i></a>
+    @endif
 		<!-- item-->
 		<a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>
 		<!-- item-->

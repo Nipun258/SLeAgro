@@ -15,9 +15,10 @@
        <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Total Availble Product List<span class="text-danger">({{$products->count()}})</span></h3>
+          <a href="{{ route('product.summary.ecenre.report') }}" style="float: right;" class="btn btn-success mb-5" target="_blank">Print</a>
         </div>
         <div class="box-header">
-          <form method="GET" action="{{ route('product.list.filter') }}">
+          <form method="GET" action="{{ route('product.list.ecentre.filter') }}">
           @csrf
           Month Filter
           <div class="row">

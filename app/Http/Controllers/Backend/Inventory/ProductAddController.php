@@ -9,6 +9,7 @@ use App\Models\Vegitable;
 use App\Models\Inventory;
 use Auth;
 use Session;
+use PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +33,7 @@ class ProductAddController extends Controller
                         ->orderBy('date', 'desc')
                         ->get();
 
-        return view('backend.inventory.index',compact('mybooking'));
+        return view('backend.inventory.ccentre.index',compact('mybooking'));
     }
 
     public function ProductAddView($id)
@@ -46,7 +47,7 @@ class ProductAddController extends Controller
 
         $vegitablelist01 = Vegitable::get(["name", "id"]);
         $vegitablelist02 = Vegitable::get(["name", "id"]);
-        return view('backend.inventory.add_product',compact('booking','vegitablelist01','vegitablelist02'));
+        return view('backend.inventory.ccentre.add_product',compact('booking','vegitablelist01','vegitablelist02'));
     }
 
 
@@ -100,7 +101,7 @@ class ProductAddController extends Controller
 
         $vegitablelist01 = Vegitable::get(["name", "id"]);
         $vegitablelist02 = Vegitable::get(["name", "id"]);
-        return view('backend.inventory.add_product_normal',compact('vegitablelist01','vegitablelist02'));
+        return view('backend.inventory.ccentre.add_product_normal',compact('vegitablelist01','vegitablelist02'));
     }
 
     public function NormalProductStore(Request $request){
@@ -189,7 +190,7 @@ class ProductAddController extends Controller
                        ->select(DB::raw('SUM(inventories.price) as total'))
                        ->get();
 
-        return view('backend.inventory.invoice_normal',compact('ccenter','orders','order_id','invoice_id','total_price'));
+        return view('backend.inventory.ccentre.invoice_normal',compact('ccenter','orders','order_id','invoice_id','total_price'));
     }
 
     public function BookingInvoiceGen()
@@ -224,7 +225,7 @@ class ProductAddController extends Controller
                        ->select(DB::raw('SUM(inventories.price) as total'))
                        ->get();
         
-        return view('backend.inventory.invoice',compact('ccenter','user','orders','total_price'));
+        return view('backend.inventory.ccentre.invoice',compact('ccenter','user','orders','total_price'));
     }
 
        public function ProductSummary()
@@ -232,12 +233,13 @@ class ProductAddController extends Controller
         $products = DB::table('inventories')
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
-                   ->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
+                   //->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
+                   ->where('inventories.status',0)
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
 
-        return view('backend.inventory.summary',compact('products'));
+        return view('backend.inventory.ccentre.summary',compact('products'));
     }
 
     public function ProductListFilter(Request $request){
@@ -254,12 +256,63 @@ class ProductAddController extends Controller
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
                    ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.status',3)
+                   //->orWhere('inventories.status',3)
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
 
-            return view('backend.inventory.summary',compact('products'));
+            return view('backend.inventory.ccentre.summary',compact('products'));
         }
+    }
+
+    public function ProductSummaryReport()
+    {   
+        $products = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                   ->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
+                   ->where('inventories.status',0)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.inventory.ccentre.current_status_summary', compact('products','ccenter'));
+        //$pdf->SetWatermarkText('DRAFT');
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        //$pdf->SetDisplayMode('fullpage');
+        return $pdf->stream('collection Centre Summary.pdf');
+    }
+
+    public function ProductMonthSummaryReport()
+    {   
+        $products = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                   ->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
+                   ->where('inventories.status',3)
+                   //->Where('inventories.status',3)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.inventory.ccentre.current_month_summary', compact('products','ccenter'));
+        //$pdf->SetWatermarkText('DRAFT');
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        //$pdf->SetDisplayMode('fullpage');
+        return $pdf->stream('collection Centre Summary.pdf');
     }
 
 }
