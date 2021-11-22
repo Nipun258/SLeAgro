@@ -70,6 +70,7 @@ class ProductAddController extends Controller
             $vegitable_inventory->invoice_id = '#IBO'.str_pad($request->booking_id , 6, "0", STR_PAD_LEFT);
             $vegitable_inventory->user_id = $request->user_id;
             $vegitable_inventory->ccentre_id = $request->ccentre_id;
+            $vegitable_inventory->ecentre_id = Auth::user()->ecentre_id;
             $vegitable_inventory->date = $request->date;
             $vegitable_inventory->veg_id = $request->veg_id[$i];
             $vegitable_inventory->quntity = $request->quntity[$i];
@@ -124,6 +125,7 @@ class ProductAddController extends Controller
             $vegitable_inventory->invoice_id = '#INO'.str_pad($code , 6, "0", STR_PAD_LEFT);
             $vegitable_inventory->user_id = 0;
             $vegitable_inventory->ccentre_id = Auth::user()->ccentre_id;
+            $vegitable_inventory->ecentre_id = Auth::user()->ecentre_id;
             $vegitable_inventory->date = date('Y-m-d');
             $vegitable_inventory->veg_id = $request->veg_id[$i];
             $vegitable_inventory->quntity = $request->quntity[$i];

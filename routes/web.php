@@ -26,6 +26,8 @@ use App\Http\Controllers\Backend\Booking\AppointmentController;
 use App\Http\Controllers\Backend\Booking\BookingController;
 use App\Http\Controllers\Backend\Booking\BuyerListController;
 use App\Http\Controllers\Backend\Booking\FarmerListController;
+use App\Http\Controllers\Backend\Booking\BuyerBookingController;
+use App\Http\Controllers\Backend\Booking\BuyerAppointmentController;
 use App\Http\Controllers\Backend\Inventory\ProductAddController;
 use App\Http\Controllers\Backend\Inventory\SellesController;
 use App\Http\Controllers\Backend\Inventory\ProductiTransferController;
@@ -508,6 +510,43 @@ Route::group(['middleware' => 'admin'],function(){
      
 
    });
+
+});
+
+Route::group(['middleware' => 'admin'],function(){
+
+   Route::prefix('bappointments')->group(function(){
+     
+     /*******************appointment setup *******************/
+
+	Route::get('/buyer/appointment/setup',[BuyerAppointmentController::class, 'BuyerAppSetup'])->name('buyer.app.setup');
+
+	Route::post('buyer/appointment/store',[BuyerAppointmentController::class, 'BuyerAppStore'])->name('buyer.app.store');
+
+	Route::get('/buyer/appointment/check/view',[BuyerAppointmentController::class, 'BuyerAppCheckView'])->name('buyer.app.check.view');
+
+	Route::get('/buyer/appointment/delete/{id}',[BuyerAppointmentController::class, 'BuyerAppDelete'])->name('buyer.app.delete');
+
+
+   });//regional center officer appointment setup data controlling route list
+
+});
+
+Route::group(['middleware' => 'buyer'],function(){
+
+   Route::prefix('bbookings')->group(function(){
+     
+     /*******************buyer booking setup *******************/
+
+ Route::get('buyer/booking/view',[BuyerBookingController::class, 'BuyerBookingView'])->name('buyer.booking.view');
+
+ Route::get('/booking/product/{id}',[BuyerBookingController::class, 'BookingProductView'])->name('booking.product.view');
+
+ Route::post('book/buyer/appointment',[BuyerBookingController::class, 'BookingBuyerApp'])->name('booking.buyer.app');
+
+  Route::get('/mybooking/buyer',[BuyerBookingController::class, 'BuyerBookingList'])->name('buyer.booking.list');
+
+   });//regional center officer appointment setup data controlling route list
 
 });
 

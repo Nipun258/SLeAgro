@@ -28,6 +28,7 @@ class BookingController extends Controller
                         ->Join('users','appointments.user_id','=','users.id')
                         ->Join('collection_centres','appointments.ccentre_id','=','collection_centres.id')
                         ->where('appointments.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('appointments.status',0)
                         ->where('appointments.date','>=', date('Y-m-d'))
                         ->select('users.name','collection_centres.centre_name','appointments.date','appointments.id')
                         ->orderBy('date', 'desc')

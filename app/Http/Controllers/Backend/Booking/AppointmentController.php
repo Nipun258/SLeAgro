@@ -22,6 +22,7 @@ class AppointmentController extends Controller
                         ->Join('users','appointments.user_id','=','users.id')
                         ->Join('collection_centres','appointments.ccentre_id','=','collection_centres.id')
                         ->where('user_id', Auth::user()->id)
+                        ->where('appointments.status',0)
                         ->select('users.name','collection_centres.centre_name','appointments.date','appointments.id')
                         ->orderBy('date', 'desc')
                         ->get();

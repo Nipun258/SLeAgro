@@ -234,7 +234,7 @@
           </ul>
         </li> 
         @endif
-        @if(Auth::user()->role =='RC-Officer')
+        @if(Auth::user()->role =='RC-Officer' )
         <li class="treeview {{ ($prefix == '/appointments')?'active':'' }}">
           <a href="#">
             <i data-feather="check-circle"></i>
@@ -295,6 +295,21 @@
         </li>
         @endif
         @if(Auth::user()->role =='EC-Officer')
+        <li class="treeview {{ ($prefix == '/bappointments')?'active':'' }}">
+          <a href="#">
+            <i data-feather="check-circle"></i>
+            <span>Appointment</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('buyer.app.setup') }}"><i class="ti-more"></i>Setup </a></li>
+            <li><a href="{{ route('buyer.app.check.view') }}"><i class="ti-more"></i>Check </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='EC-Officer')
         <li class="treeview {{ ($prefix == '/buyerreqs')?'active':'' }}">
           <a href="#">
             <i data-feather="filter"></i>
@@ -321,6 +336,21 @@
             <li><a href="{{ route('product.summary.ecentre')}}"><i class="ti-more"></i>Invetory Summary </a></li>
           </ul>
         </li>
+        @endif
+        @if(Auth::user()->role =='Buyer')
+        <li class="treeview {{ ($prefix == '/bbookings')?'active':'' }}">
+          <a href="#">
+            <i data-feather="check-circle"></i>
+            <span>Booking</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('buyer.booking.view') }}"><i class="ti-more"></i>Make Booking </a></li>
+            <li><a href="{{ route('buyer.booking.list') }}"><i class="ti-more"></i>Booking List </a></li>
+          </ul>
+        </li> 
         @endif
 <!-- {{--         <li class="treeview">
           <a href="#">
@@ -561,6 +591,8 @@
 		<!-- item-->
     @if(Auth::user()->role =='Admin')
 		<a href="{{ route('log-viewer::dashboard')}}" class="link" data-toggle="tooltip" title="" data-original-title="System logs" aria-describedby="tooltip92529" target="_blank"><i class="ti-settings"></i></a>
+    @else
+    <a href="{{ route('home')}}" class="link" data-toggle="tooltip" title="" data-original-title="System logs" aria-describedby="tooltip92529" target="_blank"><i class="ti-settings"></i></a>
     @endif
 		<!-- item-->
 		<a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>

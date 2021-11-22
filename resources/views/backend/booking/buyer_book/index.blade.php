@@ -14,7 +14,7 @@
 
        <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Farmer Havest selling Booking Selection</h3>
+          <h3 class="box-title">Buyer vegitable product Booking Selection</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -33,7 +33,7 @@
                 <td>{{ $key+1 }}</td>
                 <td>{{ $app->date }}</td>
                 <td>
-                  <a href="{{ route('booking.time.view',$app->id) }}" class="btn btn-info">Time Selection</a>
+                  <a href="{{ route('booking.product.view',$app->id) }}" class="btn btn-info">Product Selection</a>
                 </td>
               </tr>
               @endforeach
