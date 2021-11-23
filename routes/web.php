@@ -496,6 +496,14 @@ Route::group(['middleware' => 'admin'],function(){
      
      /*******************inventory mangement setup *******************/
 
+     Route::get('/buyer/booking/today/list',[SellesController::class, 'BuyerBookingList'])->name('booking.buyer.lists');
+
+     Route::get('/buyer/product/add/view/{id}',[SellesController::class, 'BuyerProductAddView'])->name('product.sell.view');
+
+     Route::post('buyer/booking/product/store',[SellesController::class, 'BuyerBookingProductStore'])->name('buyer.booking.product.store');
+
+      Route::get('/normal/buyer/invoice',[SellesController::class, 'BuyerBookingInvoiceGen'])->name('buyer.booking.invoice');
+
      Route::get('/product/sell/normal/view',[SellesController::class, 'ProductSellNormalView'])->name('product.sell.normal.view');
 
      Route::post('normal/sell/store',[SellesController::class, 'NormalSellStore'])->name('normal.sell.store');
@@ -538,11 +546,11 @@ Route::group(['middleware' => 'buyer'],function(){
      
      /*******************buyer booking setup *******************/
 
- Route::get('buyer/booking/view',[BuyerBookingController::class, 'BuyerBookingView'])->name('buyer.booking.view');
+  Route::get('buyer/booking/view',[BuyerBookingController::class, 'BuyerBookingView'])->name('buyer.booking.view');
 
- Route::get('/booking/product/{id}',[BuyerBookingController::class, 'BookingProductView'])->name('booking.product.view');
+  Route::get('/booking/product/{id}',[BuyerBookingController::class, 'BookingProductView'])->name('booking.product.view');
 
- Route::post('book/buyer/appointment',[BuyerBookingController::class, 'BookingBuyerApp'])->name('booking.buyer.app');
+  Route::post('book/buyer/appointment',[BuyerBookingController::class, 'BookingBuyerApp'])->name('booking.buyer.app');
 
   Route::get('/mybooking/buyer',[BuyerBookingController::class, 'BuyerBookingList'])->name('buyer.booking.list');
 

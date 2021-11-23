@@ -65,17 +65,6 @@
               </tr>
               @endforeach
             </tbody>
-{{--            <tfoot>
-              <tr>
-                <th width="10%">Centre Id</th>
-                <th>Centre Name</th>
-                <th width="10%">Centre Type</th>
-                <th>Provice</th>
-                <th>District</th>
-                <th>City</th>
-                <th width="25%">Action</th>
-              </tr>
-            </tfoot> --}}
             </table>
           </div>
         </div>
@@ -95,7 +84,3 @@
     </div>
   </div>
 @endsection
-
-
-{{-- Fresh vegetables & fruits
-Freshly grown for customers --}}

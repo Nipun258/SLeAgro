@@ -332,6 +332,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="{{ route('booking.buyer.lists') }}"><i class="ti-more"></i>Sell Products Buyer(RU) </a></li>
             <li><a href="{{ route('product.sell.normal.view') }}"><i class="ti-more"></i>Sell Products Buyer(N) </a></li>
             <li><a href="{{ route('product.summary.ecentre')}}"><i class="ti-more"></i>Invetory Summary </a></li>
           </ul>

@@ -48,7 +48,8 @@
 											@if($key == 0)
 											<label for="cus_order" class="text-light text-center">Requried Vegitable Qunntity(Kg)</label>
 											@endif
-											<input type="text" class="form-control border border-white text-center" name="cus_order[]" id="cus_order" >
+											<input type="number" class="form-control border border-white text-center" name="cus_order[]" id="cus_order" >
+											<span class="text-danger">@error('cus_order'){{$message}}@enderror</span>
 										</div>
 									</div>
 								</div>
@@ -56,12 +57,12 @@
 			                   <input type="hidden" name="date" value="{{$date}}">
 								@endforeach
 								@else
-								<h4 class="title text-danger">There is No Vegitable Product to Transfer</h4>
+								<h4 class="title text-danger">There is No Vegitable Product to Booking</h4>
 								@endif
 							</div>
 						</div>
 						<br>@if($orders->count()>0)						
-							<input type="submit" class="btn btn-success float-left" value="submit">
+							<input type="submit" class="btn btn-success float-left" value="Booking Request" style="width:100%;">
 							@endif
 						</div>
 					</form>

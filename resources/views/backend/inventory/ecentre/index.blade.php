@@ -14,7 +14,7 @@
 
        <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Buyer buying Appointment Booking List <span class="text-danger">({{$mybooking->count()}})</span></h3>
+          <h3 class="box-title">Sell Vegitable From System<span class="text-danger">({{$mybooking->count()}})</span></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -28,7 +28,6 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Date For</th>
-                <th>Time</th>
                 <th>Created Date</th>
                 <th>Status</th>
               </tr>
@@ -42,14 +41,9 @@
                 <td>{{ $booking->email }}</td>
                 <td>{{ $booking->mobile }}</td>
                 <td>{{ $booking->date }}</td>
-                <td>{{ $booking->time}}</td>
                 <td>{{ $booking->created_at}}</td>
                 <td>
-                  @if($booking->status == 0)
-                  <a href="{{route('update.status',$booking->id)}}" type="button" class="btn btn-danger btn-sm">Pending</a>
-                  @else
-                  <a href="{{route('update.status',$booking->id)}}" type="button" class="btn btn-success btn-sm">Checked</a>
-                  @endif
+                  <a href="{{route('product.sell.view',$booking->id)}}" type="button" class="btn btn-info btn-sm">Add Product</a>
                 </td>
               </tr>
               @endforeach
@@ -72,4 +66,5 @@
     
     </div>
   </div>
+
 @endsection

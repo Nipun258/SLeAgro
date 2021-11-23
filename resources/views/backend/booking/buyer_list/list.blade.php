@@ -14,7 +14,21 @@
 
        <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Buyer buying Appointment Booking List <span class="text-danger">({{$mybooking->count()}})</span></h3>
+          <h3 class="box-title">Farmer Havest selling Appointment Booking List <span class="text-danger">({{$mybooking->count()}})</span></h3>
+        </div>
+        <div class="box-header">
+          <form method="GET" action="{{ route('product.request.filter') }}">
+          @csrf
+          Date Filter
+          <div class="row">
+          <div class="col-md-3">
+            <input class="form-control" type="date" name="date">
+          </div>
+          <div class="coi-md-2">
+            <input type="submit" class="btn btn-primary btn-sm" style="height: 5.5vh;" value="Search">
+          </div>
+          </div>
+          </form>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -28,7 +42,6 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Date For</th>
-                <th>Time</th>
                 <th>Created Date</th>
                 <th>Status</th>
               </tr>
@@ -42,13 +55,12 @@
                 <td>{{ $booking->email }}</td>
                 <td>{{ $booking->mobile }}</td>
                 <td>{{ $booking->date }}</td>
-                <td>{{ $booking->time}}</td>
                 <td>{{ $booking->created_at}}</td>
                 <td>
                   @if($booking->status == 0)
-                  <a href="{{route('update.status',$booking->id)}}" type="button" class="btn btn-danger btn-sm">Pending</a>
+                  <a href="{{route('product.request.update.status',$booking->id)}}" type="button" class="btn btn-danger btn-sm">Pending</a>
                   @else
-                  <a href="{{route('update.status',$booking->id)}}" type="button" class="btn btn-success btn-sm">Checked</a>
+                  <a href="{{route('product.request.update.status',$booking->id)}}" type="button" class="btn btn-success btn-sm">Checked</a>
                   @endif
                 </td>
               </tr>
