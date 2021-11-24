@@ -19,19 +19,14 @@
 			</div>
 		</div>  
 
-<!-- 		<div class="px-30 my-15 no-print">
-		  <div class="callout callout-success" style="margin-bottom: 0!important;">
-			<h4><i class="fa fa-info"></i> Note:</h4>
-			This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-		  </div>
-		</div> -->
-
 		<!-- Main content -->
 		<section class="invoice printableArea">
 			
 			  <!-- title row -->
 			  <div class="row">
 				<div class="col-12">
+                <form method="POST" action="{{ route('buyer.booking.payment.store') }}" class="contact-form">
+				 @csrf
 				  <div class="bb-1 clearFix">
 					<div class="text-right pb-15">
 						<a class="btn btn-rounded btn-success" type="button"> <span><i class="fa fa-print"></i> Save</span> </a>
@@ -59,6 +54,8 @@
 					<strong class="d-inline">{{ $ecenter->address }}</strong><br>
 					<strong>Phone: {{ $ecenter->mobile }} &nbsp;&nbsp;&nbsp;&nbsp; Email: {{ $ecenter->email }}</strong>  
 				  </address>
+				  <input type="hidden" name="to" value="{{$ecenter->id}}">
+				  <input type="hidden" name="name" value="{{$ecenter->centre_name}}">
 				</div>
 				@endforeach
 				<!-- /.col -->
@@ -79,6 +76,10 @@
 					  <div class="col-md-6 col-lg-3"><b>Payment Due:</b> {{ date('d/m/Y') }}</div>
 					  <div class="col-md-6 col-lg-3"><b>Account:</b> N/A</div>
 					</div>
+					<input type="hidden" name="from" value="{{$user->id}}">
+					<input type="hidden" name="invoice_id" value="{{ $user->invoice_id }}">
+					<input type="hidden" name="order_id" value="{{ $user->order_id }}">
+					<input type="hidden" name="email" value="{{ $user->email }}">
 				</div>
 				@endforeach
 			  <!-- /.col -->
@@ -124,6 +125,8 @@
 					</div>
 					<div class="total-payment">
 						<h3><b>Total :</b>RS.{{number_format(($price->total +($price->total/100)*1),2)}}</h3>
+						<input type="hidden" name="total_payment" value="{{$price->total}}">
+						<input type="hidden" name="net_payment" value="{{$price->total +($price->total/100)*1}}">
 						@endforeach
 					</div>
 
@@ -135,11 +138,10 @@
 			  <!-- this row will not appear when printing -->
 			  <div class="row no-print">
 				<div class="col-12">
-				  <a type="submit" class="btn btn-rounded btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-				  </a>
+				  <input type="submit" class="btn btn-rounded btn-success pull-right" value="Submit Payment">
 				</div>
 			  </div>
-				
+			</form>
 		</section>
 		<!-- /.content -->
 	  </div>

@@ -42,7 +42,7 @@ class BuyerAppointmentController extends Controller
 
         $validatedData = $request->validate([
 
-            'date' => 'required|unique:appointments,date,NULL,id,user_id,'.\Auth::id(),
+            'date' => 'required|after:now|unique:appointments,date,NULL,id,user_id,'.\Auth::id(),
         ],[
                
             'date.unique' => 'All ready setup appointment'

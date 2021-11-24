@@ -290,12 +290,8 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/fruit/delete/{id}',[FruitController::class, 'FruitDelete'])->name('fruit.delete');
 
-   });//vegitable and fruits detials and price controlling route list
 
-});
-   Route::prefix('calculator')->group(function(){
-
-   	/****************************************Fruit Price***********************************/
+	/****************************************Fruit Price***********************************/
    
     Route::get('/fruit/price/view',[FruitPriceController::class, 'FruitPriceView'])->name('fruit.price.view');
 
@@ -309,6 +305,10 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/fruit/price/delete/{id}',[FruitPriceController::class, 'FruitPriceDelete'])->name('fruit.price.delete');
 
+   });//vegitable and fruits detials and price controlling route list
+
+});
+   Route::prefix('calculator')->group(function(){
 
 	/*****************************price calculator***********************************************/
     
@@ -462,6 +462,10 @@ Route::group(['middleware' => 'admin'],function(){
 
      Route::get('/booking/invoice',[ProductAddController::class, 'BookingInvoiceGen'])->name('booking.invoice');
 
+     Route::post('booking/payment/store',[ProductAddController::class, 'BookingPaymentStore'])->name('booking.payment.store');
+
+     Route::post('normal/payment/store',[ProductAddController::class, 'NormalPaymentStore'])->name('normal.payment.store');
+
      Route::get('/product/summary',[ProductAddController::class, 'ProductSummary'])->name('product.summary');
 
      Route::get('/product/list/filter',[ProductAddController::class, 'ProductListFilter'])->name('product.list.filter');
@@ -477,6 +481,9 @@ Route::group(['middleware' => 'admin'],function(){
      Route::post('normal/transfer/ecenter/store',[ProductiTransferController::class, 'ProductTransferEcenterStore'])->name('product.transfer.ecenter.store');
 
      Route::get('/transfer/invoice',[ProductiTransferController::class, 'TransferInvoiceGen'])->name('transfer.invoice');
+
+     Route::post('transfer/payment/store',[ProductiTransferController::class, 'TransferPaymentStore'])->name('transfer.payment.store');
+
    });
 
     Route::prefix('buyerreqs')->group(function(){
@@ -511,6 +518,10 @@ Route::group(['middleware' => 'admin'],function(){
      Route::post('normal/sell/store',[SellesController::class, 'NormalSellStore'])->name('normal.sell.store');
 
      Route::get('/normal/sell/invoice',[SellesController::class, 'NormalSellInvoiceGen'])->name('normal.sell.invoice');
+
+     Route::post('buyer/booking/payment/store',[SellesController::class, 'BuyerBookingPaymentStore'])->name('buyer.booking.payment.store');
+
+     Route::post('buyer/normal/payment/store',[SellesController::class, 'BuyerNormalPaymentStore'])->name('buyer.normal.payment.store');
 
      Route::get('/product/summary',[SellesController::class, 'ProductSummaryEcentre'])->name('product.summary.ecentre');
 

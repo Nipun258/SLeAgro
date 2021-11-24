@@ -29,7 +29,7 @@ class BuyerBookingController extends Controller
                         ->Join('economic_centres','appointments.ecentre_id','=','economic_centres.id')
                         ->where('appointments.ecentre_id', Auth::user()->ecentre_id)
                         ->where('appointments.status',1)
-                        ->where('appointments.date','>=', date('Y-m-d'))
+                        ->where('appointments.date','=', date("Y-m-d", strtotime('tomorrow')))
                         ->select('users.name','economic_centres.centre_name','appointments.date','appointments.id')
                         ->orderBy('date', 'desc')
                         ->get();
@@ -42,7 +42,9 @@ class BuyerBookingController extends Controller
         $orders = DB::table('inventories')
                 ->Join('vegitables','vegitables.id','=','inventories.veg_id')
                 ->Join('economic_centres','economic_centres.id','=','inventories.ecentre_id')
-                ->where('inventories.status',0)
+                ->where('inventories.date','=', date("Y-m-d"))
+                ->where('inventories.status',2)
+                ->orWhere('inventories.status',0)
                 ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
                 ->select('vegitables.name','vegitables.id',DB::raw('SUM(inventories.quntity) as count'),DB::raw('SUM(inventories.price) as total'))
                 ->groupBy('inventories.veg_id','vegitables.name','vegitables.id')
@@ -90,7 +92,7 @@ class BuyerBookingController extends Controller
 
           for($i=0; $i < $vegitable_list; $i++) {
             //dd($request->cus_order[$i])."<br>";
-            if($request->cus_order[$i]!='0' && $request->cus_order[$i]!='null' && $request->cus_order[$i]!=''){
+            if($request->cus_order[$i]!='0' && $request->cus_order[$i]!='null' && $request->cus_order[$i]!='' && $request->cus_order[$i] <= $request->quntity[$i]){
             $vegitable_inventory = new VegitableBookList();
             $vegitable_inventory->booking_id = $request->appointmentId;
             $vegitable_inventory->veg_id = $request->veg_id[$i];
@@ -103,13 +105,13 @@ class BuyerBookingController extends Controller
                 ->where('id', auth()->user()->ecentre_id)
                 ->select('economic_centres.centre_name')
                 ->get();
-        $ename=json_decode($cname,true);
+        $ename=json_decode($ename,true);
         $ename=$ename[0]["centre_name"];
         
         $data1 = [
                'name' => auth()->user()->name,
                'date' => $request->date,
-               'location' => $cname
+               'location' => $ename
             ];
     
        $mail = new BuyerBookingMail($data1);

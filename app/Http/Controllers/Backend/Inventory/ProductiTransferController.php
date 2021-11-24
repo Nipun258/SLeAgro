@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vegitable;
 use App\Models\Inventory;
+use App\Models\Payment;
 use Auth;
 use Session;
 use PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ProductTransferMail;
+use App\Mail\PaymentTransferMail;
 use Illuminate\Support\Facades\Mail;
 
 class ProductiTransferController extends Controller
@@ -128,14 +130,14 @@ class ProductiTransferController extends Controller
         $ccenter = DB::table('users')
                   ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
                   ->where('users.id',Auth::user()->id)
-                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name','users.id')
                   ->get();
 
         $ecenter = DB::table('users')
                   ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
                   ->where('users.ecentre_id',Auth::user()->ecentre_id)
                   ->where('users.role','=','EC-Officer')
-                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name','users.id')
                   ->get();
 
         $order_id = Session::get('order_id');
@@ -155,6 +157,45 @@ class ProductiTransferController extends Controller
                        ->get();
 
         return view('backend.inventory.ccentre.invoice_transfer',compact('ccenter','ecenter','orders','order_id','invoice_id','total_price'));
+    }
+
+    public function TransferPaymentStore(Request $request){
+ 
+        Payment::insert([
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'total_payment' => $request->total_payment,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 0,
+            'date' => date('Y-m-d'),
+            'from' => $request->from,
+            'to' => $request->to,
+            'status' => 3,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $data = [
+
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'net_payment' => $request->net_payment,
+            'date' => date('Y-m-d'),
+            'ecentre' => $request->ecentre,
+            'ccentre' => $request->ccentre,
+        ];
+    
+       $mail = new PaymentTransferMail($data);
+    
+       Mail::to($request->email)->send($mail);
+         
+        $notification = array(
+           'message' => 'New payment completed Successfully',
+           'alert-type' => 'success'
+        );
+
+        return redirect()->route('product.summary')->with($notification);
+
     }
 
 }

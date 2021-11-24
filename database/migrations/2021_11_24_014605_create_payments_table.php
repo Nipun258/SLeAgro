@@ -17,10 +17,13 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('order_id');
             $table->string('invoice_id');
-            $table->double('amount', 8, 2);
+            $table->double('total_payment', 8, 2);
+            $table->double('net_payment', 8, 2);
             $table->string('date');
-            $table->integer('from');
-            $table->integer('to');
+            $table->integer('payment_type');
+            $table->string('account_number')->nullable();
+            $table->integer('from')->nullable();
+            $table->integer('to')->nullable();
             $table->integer('status');
             $table->timestamps();
         });

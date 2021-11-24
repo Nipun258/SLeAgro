@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Mail\FarmerBookingMail;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -33,6 +34,7 @@ class BookingController extends Controller
                         ->select('users.name','collection_centres.centre_name','appointments.date','appointments.id')
                         ->orderBy('date', 'desc')
                         ->get();
+
         return view('backend.booking.book.index',compact('mybooking'));
     }
 
@@ -47,10 +49,16 @@ class BookingController extends Controller
                 ->where('id', $id)
                 ->select('appointments.date')
                 ->get();
+
         $date=json_decode($date,true);
         $date=$date[0]["date"];
 
-        return view('backend.booking.book.check',compact('times','date'));
+        $current_time = Carbon::now()->format('H:ia');
+        $today_date = Carbon::now()->format('Y-m-d');
+
+        //dd($today_date);
+
+        return view('backend.booking.book.check',compact('times','date','current_time','today_date'));
     }
 
     public function BookingApp(Request $request){

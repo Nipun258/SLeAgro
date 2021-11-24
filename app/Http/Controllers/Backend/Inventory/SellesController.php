@@ -12,6 +12,8 @@ use Session;
 use PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Mail\PaymentSellMail;
+use Illuminate\Support\Facades\Mail;
 
 class SellesController extends Controller
 {   
@@ -115,12 +117,12 @@ class SellesController extends Controller
         $ecenter = DB::table('users')
                   ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
                   ->where('users.id',Auth::user()->id)
-                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name','users.id')
                   ->get();
 
         $user = DB::table('inventories')
                   ->Join('users','users.id','=','inventories.user_id')
-                  ->select('users.name','users.mobile','users.email','users.address','inventories.order_id','inventories.invoice_id')
+                  ->select('users.name','users.mobile','users.email','users.address','inventories.order_id','inventories.invoice_id','users.id')
                   ->orderBy('inventories.order_id', 'desc')
                   ->limit(1)
                   ->get();
@@ -142,6 +144,46 @@ class SellesController extends Controller
                        ->get();
         
         return view('backend.inventory.ecentre.invoice',compact('ecenter','user','orders','total_price'));
+    }
+
+    public function BuyerBookingPaymentStore(Request $request){
+
+       Payment::insert([
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'total_payment' => $request->total_payment,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 0,
+            'date' => date('Y-m-d'),
+            'from' => $request->from,
+            'to' => $request->to,
+            'status' => 4,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $data = [
+
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 0,
+            'account_number' => $request->account_number,
+            'date' => date('Y-m-d'),
+            'name' => $request->name,
+            'status' => 1,
+        ];
+    
+       $mail = new PaymentSellMail($data);
+    
+       Mail::to($request->email)->send($mail);
+         
+        $notification = array(
+           'message' => 'New buyer payment completed Successfully',
+           'alert-type' => 'success'
+        );
+
+        return redirect()->route('product.summary.ecentre')->with($notification);
     }
 
     public function ProductSellNormalView()
@@ -217,7 +259,7 @@ class SellesController extends Controller
     public function NormalSellInvoiceGen()
     {   
 
-        $ccenter = DB::table('users')
+        $ecenter = DB::table('users')
                   ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
                   ->where('users.id',Auth::user()->id)
                   ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name')
@@ -239,7 +281,31 @@ class SellesController extends Controller
                        ->select(DB::raw('SUM(inventories.price) as total'))
                        ->get();
 
-        return view('backend.inventory.ecentre.invoice_normal',compact('ccenter','orders','order_id','invoice_id','total_price'));
+        return view('backend.inventory.ecentre.invoice_normal',compact('ecenter','orders','order_id','invoice_id','total_price'));
+    }
+
+    public function BuyerNormalPaymentStore(Request $request){
+
+       Payment::insert([
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'total_payment' => $request->total_payment,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 0,
+            'date' => date('Y-m-d'),
+            'from' => $request->from,
+            'to' => $request->to,
+            'status' => 5,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+         
+        $notification = array(
+           'message' => 'New unregisterd buyer payment completed Successfully',
+           'alert-type' => 'success'
+        );
+
+        return redirect()->route('product.summary.ecentre')->with($notification);
     }
 
     public function ProductSummaryEcentre()
@@ -247,7 +313,8 @@ class SellesController extends Controller
         $products = DB::table('inventories')
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
-                   //->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
+                   ->where('inventories.status',2)
+                   ->where('inventories.date','=', date("Y-m-d", strtotime('yesterday')))
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
@@ -268,6 +335,7 @@ class SellesController extends Controller
             $products = DB::table('inventories')
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                   ->where('inventories.status',2)
                    ->where('inventories.date','LIKE','%'.$request->month.'%')
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
@@ -282,7 +350,8 @@ class SellesController extends Controller
         $products = DB::table('inventories')
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
-                   //->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
+                   ->where('inventories.status',2)
+                   ->where('inventories.date','=', date("Y-m-d", strtotime('yesterday')))
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
@@ -294,9 +363,7 @@ class SellesController extends Controller
                   ->get();
 
         $pdf = PDF::loadView('backend.inventory.ecentre.current_month_summary', compact('products','ccenter'));
-        //$pdf->SetWatermarkText('DRAFT');
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        //$pdf->SetDisplayMode('fullpage');
         return $pdf->stream('collection Centre Summary.pdf');
     }
 }

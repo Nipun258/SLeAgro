@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Vegitable;
+use App\Models\Payment;
 use App\Models\Inventory;
 use Auth;
 use Session;
 use PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Mail\PaymentPayMail;
+use Illuminate\Support\Facades\Mail;
 
 class ProductAddController extends Controller
 {
@@ -173,7 +176,7 @@ class ProductAddController extends Controller
         $ccenter = DB::table('users')
                   ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
                   ->where('users.id',Auth::user()->id)
-                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name','users.id')
                   ->get();
 
         $order_id = Session::get('order_id');
@@ -200,13 +203,13 @@ class ProductAddController extends Controller
         $ccenter = DB::table('users')
                   ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
                   ->where('users.id',Auth::user()->id)
-                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name','users.id')
                   ->get();
 
         $user = DB::table('inventories')
                   ->Join('users','users.id','=','inventories.user_id')
                   ->Join('farmers','farmers.user_id','=','users.id')
-                  ->select('users.name','users.mobile','users.email','users.address','farmers.account_number','inventories.order_id','inventories.invoice_id')
+                  ->select('users.name','users.mobile','users.email','users.address','farmers.account_number','inventories.order_id','inventories.invoice_id','users.id')
                   ->orderBy('inventories.order_id', 'desc')
                   ->limit(1)
                   ->get();
@@ -229,6 +232,73 @@ class ProductAddController extends Controller
         
         return view('backend.inventory.ccentre.invoice',compact('ccenter','user','orders','total_price'));
     }
+
+    public function BookingPaymentStore(Request $request){
+ 
+        Payment::insert([
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'total_payment' => $request->total_payment,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 1,
+            'account_number' => $request->account_number,
+            'date' => date('Y-m-d'),
+            'from' => $request->from,
+            'to' => $request->to,
+            'status' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        $data = [
+
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 1,
+            'account_number' => $request->account_number,
+            'date' => date('Y-m-d'),
+            'status' => 1,
+        ];
+    
+       $mail = new PaymentPayMail($data);
+    
+       Mail::to($request->email)->send($mail);
+         
+        $notification = array(
+           'message' => 'New payment completed Successfully',
+           'alert-type' => 'success'
+        );
+
+        return redirect()->route('product.summary')->with($notification);
+
+    }
+
+    public function NormalPaymentStore(Request $request){
+ 
+        Payment::insert([
+            'order_id' => $request->order_id,
+            'invoice_id' => $request->invoice_id,
+            'total_payment' => $request->total_payment,
+            'net_payment' => $request->net_payment,
+            'payment_type' => 0,
+            'date' => date('Y-m-d'),
+            'from' => $request->from,
+            'to' => $request->to,
+            'status' => 2,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+         
+        $notification = array(
+           'message' => 'New payment completed Successfully',
+           'alert-type' => 'success'
+        );
+
+        return redirect()->route('product.summary')->with($notification);
+
+    }
+
 
        public function ProductSummary()
     {   
@@ -299,7 +369,6 @@ class ProductAddController extends Controller
                    ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
                    ->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
                    ->where('inventories.status',3)
-                   //->Where('inventories.status',3)
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();

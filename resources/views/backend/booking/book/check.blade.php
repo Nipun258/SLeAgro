@@ -49,13 +49,24 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div class="row">
-             @foreach($times as $time)
+        @foreach($times as $time)
+          @if($today_date < $date)
              <div class="col-md-4">
 		      <label class="btn btn-outline-primary">
 		      	<input type="radio" name="time" value="{{$time->time}}">
 		      	<span>{{$time->time}}</span>
 		      </label>
 			</div>
+      @elseif($today_date == $date)
+      @if(date("H:i", strtotime($current_time)) <= date("H:i", strtotime($time->time)))
+      <div class="col-md-4">
+          <label class="btn btn-outline-primary">
+            <input type="radio" name="time" value="{{$time->time}}">
+            <span>{{$time->time}}</span>
+          </label>
+      </div>
+      @endif
+      @endif
 			<input type="hidden" name="appointmentId" value="{{$time->appointment_id}}">
 			<input type="hidden" name="date" value="{{$date}}">
 			@endforeach
