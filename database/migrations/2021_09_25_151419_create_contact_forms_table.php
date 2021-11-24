@@ -22,6 +22,7 @@ class CreateContactFormsTable extends Migration
             $table->string('contact_reason');
             $table->string('district');
             $table->text('message');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

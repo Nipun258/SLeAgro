@@ -237,7 +237,9 @@ Route::group(['middleware' => 'admin'],function(){
 
     Route::get('/contact/message/view',[ContactFormController::class, 'ContactMessageView'])->name('contact.message.view');
 
-    
+    Route::get('/contact/message/reply/{id}',[ContactFormController::class, 'ContactMessageReplay'])->name('contact.message.reply');
+
+    Route::post('contact/message/email',[ContactFormController::class, 'ContactMessageEmail'])->name('contact.message.email');
 
     Route::get('/contact/message/{id}',[ContactFormController::class, 'ContactMessageDelete'])->name('contact.message.delete');
 

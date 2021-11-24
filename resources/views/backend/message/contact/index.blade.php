@@ -59,7 +59,11 @@
                 <td> {{ $message->district }} </td>
                 <td> {{ $message->message }} </td>
                 <td>
-                  <a href="{{-- {{ route('contact.edit',$contact->id) }} --}}" class="btn btn-info btn-sm">Reply</a>
+                  @if($message->status == 0)
+                  <a href="{{ route('contact.message.reply',$message->id) }}" class="btn btn-info btn-sm">Reply</a>
+                  @else
+                  <a href="" class="btn btn-success btn-sm">Done</a>
+                  @endif
                   <a href="{{ route('contact.message.delete',$message->id) }}" class="btn btn-danger btn-sm" id="delete">Delete</a>
                 </td>
               </tr>
