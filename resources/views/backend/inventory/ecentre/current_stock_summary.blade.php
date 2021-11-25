@@ -39,7 +39,6 @@ e<!DOCTYPE html>
 
   </td> 
     <td><h2>Easy SleAgro System</h2>
-      <p>{{$current_month}}</p>
       @foreach($ecenter as $ecenter)
 <p>Centre Location : {{ $ecenter->centre_name}}</p>
 <p>Phone : {{ $ecenter->mobile}}</p>

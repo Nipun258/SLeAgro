@@ -37,6 +37,7 @@
 
     </h2></td> 
     <td><h2>Easy SleAgro System</h2>
+      <p>{{$current_month}}</p>
       @foreach($ecenter as $ecenter)
 <p>Centre Location : {{ $ecenter->centre_name}}</p>
 <p>Phone : {{ $ecenter->mobile}}</p>
@@ -61,7 +62,7 @@
   <tr>
     <td>{{ $key++ }}</td>
      <td>{{ $product->name }}</td>
-     <td>{{ $product->quntity }}</td>
+     <td>{{ $product->total }}</td>
   </tr>
   @endforeach
 </table>

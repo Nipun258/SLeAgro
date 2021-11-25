@@ -102,15 +102,18 @@ class BookingController extends Controller
                'location' => $cname
             ];
 
-       $receiverNumber = "94766453075";
-       $message = 'You vegitable Selling Order place Successfully.You booking Date :'.$request->date.'and time :'.$request->time.'and Booking Location :'.$cname.'Thank you'.auth()->user()->name.'Making order with us';
+       //  $basic  = new \Nexmo\Client\Credentials\Basic(getenv("NEXMO_KEY"), getenv("NEXMO_SECRET"));
+       //  $client = new \Nexmo\Client($basic);
 
-        Nexmo::message()->send([
+       // $receiverNumber = "94766453075";
+       // $message = 'You vegitable Selling Order place Successfully.You booking Date :'.$request->date.'and time :'.$request->time.'and Booking Location :'.$cname.'Thank you'.auth()->user()->name.'Making order with us';
 
-                'to' => $receiverNumber,
-                'from' => 'SLeAgro System',
-                'text' => $message
-        ]);
+       //  $client->message()->send([
+
+       //          'to' => $receiverNumber,
+       //          'from' => 'SLeAgro System',
+       //          'text' => $message
+       //  ]);
     
        $mail = new FarmerBookingMail($data1);
     
@@ -142,10 +145,11 @@ class BookingController extends Controller
         $mybooking  = DB::table('bookings')
                         ->Join('users','bookings.user_id','=','users.id')
                         ->Join('collection_centres','bookings.ccentre_id','=','collection_centres.id')
-                        ->where('bookings.ccentre_id', Auth::user()->ccentre_id)
+                         ->where('users.id', Auth::user()->id)
                         ->select('users.name','collection_centres.centre_name','bookings.date','bookings.time','bookings.created_at','bookings.status')
                         ->orderBy('date', 'desc')
                         ->get();
+        //dd($mybooking);
         return view('backend.booking.book.list',compact('mybooking'));
     }
 }

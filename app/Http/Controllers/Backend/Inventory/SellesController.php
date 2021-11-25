@@ -354,7 +354,7 @@ class SellesController extends Controller
                    ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
                    ->where('inventories.status',2)
                    ->where('inventories.date','LIKE','%'.$request->month.'%')
-                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as quntity'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
 

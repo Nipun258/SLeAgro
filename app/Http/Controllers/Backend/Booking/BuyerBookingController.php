@@ -170,11 +170,11 @@ class BuyerBookingController extends Controller
            $mybooking  = DB::table('buyer_bookings')
                         ->Join('users','buyer_bookings.user_id','=','users.id')
                         ->Join('economic_centres','buyer_bookings.ecentre_id','=','economic_centres.id')
-                        ->where('buyer_bookings.ecentre_id', Auth::user()->ecentre_id)
+                        ->where('users.id', Auth::user()->id)
                         ->select('users.name','economic_centres.centre_name','buyer_bookings.date','buyer_bookings.created_at','buyer_bookings.status')
                         ->orderBy('date', 'desc')
                         ->get();
-
+            //dd($mybooking);
         return view('backend.booking.buyer_book.list',compact('mybooking'));
     }
 

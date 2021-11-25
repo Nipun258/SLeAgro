@@ -48,7 +48,11 @@
             <tbody>
               @foreach(json_decode($products) as $product)
               <tr>
-                <td>{{ $product->id}}</td>
+                @php
+                $i = 0;
+                $i++
+                @endphp
+                <td>{{ $i}}</td>
                 <td><img width="70" style="border-radius: 10%;" src="{{ (!empty($product->image))? url($product->image):url('upload/images.png')}}" alt="User Avatar"></td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->quntity }}</td>

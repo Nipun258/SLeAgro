@@ -363,10 +363,14 @@
 											</td>
 
 											<td>
+												@if($summary->todayPrice != 'No Data' && $summary->yesterdayPrice != 'No Data')
 												@if(($summary->todayPrice-$summary->yesterdayPrice)> 0)
 												<h3 class="text-success"><i class="fa fa-caret-up"></i>{{number_format((($summary->todayPrice-$summary->yesterdayPrice)/$summary->todayPrice)*100,2)}}%</h3>
 												@else
 												<h3 class="text-danger"><i class="fa fa-caret-down"></i>{{number_format((-($summary->todayPrice-$summary->yesterdayPrice)/$summary->todayPrice)*100,2)}}%</h3>
+												@endif
+												@else
+												<h3 class="text-danger">Loading...</h3>
 												@endif
 											</td>
 										</tr>
