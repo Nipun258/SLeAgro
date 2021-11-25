@@ -132,19 +132,23 @@ class SellesController extends Controller
 
         $invoice_id = Session::get('invoice_id');
 
+        //dd($order_id);
+
         $orders = DB::table('inventories')
                 ->Join('vegitables','vegitables.id','=','inventories.veg_id')
                 ->Join('vegitable_prices','vegitable_prices.veg_id','=','vegitables.id')
                 ->where('inventories.order_id',$order_id)
+                ->where('inventories.status',1)
                 ->select('vegitables.name','inventories.quntity','vegitable_prices.price_wholesale','inventories.price')
                 ->get();
-
+        //dd($orders);
         $total_price = DB::table('inventories')
                        ->where('inventories.order_id',$order_id)
+                       ->where('inventories.status',1)
                        ->select(DB::raw('SUM(inventories.price) as total'))
                        ->get();
         
-        return view('backend.inventory.ecentre.invoice',compact('ecenter','user','orders','total_price'));
+        return view('backend.inventory.ecentre.invoice',compact('ecenter','user','orders','total_price','order_id','invoice_id'));
     }
 
     public function BuyerBookingPaymentStore(Request $request){

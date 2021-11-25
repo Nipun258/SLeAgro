@@ -71,14 +71,14 @@
 				<!-- /.col -->
 				<div class="col-sm-12 invoice-col mb-15">
 					<div class="invoice-details row no-margin">
-					  <div class="col-md-6 col-lg-3"><b>Invoice </b>{{ $user->invoice_id }}</div>
-					  <div class="col-md-6 col-lg-3"><b>Order ID:</b> {{ $user->order_id }}</div>
+					  <div class="col-md-6 col-lg-3"><b>Invoice </b>{{ $invoice_id }}</div>
+					  <div class="col-md-6 col-lg-3"><b>Order ID:</b> {{ $order_id }}</div>
 					  <div class="col-md-6 col-lg-3"><b>Payment Due:</b> {{ date('d/m/Y') }}</div>
 					  <div class="col-md-6 col-lg-3"><b>Account:</b> N/A</div>
 					</div>
 					<input type="hidden" name="from" value="{{$user->id}}">
-					<input type="hidden" name="invoice_id" value="{{ $user->invoice_id }}">
-					<input type="hidden" name="order_id" value="{{ $user->order_id }}">
+					<input type="hidden" name="invoice_id" value="{{ $invoice_id }}">
+					<input type="hidden" name="order_id" value="{{ $order_id }}">
 					<input type="hidden" name="email" value="{{ $user->email }}">
 				</div>
 				@endforeach
