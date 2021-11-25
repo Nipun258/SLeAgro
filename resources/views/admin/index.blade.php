@@ -311,7 +311,7 @@
 											<th style="min-width: 150px"><span class="text-fade">Average Price(per/Kg)</span></th>
 											{{-- <th style="min-width: 150px"><span class="text-fade">Last Month Price</span></th> --}}
 											<th style="min-width: 130px"><span class="text-fade">Price Change</span></th>
-											<th style="min-width: 120px"></th>
+											<th style="min-width: 50px"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -351,19 +351,23 @@
 													@if($summary->yesterdayPrice == 'No Data')
                                                        Loading...
 													@else
-                                                       Rs. {{ number_format($summary->yesterdayPrice , 2) }}
+                            Rs. {{ number_format($summary->yesterdayPrice , 2) }}
 													@endif
 													
 												</span>
 											</td>
 											<td>
 												<span class="text-white font-weight-600 d-block font-size-16">
-                                                Rs. {{ number_format($summary->avg , 2) }}
+                            Rs. {{ number_format($summary->avg , 2) }}
 												</span>
 											</td>
 
 											<td>
-												<h3 class="text-success"><i class="fa fa-caret-up"></i> +25%</h3>
+												@if(($summary->todayPrice-$summary->yesterdayPrice)> 0)
+												<h3 class="text-success"><i class="fa fa-caret-up"></i>{{number_format((($summary->todayPrice-$summary->yesterdayPrice)/$summary->todayPrice)*100,2)}}%</h3>
+												@else
+												<h3 class="text-danger"><i class="fa fa-caret-down"></i>{{number_format((-($summary->todayPrice-$summary->yesterdayPrice)/$summary->todayPrice)*100,2)}}%</h3>
+												@endif
 											</td>
 										</tr>
 										@endforeach

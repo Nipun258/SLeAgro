@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Mail\FarmerBookingMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Nexmo;
 use Carbon\Carbon;
 
 class BookingController extends Controller
@@ -100,6 +101,16 @@ class BookingController extends Controller
                'time' => $request->time,
                'location' => $cname
             ];
+
+       $receiverNumber = "94766453075";
+       $message = 'You vegitable Selling Order place Successfully.You booking Date :'.$request->date.'and time :'.$request->time.'and Booking Location :'.$cname.'Thank you'.auth()->user()->name.'Making order with us';
+
+        Nexmo::message()->send([
+
+                'to' => $receiverNumber,
+                'from' => 'SLeAgro System',
+                'text' => $message
+        ]);
     
        $mail = new FarmerBookingMail($data1);
     
