@@ -53,10 +53,12 @@ class BookingController extends Controller
         $date=json_decode($date,true);
         $date=$date[0]["date"];
 
-        $current_time = Carbon::now()->format('H:ia');
+        //dd($date);
+
+        $current_time = Carbon::now()->format('H:i');
         $today_date = Carbon::now()->format('Y-m-d');
 
-        //dd($today_date);
+        //dd($current_time);
 
         return view('backend.booking.book.check',compact('times','date','current_time','today_date'));
     }

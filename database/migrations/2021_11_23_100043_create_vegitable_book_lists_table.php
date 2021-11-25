@@ -18,6 +18,7 @@ class CreateVegitableBookListsTable extends Migration
             $table->integer('booking_id');
             $table->integer('veg_id');
             $table->double('quntity');
+            $table->string('date');
             $table->timestamps();
         });
     }

@@ -16,7 +16,6 @@ class CreateBuyerBookingsTable extends Migration
         Schema::create('buyer_bookings', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('booking_id');
             $table->integer('ccentre_id')->nullable();
             $table->integer('ecentre_id')->nullable();
             $table->string('date');

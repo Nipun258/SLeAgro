@@ -2,7 +2,7 @@
 <h1>SleAgro System Vegitable Selling payment conformation to Buyer</h1>
 
 <br>
-     <p style="text-align: center;">you have paid <b>{{ $data["net_payment"] }}</b> to <b>{{ $data["name"] }} Economic Centre</b>.</p>
+     <p style="text-align: center;">you have paid <b>Rs.{{ $data["net_payment"] }}.00</b> to <b>{{ $data["name"] }} Economic Centre</b>.</p>
 <br>
 <b> Invoice No :  </b><span style="color:red;">{{ $data["invoice_id"] }} </span> 
 <br>

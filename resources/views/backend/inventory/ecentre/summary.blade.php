@@ -14,8 +14,9 @@
 
        <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Total Availble Product List<span class="text-danger">({{$products->count()}})</span></h3>
-          <a href="{{ route('product.summary.ecenre.report') }}" style="float: right;" class="btn btn-success mb-5" target="_blank">Print</a>
+          <h3 class="box-title">Total Availble Product List<span class="text-danger">({{count(json_decode($products))}})</span></h3>
+          <a href="{{ route('product.summary.ecenre.report') }}" style="float: right;" class="btn btn-success " target="_blank">Current Stock Summary Report</a>
+          <a href="{{ route('product.summary.month.ecenre.report') }}" style="float: right;" class="btn btn-info" target="_blank">Month Summary Report</a>
         </div>
         <div class="box-header">
           <form method="GET" action="{{ route('product.list.ecentre.filter') }}">
@@ -27,6 +28,7 @@
           </div>
           <div class="coi-md-2">
             <input type="submit" class="btn btn-primary btn-sm" style="height: 5.5vh;" value="Search">
+            <a type="button" href="{{ route('product.summary.ecentre') }}" class="btn btn-success btn-md" >Back Current State</a>
           </div>
           </div>
           </form>
@@ -44,12 +46,12 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($products as $key => $product)
+              @foreach(json_decode($products) as $product)
               <tr>
-                <td>{{ $key+1 }}</td>
+                <td>{{ $product->id}}</td>
                 <td><img width="70" style="border-radius: 10%;" src="{{ (!empty($product->image))? url($product->image):url('upload/images.png')}}" alt="User Avatar"></td>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->total }}</td>
+                <td>{{ $product->quntity }}</td>
               </tr>
               @endforeach
             </tbody>

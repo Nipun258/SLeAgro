@@ -2,9 +2,9 @@
 <h1>SleAgro System Vegitable Transfer payment Economic Centre to Collection Centre</h1>
 
 <br>
-     <p style="text-align: center;">We have payment account number <b>{{ $data["ccentre"] }} Collection Centre </b> to <b>Rs. {{ $data["ecentre"] }} Economic Centre </b>.</p>
+     <p style="text-align: center;">We have payment account number <b>{{ $data["ccentre"] }} Collection Centre </b> to <b>{{ $data["ecentre"] }} Economic Centre </b>.</p>
 <br>
-<b> Tatal payment :  </b><span style="color:red;">{{ $data["net_payment"] }} </span> 
+<b> Tatal payment :  </b><span style="color:red;">Rs.{{ $data["net_payment"] }}.00 </span> 
 <br>
 <b> Invoice No :  </b><span style="color:red;">{{ $data["invoice_id"] }} </span> 
 <br>

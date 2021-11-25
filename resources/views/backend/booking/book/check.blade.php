@@ -43,7 +43,7 @@
           <h4 class="box-title">Farmer Havest selling time Selection </h4>
           <h5>Date : <span class="text-danger">{{$date}}</span></h5>
         </div>
-               @foreach($errors->all() as $error)
+        @foreach($errors->all() as $error)
           <div class="alert alert-danger">{{$error}}</div>
       	@endforeach
         <!-- /.box-header -->

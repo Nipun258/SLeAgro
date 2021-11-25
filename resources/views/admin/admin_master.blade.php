@@ -78,7 +78,7 @@
 	@php
    $name = Route::currentRouteName();
    @endphp
-   @if($name != "calendar" || $name != "app.filter")
+   @if($name != "calendar")
 	<!--datatable-->
 	<script src="{{ asset('../assets/vendor_components/datatable/datatables.min.js')}}"></script>
 	<script src="{{ asset('backend/js/pages/data-table.js')}}"></script>

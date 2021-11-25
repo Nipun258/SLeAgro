@@ -39,16 +39,31 @@ class BuyerBookingController extends Controller
 
     public function BookingProductView($id)
     {   
-        $orders = DB::table('inventories')
-                ->Join('vegitables','vegitables.id','=','inventories.veg_id')
-                ->Join('economic_centres','economic_centres.id','=','inventories.ecentre_id')
-                ->where('inventories.date','=', date("Y-m-d"))
-                ->where('inventories.status',2)
-                ->orWhere('inventories.status',0)
-                ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
-                ->select('vegitables.name','vegitables.id',DB::raw('SUM(inventories.quntity) as count'),DB::raw('SUM(inventories.price) as total'))
-                ->groupBy('inventories.veg_id','vegitables.name','vegitables.id')
-                ->get();
+
+        $vagArray=array();
+
+        $vegitables_data = DB::table('vegitables')
+                        ->select('vegitables.id','vegitables.name','vegitables.image','vegitables.catagory')
+                        ->get();
+
+        foreach ($vegitables_data as $veg) {
+
+            $vegID=$veg->id;
+            $totalStock=$this->GetTotalStock($vegID);
+            $bookingStock=$this->GetBookingStock($vegID);
+            $availbleStock = $totalStock - $bookingStock;
+
+            $vagArray[]=array(
+                        'id' =>$veg->id,
+                        'name' =>$veg->name,  
+                        'quntity' =>$availbleStock
+                    );
+            
+         }
+
+        $vegitables_summary = json_encode($vagArray);
+
+        //dd($vegitables_summary);
 
         $date = DB::table('appointments')
                 ->where('id', $id)
@@ -60,7 +75,7 @@ class BuyerBookingController extends Controller
 
         $app_id = $id;
 
-        return view('backend.booking.buyer_book.check',compact('orders','date','app_id'));
+        return view('backend.booking.buyer_book.check',compact('vegitables_summary','date','app_id'));
     }
 
     public function BookingBuyerApp(Request $request){
@@ -82,29 +97,43 @@ class BuyerBookingController extends Controller
 
         $booking = BuyerBooking::create([
              'user_id' => auth()->user()->id,
-             'booking_id' => $request->appointmentId,
+             // 'booking_id' => $request->appointmentId,
              'ccentre_id' => auth()->user()->ccentre_id,
              'ecentre_id' => auth()->user()->ecentre_id,
              'date' => $request->date,
          ]);
 
+        $booking_id = DB::table('buyer_bookings')
+                      ->latest('id')
+                      ->select('id')
+                      ->get();
+
+        $booking_id=json_decode($booking_id,true);
+        $booking_id=$booking_id[0]["id"];
+
+
+        //dd($booking_id);
+
         $vegitable_list = count($request->cus_order);
 
           for($i=0; $i < $vegitable_list; $i++) {
-            //dd($request->cus_order[$i])."<br>";
+
             if($request->cus_order[$i]!='0' && $request->cus_order[$i]!='null' && $request->cus_order[$i]!='' && $request->cus_order[$i] <= $request->quntity[$i]){
             $vegitable_inventory = new VegitableBookList();
-            $vegitable_inventory->booking_id = $request->appointmentId;
+            $vegitable_inventory->booking_id = $booking_id;
             $vegitable_inventory->veg_id = $request->veg_id[$i];
             $vegitable_inventory->quntity = $request->cus_order[$i];
+            $vegitable_inventory->date = $request->date;
             $vegitable_inventory->save();
             }
+
           }
 
         $ename = DB::table('economic_centres')
                 ->where('id', auth()->user()->ecentre_id)
                 ->select('economic_centres.centre_name')
                 ->get();
+
         $ename=json_decode($ename,true);
         $ename=$ename[0]["centre_name"];
         
@@ -147,6 +176,50 @@ class BuyerBookingController extends Controller
                         ->get();
 
         return view('backend.booking.buyer_book.list',compact('mybooking'));
+    }
+
+    public function GetTotalStock($vegID){
+        
+
+        $orders = DB::table('inventories')
+                  ->Join('economic_centres','economic_centres.id','=','inventories.ecentre_id')
+                  ->where('inventories.date','=', date("Y-m-d"))
+                  ->where('inventories.veg_id','=',$vegID)
+                  ->whereIn('inventories.status',[0,2])
+                  ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                  ->select(DB::raw('SUM(inventories.quntity) as count'))
+                  ->get();
+
+            foreach ($orders as  $order) 
+            {
+
+              $totalcount = $order->count;
+             
+            }
+
+        return $totalcount;
+    }
+
+    public function GetBookingStock($vegID){
+        
+
+        $pre_orders = DB::table('vegitable_book_lists')
+                     ->Join('buyer_bookings','buyer_bookings.id','=','vegitable_book_lists.booking_id')
+                     ->Join('economic_centres','economic_centres.id','=','buyer_bookings.ecentre_id')
+                     ->where('buyer_bookings.date','=', date("Y-m-d", strtotime('tomorrow')))
+                     ->where('buyer_bookings.ecentre_id',Auth::user()->ecentre_id)
+                     ->where('vegitable_book_lists.veg_id','=',$vegID)
+                     ->select(DB::raw('SUM(vegitable_book_lists.quntity) as count'))
+                     ->get();
+
+            foreach ($pre_orders as  $order) 
+            {
+
+              $bookcount = $order->count;
+             
+            }
+
+        return $bookcount;
     }
 
 }

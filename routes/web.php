@@ -88,8 +88,6 @@ Route::get('/admin/logout',[ AdminController::class, 'Logout'])->name('admin.log
 
 Route::get('/dashboard',[SummaryController::class, 'getVegData'])->name('dashboard');
 
-//Route::get('/calender',[SummaryController::class, 'ShowCalender'])->name('calendar');
-
 Route::get('calendar-event', [CalenderController::class, 'calendarIndex'])->name('calendar');
 
 Route::post('calendar-crud-ajax', [CalenderController::class, 'calendarEvents'])->name('calendar.store');
@@ -529,7 +527,7 @@ Route::group(['middleware' => 'admin'],function(){
 
       Route::get('/product/summary/report',[SellesController::class, 'ProductSummaryReportEcentre'])->name('product.summary.ecenre.report');
      
-
+      Route::get('/product/summary/month/report',[SellesController::class, 'ProductSummaryMonthReportEcentre'])->name('product.summary.month.ecenre.report');
    });
 
 });

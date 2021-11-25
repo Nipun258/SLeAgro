@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Vegitable;
 use App\Models\Inventory;
 use App\Models\BuyerBooking;
+use App\Models\Payment;
 use Auth;
 use Session;
 use PDF;
@@ -50,11 +51,11 @@ class SellesController extends Controller
 
         $booking_id = DB::table('buyer_bookings')
                       ->where('buyer_bookings.id',$id)
-                      ->select('buyer_bookings.booking_id')
+                      ->select('buyer_bookings.id')
                       ->get();
 
         $booking_id =json_decode($booking_id,true);
-        $booking_id=$booking_id[0]["booking_id"];
+        $booking_id=$booking_id[0]["id"];
 
         $orders = DB::table('vegitable_book_lists')
                   ->Join('vegitables','vegitables.id','=','vegitable_book_lists.veg_id')
@@ -68,9 +69,9 @@ class SellesController extends Controller
     public function BuyerBookingProductStore(Request $request){
 
         $validatedData = $request->validate([
-            
-            //'veg_id' => 'required',
+
             'quntity'=> 'required'
+
         ]);
 
         Session::forget('order_id');
@@ -234,7 +235,7 @@ class SellesController extends Controller
            'alert-type' => 'success'
         );
 
-        return redirect()->route('normal.ecentre.invoice')->with($notification);
+        return redirect()->route('normal.sell.invoice')->with($notification);
 
     }
 
@@ -262,7 +263,7 @@ class SellesController extends Controller
         $ecenter = DB::table('users')
                   ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
                   ->where('users.id',Auth::user()->id)
-                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name','users.id')
                   ->get();
 
         $order_id = Session::get('order_id');
@@ -310,14 +311,30 @@ class SellesController extends Controller
 
     public function ProductSummaryEcentre()
     {   
-        $products = DB::table('inventories')
-                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
-                   ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
-                   ->where('inventories.status',2)
-                   ->where('inventories.date','=', date("Y-m-d", strtotime('yesterday')))
-                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
-                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
-                   ->get();
+        $vagArray=array();
+
+        $vegitables_data = DB::table('vegitables')
+                          ->select('vegitables.id','vegitables.name','vegitables.image')
+                          ->get();
+
+        foreach ($vegitables_data as $veg) {
+
+            $vegID=$veg->id;
+            $totalStock=$this->GetTotalStock($vegID);
+            $sellingStock=$this->GetSellingStock($vegID);
+            $availbleStock = $totalStock - $sellingStock;
+
+            $vagArray[]=array(
+                        'id' =>$veg->id,
+                        'name' =>$veg->name,
+                        'image' => $veg->image,  
+                        'quntity' =>$availbleStock
+                    );
+            
+         }
+
+        $products = json_encode($vagArray);
+        //dd($products);
 
         return view('backend.inventory.ecentre.summary',compact('products'));
     }
@@ -347,23 +364,109 @@ class SellesController extends Controller
 
     public function ProductSummaryReportEcentre()
     {   
+        $vagArray=array();
+
+        $vegitables_data = DB::table('vegitables')
+                          ->select('vegitables.id','vegitables.name','vegitables.image')
+                          ->get();
+
+        foreach ($vegitables_data as $veg) {
+
+            $vegID=$veg->id;
+            $totalStock=$this->GetTotalStock($vegID);
+            $sellingStock=$this->GetSellingStock($vegID);
+            $availbleStock = $totalStock - $sellingStock;
+
+            $vagArray[]=array(
+                        'id' =>$veg->id,
+                        'name' =>$veg->name,
+                        'image' => $veg->image,  
+                        'quntity' =>$availbleStock
+                    );
+            
+         }
+
+        $products = json_encode($vagArray);
+
+        $ecenter = DB::table('users')
+                  ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.inventory.ecentre.current_stock_summary', compact('products','ecenter'));
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Economic Centre Current Stock Summary.pdf');
+    }
+
+        public function ProductSummaryMonthReportEcentre()
+    {   
         $products = DB::table('inventories')
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
                    ->where('inventories.status',2)
-                   ->where('inventories.date','=', date("Y-m-d", strtotime('yesterday')))
+                   ->where('inventories.date','LIKE','%'.date('Y-m').'%')
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
 
-        $ccenter = DB::table('users')
-                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+        $ecenter = DB::table('users')
+                  ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
                   ->where('users.id',Auth::user()->id)
-                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name')
                   ->get();
 
-        $pdf = PDF::loadView('backend.inventory.ecentre.current_month_summary', compact('products','ccenter'));
+        $current_month = date('M Y');
+
+        $pdf = PDF::loadView('backend.inventory.ecentre.current_month_summary', compact('products','ecenter','current_month'));
+        
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('collection Centre Summary.pdf');
+        return $pdf->stream('Economic Centre Month Summary.pdf');
     }
+
+    public function GetTotalStock($vegID){
+        
+
+       $products = DB::table('inventories')
+                   ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                   ->where('inventories.status',2)
+                   ->where('inventories.date','=', date("Y-m-d", strtotime('yesterday')))
+                   ->where('inventories.veg_id','=',$vegID)
+                   ->select(DB::raw('SUM(inventories.quntity) as total'))
+                   //->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+            foreach ($products as $product) 
+            {
+
+              $totalStock = $product->total;
+             
+            }
+
+        return $totalStock;
+    }
+
+    public function GetSellingStock($vegID){
+        
+
+       $products = DB::table('inventories')
+                   ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                   ->where('inventories.status',1)
+                   ->where('inventories.date','=', date("Y-m-d"))
+                   ->where('inventories.veg_id','=',$vegID)
+                   ->select(DB::raw('SUM(inventories.quntity) as total'))
+                   //->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+            foreach ($products as $product) 
+            {
+
+              $sellStock = $product->total;
+             
+            }
+
+        return $sellStock;
+    }
+
+    
 }

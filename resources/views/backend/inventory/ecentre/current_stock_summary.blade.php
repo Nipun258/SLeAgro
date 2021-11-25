@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+e<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -31,21 +31,23 @@
 
 <table id="customers">
   <tr>
-   <td><h2>
+   <td>
+    <h2>
   <?php $image_path = '/upload/logo.png'; ?>
   <img src="{{ public_path() . $image_path }}" width="200" height="100">
+    </h2>
 
-    </h2></td> 
+  </td> 
     <td><h2>Easy SleAgro System</h2>
+      <p>{{$current_month}}</p>
       @foreach($ecenter as $ecenter)
 <p>Centre Location : {{ $ecenter->centre_name}}</p>
 <p>Phone : {{ $ecenter->mobile}}</p>
 <p>Email : {{ $ecenter->email}}</p>
       @endforeach
+      
     </td> 
   </tr>
-  
-   
 </table>
 
 
@@ -57,9 +59,9 @@
     <th>Name</th>
     <th>Quntity(KG)</th>
   </tr>
-  @foreach($products as $key => $product)
+  @foreach(json_decode($products) as $product)
   <tr>
-    <td>{{ $key++ }}</td>
+    <td>{{ $product->id }}</td>
      <td>{{ $product->name }}</td>
      <td>{{ $product->quntity }}</td>
   </tr>
