@@ -29,21 +29,22 @@
 
 </style>
 </head>
-<body class="view_parent_image1">
+<body class="view_parent_image1 hold-transition">
     
-    <section class="error-page h-p100 ">
-        <div class="container h-p100">
-          <div class="row h-p100 align-items-center justify-content-center text-center">
-              <div class="col-lg-6 col-md-8 col-12">
-                  <div class="b-double border-white rounded30 bg-dark">
-                      <h1 class="text-warning font-size-180 font-weight-bold error-page-title"> 503</h1>
-                      <h1 class="text-white">SleAgro System Under Maintainace Mode !</h1>
-                      <h3 class="text-info">please cheack after few hours</h3>               
-                  </div>
-              </div>                
+    <section class="error-page h-p100">
+    <div class="container h-p100">
+      <div class="row h-p100 align-items-center justify-content-center text-center">
+        <div class="col-lg-6 col-md-8 col-12">
+          <div class="b-double border-white rounded bg-dark">
+            <h1 class="text-white font-size-180 font-weight-bold error-page-title"> <i class="fa fa-gear fa-spin"></i></h1>
+            <h1 class="text-danger">SLeAgro UNDER MAINTENANCE!</h1>
+            <h3 class="text-white">We're sorry for the inconvenience.</h3>
+            <h4 class="mb-25 text-white">Please check back later.</h4>  
           </div>
-        </div>
-    </section>
+        </div>        
+      </div>
+    </div>
+  </section>
 
 
     <!-- Vendor JS -->

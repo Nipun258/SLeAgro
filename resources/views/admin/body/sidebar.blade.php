@@ -115,11 +115,8 @@
           <ul class="treeview-menu">
             <li><a href="{{ route('vegitable.view') }}"><i class="ti-more"></i>Vegitables List </a></li>
             <li><a href="{{ route('vegitable.price.view') }}"><i class="ti-more"></i>Vegitable Price Set</a></li>
-            <!-- <li><a href="{{ route('vegitable.price.view') }}"><i class="ti-more"></i>Vegitable Price List</a></li> -->
             <li><a href="{{ route('fruit.view') }}"><i class="ti-more"></i>Furits List </a></li>
             <li><a href="{{ route('fruit.price.view') }}"><i class="ti-more"></i>Furits Price Set</a></li>
-<!--             <li><a href="{{ route('calculator.view') }}"><i class="ti-more"></i>havest Predictor Calculator</a></li>
-            <li><a href="{{ route('price.calculator.view') }}"><i class="ti-more"></i>Price Calculator</a></li> -->
           </ul>
         </li> 
         @endif
@@ -353,6 +350,37 @@
           </ul>
         </li> 
         @endif
+        @if(Auth::user()->role =='Farmer-Buyer')
+          <li class="treeview {{ ($prefix == '/bbookings')?'active':'' }}">
+          <a href="#">
+            <i data-feather="check-circle"></i>
+            <span>Buyer Booking</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('buyer.booking.view') }}"><i class="ti-more"></i>Make Booking </a></li>
+            <li><a href="{{ route('buyer.booking.list') }}"><i class="ti-more"></i>Booking List </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Farmer-Buyer')
+          <li class="treeview {{ ($prefix == '/bookings')?'active':'' }}">
+          <a href="#">
+            <i data-feather="airplay"></i>
+            <span>Farmer Booking</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('booking.view') }}"><i class="ti-more"></i>Make Booking </a></li>
+            <li><a href="{{ route('booking.list') }}"><i class="ti-more"></i>Booking List </a></li>
+          </ul>
+        </li> 
+        @endif
+
 <!-- {{--         <li class="treeview">
           <a href="#">
             <i data-feather="file"></i>
