@@ -380,6 +380,53 @@
           </ul>
         </li> 
         @endif
+        @if(Auth::user()->role =='RC-Officer' )
+        <li class="treeview {{ ($prefix == '/creport')?'active':'' }}">
+          <a href="#">
+            <i data-feather="file-plus"></i>
+            <span>Summary Report</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Farmer Report </a></li>
+            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Product Report </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='EC-Officer' )
+        <li class="treeview {{ ($prefix == '/ereport')?'active':'' }}">
+          <a href="#">
+            <i data-feather="file-plus"></i>
+            <span>Summary Report</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Buyer Report </a></li>
+            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Product Report </a></li>
+            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Collection Centre Report </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Admin' )
+        <li class="treeview {{ ($prefix == '/areport')?'active':'' }}">
+          <a href="#">
+            <i data-feather="file-plus"></i>
+            <span>Summary Report</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Product Report </a></li>
+            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Economic Centre Report </a></li>
+            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Collection Centre Report </a></li>
+          </ul>
+        </li> 
+        @endif
 
 <!-- {{--         <li class="treeview">
           <a href="#">
