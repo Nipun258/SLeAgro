@@ -47,8 +47,10 @@
                 <td>
                   @if($booking->status == 0)
                   <a href="{{route('update.status',$booking->id)}}" type="button" class="btn btn-danger btn-sm">Pending</a>
-                  @else
+                  @elseif($booking->status == 1)
                   <a href="{{route('update.status',$booking->id)}}" type="button" class="btn btn-success btn-sm">Checked</a>
+                  @else
+                  <a href="" type="button" class="btn btn-info btn-sm">Completed</a>
                   @endif
                 </td>
               </tr>

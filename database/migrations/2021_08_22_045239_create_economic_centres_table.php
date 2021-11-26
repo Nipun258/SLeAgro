@@ -21,6 +21,7 @@ class CreateEconomicCentresTable extends Migration
             $table->integer('district_id');
             $table->integer('city_id');
             $table->timestamps();
+            $table->SoftDeletes();
         });
     }
 

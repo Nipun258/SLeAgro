@@ -12,6 +12,8 @@ use Validator;
 use Response;
 use Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Carbon;
+
 
 class EconomicCenterController extends Controller
 {
@@ -23,13 +25,25 @@ class EconomicCenterController extends Controller
     public function EconomicCentreView()
     {  
         
-      $data['allData'] = DB::table('economic_centres')
+      $ecentre = DB::table('economic_centres')
                         ->Join('provices','economic_centres.province_id','=','provices.id')
                         ->Join('districts','economic_centres.district_id','=','districts.id')
                         ->Join('cities','economic_centres.city_id','=','cities.id')
+                        ->whereNull('deleted_at')
                         ->select('economic_centres.id','economic_centres.centre_name','economic_centres.centre_type','provices.name_en AS pname','districts.name_en AS dname','cities.name_en AS cname')
                         ->get();
-      return view('backend.centre.economic_centre.view',$data);
+
+      $trachEcentre = DB::table('economic_centres')
+                        ->Join('provices','economic_centres.province_id','=','provices.id')
+                        ->Join('districts','economic_centres.district_id','=','districts.id')
+                        ->Join('cities','economic_centres.city_id','=','cities.id')
+                        ->where('deleted_at','!=',NULL)
+                        ->select('economic_centres.id','economic_centres.centre_name','economic_centres.centre_type','provices.name_en AS pname','districts.name_en AS dname','cities.name_en AS cname')
+                        ->get();
+
+
+      return view('backend.centre.economic_centre.view',compact('ecentre','trachEcentre'));
+
     }
 
     public function EconomicCentreAdd()
@@ -109,13 +123,37 @@ class EconomicCenterController extends Controller
         return redirect()->route('ecomomic.centre.view')->with($notification);
     }
 
-    public function EconomicCentreDelete($id){
+    public function EconomicCentreSoftDelete($id){
 
         $ecentre = EconomicCentre::find($id);
         $ecentre->delete();
 
         $notification = array(
            'message' => 'Economic Centre Deleted Successfully',
+           'alert-type' => 'error'
+        );
+
+        return redirect()->route('ecomomic.centre.view')->with($notification);
+    }
+
+    public function EconomicCentreRestore($id){
+
+        $ecentre = EconomicCentre::withTrashed()->find($id)->restore();
+
+        $notification = array(
+           'message' => 'Economic Centre Restore Successfully',
+           'alert-type' => 'info'
+        );
+
+        return redirect()->route('ecomomic.centre.view')->with($notification);
+    }
+
+    public function EconomicCentreDelete($id){
+
+        $ecentre = EconomicCentre::onlyTrashed()->find($id)->forceDelete();
+        
+        $notification = array(
+           'message' => 'Economic Centre Permantly Deleted Successfully',
            'alert-type' => 'error'
         );
 

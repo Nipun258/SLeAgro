@@ -144,6 +144,10 @@ Route::prefix('centres')->group(function(){
 
 	Route::post('economic/centre/update/{id}',[EconomicCenterController::class, 'EconomicCentreUpdate'])->name('ecomomic.centre.update');
 
+	Route::get('economic/centre/soft/delete/{id}',[EconomicCenterController::class, 'EconomicCentreSoftDelete'])->name('ecomomic.centre.soft.delete');
+
+	Route::get('economic/centre/restore/{id}',[EconomicCenterController::class, 'EconomicCentreRestore'])->name('ecomomic.centre.restore');
+
 	Route::get('economic/centre/delete/{id}',[EconomicCenterController::class, 'EconomicCentreDelete'])->name('ecomomic.centre.delete');
 
 	/********************************************************************************/
