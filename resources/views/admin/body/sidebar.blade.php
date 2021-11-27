@@ -113,8 +113,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('vegitable.view') }}"><i class="ti-more"></i>Vegitables List </a></li>
-            <li><a href="{{ route('vegitable.price.view') }}"><i class="ti-more"></i>Vegitable Price Set</a></li>
+            <li><a href="{{ route('vegitable.view') }}"><i class="ti-more"></i>Vegetables List </a></li>
+            <li><a href="{{ route('vegitable.price.view') }}"><i class="ti-more"></i>Vegetable Price Set</a></li>
             <li><a href="{{ route('fruit.view') }}"><i class="ti-more"></i>Furits List </a></li>
             <li><a href="{{ route('fruit.price.view') }}"><i class="ti-more"></i>Furits Price Set</a></li>
           </ul>
