@@ -51,31 +51,31 @@
 							<input type="hidden" name="appointmentId" value="{{$appointmentId}}">
 							<tr>
 								<th scope="row">1</th>
-								<td align="center"><input type="checkbox" name="time[]" id="8.00am" class="filled-in chk-col-success" value="8.00am" @if(isset($times)){{$times->contains('time','8.00am') ? 'Checked':''}}@endif/>
-						        <label for="8.00am">8.00 Am</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="8.30am" class="filled-in chk-col-primary" value="8.30am" @if(isset($times)){{$times->contains('time','8.30am') ? 'Checked':''}}@endif/>
-						        <label for="8.30am">8.30 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="08.00" class="filled-in chk-col-success" value="08.00" @if(isset($times)){{$times->contains('time','08.00') ? 'Checked':''}}@endif/>
+						        <label for="08.00">8.00 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="08.30" class="filled-in chk-col-primary" value="08.30" @if(isset($times)){{$times->contains('time','08.30') ? 'Checked':''}}@endif/>
+						        <label for="08.30">8.30 Am</label></td>
 							</tr>
 							<tr>
 								<th scope="row">2</th>
-								<td align="center"><input type="checkbox" name="time[]" id="9.00am" class="filled-in chk-col-success" value="9.00am" @if(isset($times)){{$times->contains('time','9.00am') ? 'Checked':''}}@endif/>
-						        <label for="9.00am">9.00 Am</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="9.30am" class="filled-in chk-col-primary" value="9.30am" @if(isset($times)){{$times->contains('time','9.30am') ? 'Checked':''}}@endif/>
-						        <label for="9.30am">9.30 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="09.00" class="filled-in chk-col-success" value="09.00" @if(isset($times)){{$times->contains('time','09.00') ? 'Checked':''}}@endif/>
+						        <label for="9.00">9.00 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="09.30" class="filled-in chk-col-primary" value="09.30" @if(isset($times)){{$times->contains('time','09.30') ? 'Checked':''}}@endif/>
+						        <label for="09.30">9.30 Am</label></td>
 							</tr>
 							<tr>
 								<th scope="row">3</th>
-								<td align="center"><input type="checkbox" name="time[]" id="10.00am" class="filled-in chk-col-success" value="10.00am" @if(isset($times)){{$times->contains('time','10.00am') ? 'Checked':''}}@endif/>
-						        <label for="10.00am">10.00 Am</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="10.30am" class="filled-in chk-col-primary" value="10.30am" @if(isset($times)){{$times->contains('time','10.30am') ? 'Checked':''}}@endif/>
-						        <label for="10.30am">10.30 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="10.00" class="filled-in chk-col-success" value="10.00" @if(isset($times)){{$times->contains('time','10.00') ? 'Checked':''}}@endif/>
+						        <label for="10.00">10.00 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="10.30" class="filled-in chk-col-primary" value="10.30" @if(isset($times)){{$times->contains('time','10.30') ? 'Checked':''}}@endif/>
+						        <label for="10.30">10.30 Am</label></td>
 							</tr>
 							<tr>
 								<th scope="row">4</th>
-								<td align="center"><input type="checkbox" name="time[]" id="11.00am" class="filled-in chk-col-success" value="11.00am" @if(isset($times)){{$times->contains('time','11.00am') ? 'Checked':''}}@endif/>
-						        <label for="11.00am">11.00 Am</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="11.30am" class="filled-in chk-col-primary" value="11.30am" @if(isset($times)){{$times->contains('time','11.30am') ? 'Checked':''}}@endif/>
-						        <label for="11.30am">11.30 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="11.00" class="filled-in chk-col-success" value="11.00" @if(isset($times)){{$times->contains('time','11.00') ? 'Checked':''}}@endif/>
+						        <label for="11.00">11.00 Am</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="11.30" class="filled-in chk-col-primary" value="11.30" @if(isset($times)){{$times->contains('time','11.30') ? 'Checked':''}}@endif/>
+						        <label for="11.30">11.30 Am</label></td>
 							</tr>
 						</tbody>
 					  </table>
@@ -84,31 +84,31 @@
 						<tbody>
 							<tr>
 								<th scope="row">5</th>
-								<td align="center"><input type="checkbox" name="time[]" id="1.00pm" class="filled-in chk-col-success" value="1.00pm" @if(isset($times)){{$times->contains('time','1.00pm') ? 'Checked':''}}@endif/>
-						        <label for="1.00pm">1.00 Pm</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="1.30pm" class="filled-in chk-col-primary" value="1.30pm" @if(isset($times)){{$times->contains('time','1.30pm') ? 'Checked':''}}@endif/>
-						        <label for="1.30pm">1.30 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="13.00" class="filled-in chk-col-success" value="13.00" @if(isset($times)){{$times->contains('time','13.00') ? 'Checked':''}}@endif/>
+						        <label for="13.00">1.00 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="13.30" class="filled-in chk-col-primary" value="13.30" @if(isset($times)){{$times->contains('time','13.30') ? 'Checked':''}}@endif/>
+						        <label for="13.30">1.30 Pm</label></td>
 							</tr>
 							<tr>
 								<th scope="row">6</th>
-								<td align="center"><input type="checkbox" name="time[]" id="2.00pm" class="filled-in chk-col-success" value="2.00pm" @if(isset($times)){{$times->contains('time','2.00pm') ? 'Checked':''}}@endif/>
-						        <label for="2.00pm">2.00 Pm</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="2.30pm" class="filled-in chk-col-primary" value="2.30pm" @if(isset($times)){{$times->contains('time','2.30pm') ? 'Checked':''}}@endif/>
-						        <label for="2.30pm">2.30 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="14.00" class="filled-in chk-col-success" value="14.00" @if(isset($times)){{$times->contains('time','14.00') ? 'Checked':''}}@endif/>
+						        <label for="14.00">2.00 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="14.30" class="filled-in chk-col-primary" value="14.30" @if(isset($times)){{$times->contains('time','14.30') ? 'Checked':''}}@endif/>
+						        <label for="14.30">2.30 Pm</label></td>
 							</tr>
 							<tr>
 								<th scope="row">7</th>
-								<td align="center"><input type="checkbox" name="time[]" id="3.00pm" class="filled-in chk-col-success" value="3.00pm" @if(isset($times)){{$times->contains('time','3.00pm') ? 'Checked':''}}@endif/>
-						        <label for="3.00pm">3.00 Pm</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="3.30pm" class="filled-in chk-col-primary" value="3.30pm" @if(isset($times)){{$times->contains('time','3.30pm') ? 'Checked':''}}@endif/>
-						        <label for="3.30pm">3.30 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="15.00" class="filled-in chk-col-success" value="15.00" @if(isset($times)){{$times->contains('time','15.00') ? 'Checked':''}}@endif/>
+						        <label for="15.00">3.00 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="15.30" class="filled-in chk-col-primary" value="15.30" @if(isset($times)){{$times->contains('time','15.30') ? 'Checked':''}}@endif/>
+						        <label for="15.30">3.30 Pm</label></td>
 							</tr>
 							<tr>
 								<th scope="row">8</th>
-								<td align="center"><input type="checkbox" name="time[]" id="4.00pm" class="filled-in chk-col-success" value="4.00pm" @if(isset($times)){{$times->contains('time','4.00pm') ? 'Checked':''}}@endif/>
-						        <label for="4.00pm">4.00 Pm</label></td>
-								<td align="center"><input type="checkbox" name="time[]" id="4.30pm" class="filled-in chk-col-primary" value="4.30pm" @if(isset($times)){{$times->contains('time','4.30pm') ? 'Checked':''}}@endif/>
-						        <label for="4.30pm">4.30 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="16.00" class="filled-in chk-col-success" value="16.00" @if(isset($times)){{$times->contains('time','16.00') ? 'Checked':''}}@endif/>
+						        <label for="16.00">4.00 Pm</label></td>
+								<td align="center"><input type="checkbox" name="time[]" id="16.30" class="filled-in chk-col-primary" value="16.30" @if(isset($times)){{$times->contains('time','16.30') ? 'Checked':''}}@endif/>
+						        <label for="16.30">4.30 Pm</label></td>
 							</tr>
 						</tbody>
 					  </table>	

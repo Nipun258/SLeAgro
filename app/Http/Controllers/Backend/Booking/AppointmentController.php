@@ -82,6 +82,8 @@ class AppointmentController extends Controller
         $appointment = Appointment::where('date',$date)
                        ->where('user_id',auth()->user()->id)
                        ->first();
+
+        //dd($appointment);
         
         if(empty($appointment)){
           
@@ -95,8 +97,10 @@ class AppointmentController extends Controller
          }else{
 
             $appointmentId = $appointment->id;
+            //dd($appointmentId);
             $times = Time::where('appointment_id',$appointmentId)
                     ->get();
+            //dd($times);
             //return $time;
             return view('backend.booking.appointment.index',compact('times','appointmentId','date'));
          }

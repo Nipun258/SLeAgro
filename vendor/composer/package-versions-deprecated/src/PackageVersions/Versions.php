@@ -135,6 +135,11 @@ final class Versions
   'vonage/client-core' => '2.9.3@927d4594b1e3d034efcee87eed79c33f443353ef',
   'vonage/nexmo-bridge' => '0.1.0@62653b1165f4401580ca8d2b859f59c968de3711',
   'webmozart/assert' => '1.10.0@6964c76c7804814a842473e0c8fd15bab0f18e25',
+  'beyondcode/laravel-er-diagram-generator' => '1.5.0@2578ea947f1b9030221a30803385e4b4758ca323',
+  'doctrine/cache' => '2.1.1@331b4d5dbaeab3827976273e9356b3b453c300ce',
+  'doctrine/dbal' => '2.13.6@67ef6d0327ccbab1202b39e0222977a47ed3ef2f',
+  'doctrine/deprecations' => 'v0.5.3@9504165960a1f83cc1480e2be1dd0a0478561314',
+  'doctrine/event-manager' => '1.1.1@41370af6a30faa9dc0368c4a6814d596e81aba7f',
   'doctrine/instantiator' => '1.4.0@d56bf6102915de5702778fe20f2de3b2fe570b5b',
   'facade/flare-client-php' => '1.9.1@b2adf1512755637d0cef4f7d1b54301325ac78ed',
   'facade/ignition' => '2.17.1@317f6110c1977b50e06365bbb155fbe5079035ec',
@@ -147,6 +152,7 @@ final class Versions
   'nunomaduro/collision' => 'v5.10.0@3004cfa49c022183395eabc6d0e5207dfe498d00',
   'phar-io/manifest' => '2.0.3@97803eca37d319dfa7826cc2437fc020857acb53',
   'phar-io/version' => '3.1.0@bae7c545bef187884426f042434e561ab1ddb182',
+  'phpdocumentor/graphviz' => '1.0.4@a906a90a9f230535f25ea31caf81b2323956283f',
   'phpdocumentor/reflection-common' => '2.2.0@1d01c49d4ed62f25aa84a747ad35d5a16924662b',
   'phpdocumentor/reflection-docblock' => '5.3.0@622548b623e81ca6d78b721c5e029f4ce664f170',
   'phpdocumentor/type-resolver' => '1.5.1@a12f7e301eb7258bb68acd89d4aefa05c2906cae',
@@ -174,7 +180,7 @@ final class Versions
   'sebastian/type' => '2.3.4@b8cd8a1c753c90bc1a0f5372170e3e489136f914',
   'sebastian/version' => '3.0.2@c6c1022351a901512170118436c764e473f6de8c',
   'theseer/tokenizer' => '1.2.1@34a41e998c2183e22995f158c581e7b5e755ab9e',
-  'laravel/laravel' => 'dev-master@dd1a98096e987d18ce0c83aec8a4f818b1479602',
+  'laravel/laravel' => 'dev-master@78bfd0aeaf88c07222b996af57aa1f5a50f62d22',
 );
 
     private function __construct()
