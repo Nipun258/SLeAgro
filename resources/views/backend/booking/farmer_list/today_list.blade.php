@@ -14,7 +14,7 @@
 
        <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Buyer buying Appointment Booking List <span class="text-danger">({{$mybooking->count()}})</span></h3>
+          <h3 class="box-title">Farmer Selling Appointment Booking List <span class="text-danger">({{$mybooking->count()}})</span></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">

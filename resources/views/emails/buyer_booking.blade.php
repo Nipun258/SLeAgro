@@ -2,7 +2,7 @@
 <h1>Welcome SleAgro Agricultural Product Management System </h1>
 Dear {{ $data["name"] }} ,
 <br>
-       you need come on or before time with your vegitable harvest .
+       you need come economic Centre to collect your Harvest  .
 <br>
 <b>Booking Date :  </b><span style="color:red;">{{ $data["date"] }}</span>
 <br>

@@ -36,7 +36,7 @@
           <div class="row h-p100 align-items-center justify-content-center text-center">
               <div class="col-lg-6 col-md-8 col-12">
                   <div class="b-double border-white rounded30 bg-dark">
-                      <h1 class="text-warning font-size-180 font-weight-bold error-page-title"> 404</h1>
+                      <h1 class="text-warning font-size-180 font-weight-bold error-page-title"> 419</h1>
                       <h1 class="text-white">Page Expired!</h1>
                       <h3 class="text-info">looks like,you need login to system to agian</h3>
                       <div class="my-30"><a href="{{ route('login') }}" class="btn btn-danger btn-rounded">Back to Login</a></div>               
