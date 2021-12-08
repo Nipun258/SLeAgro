@@ -29,12 +29,14 @@
    background-color: #3232a8;
    color: white;
    text-align: center;
+   font-size: 15px;
 }
 @page { margin: 20px 30px 40px 50px; }
 @page {
   footer: page-footer;
   border: 1px solid red;
 }
+
 </style>
 </head>
 <body>
@@ -60,29 +62,34 @@
 </table>
 
 <div class="footer">
-  <p>Product Trasfer Summary Report</p>
+  <p><b>Current Farmer List</b></p>
 </div>
 
 <table id="customers">
   <tr>
     <th width="10%">SN</th>
-    <!-- <th>Photo</th> -->
     <th>Name</th>
-    <th>Transfer Date</th>
-    <th>Quntity(KG)</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Mobile</th>
+    <th>NIC</th>
+    <th>Account Number</th>
   </tr>
-  @foreach($products as $key => $product)
+  @foreach($farmers as $key => $farmer)
   <tr>
     <td>{{ $key+1 }}</td>
-     <td>{{ $product->name }}</td>
-     <td>{{ $product->date }}</td>
-     <td>{{ $product->total }}</td>
+     <td>{{ $farmer->name }}</td>
+     <td>{{ $farmer->email }}</td>
+     <td>{{ $farmer->address }}</td>
+     <td>{{ $farmer->mobile }}</td>
+     <td>{{ $farmer->nic }}</td>
+     <td>{{ $farmer->account_number }}</td>
   </tr>
   @endforeach
 </table>
 <br> <br>
   <i style="font-size: 10px; float: right;">Print Data : {{ date("d M Y") }}</i>
-  <htmlpagefooter name="page-footer">
+<htmlpagefooter name="page-footer">
   <table width="100%">
     <tr>
         <td width="33%">{DATE d M Y}</td>
@@ -91,6 +98,5 @@
     </tr>
 </table>
 </htmlpagefooter>
-
 </body>
 </html>

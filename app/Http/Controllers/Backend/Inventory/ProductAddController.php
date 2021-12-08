@@ -331,7 +331,6 @@ class ProductAddController extends Controller
                    ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
                    ->where('inventories.date','LIKE','%'.$request->month.'%')
                    ->where('inventories.status',3)
-                   //->orWhere('inventories.status',3)
                    ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
@@ -358,10 +357,8 @@ class ProductAddController extends Controller
                   ->get();
 
         $pdf = PDF::loadView('backend.inventory.ccentre.current_status_summary', compact('products','ccenter'));
-        //$pdf->SetWatermarkText('DRAFT');
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        //$pdf->SetDisplayMode('fullpage');
-        return $pdf->stream('collection Centre Summary.pdf');
+        return $pdf->stream('collection centre current status Summary.pdf');
     }
 
     public function ProductMonthSummaryReport()
@@ -370,10 +367,12 @@ class ProductAddController extends Controller
                    ->Join('vegitables','inventories.veg_id','=','vegitables.id')
                    ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
                    ->where('inventories.date','LIKE','%'.Carbon::now()->format('Y-m').'%')
-                   ->where('inventories.status',3)
-                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'))
-                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->where('inventories.status',2)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),'inventories.date')
+                   ->groupBy('inventories.date','vegitables.name','vegitables.image')
                    ->get();
+
+        //dd($products);
 
         $ccenter = DB::table('users')
                   ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
@@ -382,10 +381,8 @@ class ProductAddController extends Controller
                   ->get();
 
         $pdf = PDF::loadView('backend.inventory.ccentre.current_month_summary', compact('products','ccenter'));
-        //$pdf->SetWatermarkText('DRAFT');
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        //$pdf->SetDisplayMode('fullpage');
-        return $pdf->stream('collection Centre Summary.pdf');
+        return $pdf->stream('collection Centre Transfer Summary.pdf');
     }
 
 }

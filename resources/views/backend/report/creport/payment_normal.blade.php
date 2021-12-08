@@ -29,12 +29,14 @@
    background-color: #3232a8;
    color: white;
    text-align: center;
+   font-size: 15px;
 }
 @page { margin: 20px 30px 40px 50px; }
 @page {
   footer: page-footer;
   border: 1px solid red;
 }
+
 </style>
 </head>
 <body>
@@ -60,29 +62,38 @@
 </table>
 
 <div class="footer">
-  <p>Product Trasfer Summary Report</p>
+  <p><b>UnRegisterd Farmer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
 </div>
 
 <table id="customers">
   <tr>
-    <th width="10%">SN</th>
-    <!-- <th>Photo</th> -->
-    <th>Name</th>
-    <th>Transfer Date</th>
-    <th>Quntity(KG)</th>
+    <th width="5%">SN</th>
+    <th>Date</th>
+    <th>Order ID</th>
+    <th>Invoice ID</th>
+    <th>Total Payment</th>
+    <th>Payment Type</th>
+    <th width="10%">Payment Officer</th>
   </tr>
-  @foreach($products as $key => $product)
+  @foreach(json_decode($payments) as $key => $payment)
   <tr>
     <td>{{ $key+1 }}</td>
-     <td>{{ $product->name }}</td>
-     <td>{{ $product->date }}</td>
-     <td>{{ $product->total }}</td>
+    <td>{{ $payment->date }}</td>
+    <td>{{ $payment->order_id }}</td>
+    <td>{{ $payment->invoice_id }}</td>
+    <td>Rs. {{ number_format($payment->net_payment , 2) }}</td>
+    @if($payment->payment_type == 1)
+    <td>Bank Payment</td>
+    @else
+    <td>Cash Payment</td>
+    @endif
+    <td>{{ $payment->sname}}</td>
   </tr>
   @endforeach
 </table>
 <br> <br>
   <i style="font-size: 10px; float: right;">Print Data : {{ date("d M Y") }}</i>
-  <htmlpagefooter name="page-footer">
+<htmlpagefooter name="page-footer">
   <table width="100%">
     <tr>
         <td width="33%">{DATE d M Y}</td>
@@ -91,6 +102,5 @@
     </tr>
 </table>
 </htmlpagefooter>
-
 </body>
 </html>

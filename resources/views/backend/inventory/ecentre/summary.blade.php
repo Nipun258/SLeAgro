@@ -15,8 +15,8 @@
        <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Total Availble Product List<span class="text-danger">({{count(json_decode($products))}})</span></h3>
-          <a href="{{ route('product.summary.ecenre.report') }}" style="float: right;" class="btn btn-success " target="_blank">Current Stock Summary Report</a>
-          <a href="{{ route('product.summary.month.ecenre.report') }}" style="float: right;" class="btn btn-info" target="_blank">Month Summary Report</a>
+<!--           <a href="{{ route('product.summary.ecenre.report') }}" style="float: right;" class="btn btn-success " target="_blank">Current Stock Summary Report</a>
+          <a href="{{ route('product.summary.month.ecenre.report') }}" style="float: right;" class="btn btn-info" target="_blank">Month Summary Report</a> -->
         </div>
         <div class="box-header">
           <form method="GET" action="{{ route('product.list.ecentre.filter') }}">

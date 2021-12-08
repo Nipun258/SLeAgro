@@ -24,6 +24,19 @@
   background-color: #4CAF50;
   color: white;
 }
+
+.footer {
+   width: 100%;
+   background-color: #3232a8;
+   color: white;
+   text-align: center;
+   font-size: 15px;
+}
+@page { margin: 20px 30px 40px 50px; }
+@page {
+  footer: page-footer;
+  border: 1px solid red;
+}
 </style>
 </head>
 <body>
@@ -49,7 +62,9 @@
    
 </table>
 
-
+<div class="footer">
+  <p><b>Economic Centre Month Summary List</b></p>
+</div>
 
 <table id="customers">
   <tr>
@@ -68,6 +83,14 @@
 </table>
 <br> <br>
   <i style="font-size: 10px; float: right;">Print Data : {{ date("d M Y") }}</i>
-
+<htmlpagefooter name="page-footer">
+  <table width="100%">
+    <tr>
+        <td width="33%">{DATE d M Y}</td>
+        <td width="33%" align="center">{PAGENO}/{nbpg}</td>
+        <td width="33%" style="text-align: right;">SL e Agro</td>
+    </tr>
+</table>
+</htmlpagefooter>
 </body>
 </html>

@@ -15,8 +15,8 @@
        <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Total Availble Product List<span class="text-danger">({{$products->count()}})</span></h3>
-          <a href="{{ route('product.summary.report') }}" style="float: right;" class="btn btn-success mb-5" target="_blank">Current State Report</a>
-          <a href="{{ route('product.month.summary.report') }}" style="float: right;" class="btn btn-info mb-5" target="_blank">Product Transfer Report</a>
+<!--           <a href="{{ route('product.summary.report') }}" style="float: right;" class="btn btn-success mb-5" target="_blank">Current State Report</a>
+          <a href="{{ route('product.month.summary.report') }}" style="float: right;" class="btn btn-info mb-5" target="_blank">Product Transfer Report</a> -->
         </div>
         <div class="box-header">
           <form method="GET" action="{{ route('product.list.filter') }}">
@@ -28,7 +28,7 @@
           </div>
           <div class="coi-md-2">
             <input type="submit" class="btn btn-primary btn-sm" style="height: 5.5vh;" value="Search">
-            <a type="button" href="{{ route('product.summary') }}" class="btn btn-success btn-sm" >Go Back</a>
+            <a type="button" href="{{ route('product.summary') }}" class="btn btn-success btn-md" >Go Current State</a>
           </div>
           </div>
           </form>

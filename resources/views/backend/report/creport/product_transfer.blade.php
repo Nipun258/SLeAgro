@@ -60,7 +60,7 @@
 </table>
 
 <div class="footer">
-  <p>Product Trasfer Summary Report</p>
+  <p><b>Product Trasfer Month Summary Report </b>({{$month}})</p>
 </div>
 
 <table id="customers">
@@ -68,14 +68,12 @@
     <th width="10%">SN</th>
     <!-- <th>Photo</th> -->
     <th>Name</th>
-    <th>Transfer Date</th>
     <th>Quntity(KG)</th>
   </tr>
   @foreach($products as $key => $product)
   <tr>
     <td>{{ $key+1 }}</td>
      <td>{{ $product->name }}</td>
-     <td>{{ $product->date }}</td>
      <td>{{ $product->total }}</td>
   </tr>
   @endforeach

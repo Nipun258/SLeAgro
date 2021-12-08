@@ -29,12 +29,14 @@
    background-color: #3232a8;
    color: white;
    text-align: center;
+   font-size: 15px;
 }
 @page { margin: 20px 30px 40px 50px; }
 @page {
   footer: page-footer;
   border: 1px solid red;
 }
+
 </style>
 </head>
 <body>
@@ -48,10 +50,10 @@
 
     </h2></td> 
     <td><h2>Easy SleAgro System</h2>
-      @foreach($ccenter as $ccenter)
-<p>Centre Location : {{ $ccenter->centre_name}}</p>
-<p>Phone : {{ $ccenter->mobile}}</p>
-<p>Email : {{ $ccenter->email}}</p>
+      @foreach($ecenter as $ecenter)
+<p>Centre Location : {{ $ecenter->centre_name}}</p>
+<p>Phone : {{ $ecenter->mobile}}</p>
+<p>Email : {{ $ecenter->email}}</p>
       @endforeach
     </td> 
   </tr>
@@ -60,29 +62,30 @@
 </table>
 
 <div class="footer">
-  <p>Product Trasfer Summary Report</p>
+  <p><b>Current Registered Collection Centre List</b></p>
 </div>
 
 <table id="customers">
   <tr>
     <th width="10%">SN</th>
-    <!-- <th>Photo</th> -->
     <th>Name</th>
-    <th>Transfer Date</th>
-    <th>Quntity(KG)</th>
+    <th>Province</th>
+    <th>District</th>
+    <th>City</th>
   </tr>
-  @foreach($products as $key => $product)
+  @foreach($ccentres as $key => $ccentre)
   <tr>
     <td>{{ $key+1 }}</td>
-     <td>{{ $product->name }}</td>
-     <td>{{ $product->date }}</td>
-     <td>{{ $product->total }}</td>
+     <td>{{ $ccentre->centre_name }}</td>
+     <td>{{ $ccentre->pname }}</td>
+     <td>{{ $ccentre->dname }}</td>
+     <td>{{ $ccentre->cname }}</td>
   </tr>
   @endforeach
 </table>
 <br> <br>
   <i style="font-size: 10px; float: right;">Print Data : {{ date("d M Y") }}</i>
-  <htmlpagefooter name="page-footer">
+<htmlpagefooter name="page-footer">
   <table width="100%">
     <tr>
         <td width="33%">{DATE d M Y}</td>
@@ -91,6 +94,5 @@
     </tr>
 </table>
 </htmlpagefooter>
-
 </body>
 </html>

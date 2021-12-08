@@ -92,7 +92,7 @@ class BuyerBookingController extends Controller
            'alert-type' => 'warning'
         );
 
-        return redirect()->route('buyer.booking.view')->with($notification);
+        return redirect()->route('buyer.booking.list')->with($notification);
         }
 
         $booking = BuyerBooking::create([
@@ -153,7 +153,7 @@ class BuyerBookingController extends Controller
            'alert-type' => 'success'
         );
 
-        return redirect()->route('buyer.booking.view')->with($notification);
+        return redirect()->route('buyer.booking.list')->with($notification);
 
     }
 
@@ -186,6 +186,7 @@ class BuyerBookingController extends Controller
                   ->where('inventories.date','=', date("Y-m-d"))
                   ->where('inventories.veg_id','=',$vegID)
                   ->whereIn('inventories.status',[0,2])
+                  //->where('inventories.status',0)
                   ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
                   ->select(DB::raw('SUM(inventories.quntity) as count'))
                   ->get();

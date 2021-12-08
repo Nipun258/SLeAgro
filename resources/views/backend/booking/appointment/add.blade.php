@@ -22,7 +22,7 @@
 												<div class="form-group">
 													<h5>Choose Date <span class="text-danger">*</span></h5>
 													<div class="controls">
-														<input type="date" name="date" class="form-control" value="{{old('email')}}"> <span class="text-danger">@error('date'){{$message}}@enderror</span> 
+														<input type="date" name="date" class="form-control" value="{{old('date')}}"> <span class="text-danger">@error('date'){{$message}}@enderror</span> 
 													</div>
 												</div>	
 											</div>

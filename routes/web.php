@@ -31,6 +31,10 @@ use App\Http\Controllers\Backend\Booking\BuyerAppointmentController;
 use App\Http\Controllers\Backend\Inventory\ProductAddController;
 use App\Http\Controllers\Backend\Inventory\SellesController;
 use App\Http\Controllers\Backend\Inventory\ProductiTransferController;
+use App\Http\Controllers\Backend\Inventory\EcentreProductTransferController;
+use App\Http\Controllers\Backend\Report\CollectionCentreReportController;
+use App\Http\Controllers\Backend\Report\EconomicCentreReportController;
+use App\Http\Controllers\Backend\Report\AdminReportController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
@@ -532,6 +536,17 @@ Route::group(['middleware' => 'admin'],function(){
       Route::get('/product/summary/report',[SellesController::class, 'ProductSummaryReportEcentre'])->name('product.summary.ecenre.report');
      
       Route::get('/product/summary/month/report',[SellesController::class, 'ProductSummaryMonthReportEcentre'])->name('product.summary.month.ecenre.report');
+
+
+           /***************************************************************************/
+     
+     Route::get('/product/transfer/market/view',[EcentreProductTransferController::class, 'ProductTransferMarketView'])->name('product.transfer.market.view');
+
+     Route::post('normal/transfer/market/store',[EcentreProductTransferController::class, 'ProductTransferMarketStore'])->name('product.transfer.market.store');
+
+     Route::get('/transfer/market/invoice',[EcentreProductTransferController::class, 'TransferMarketInvoiceGen'])->name('transfer.market.invoice');
+
+     Route::post('transfer/market/payment/store',[EcentreProductTransferController::class, 'TransferMarketPaymentStore'])->name('transfer.market.payment.store');
    });
 
 });
@@ -570,6 +585,52 @@ Route::group(['middleware' => 'buyer'],function(){
   Route::get('/mybooking/buyer',[BuyerBookingController::class, 'BuyerBookingList'])->name('buyer.booking.list');
 
    });//regional center officer appointment setup data controlling route list
+
+});
+
+Route::group(['middleware' => 'admin'],function(){
+
+   Route::prefix('creport')->group(function(){
+     
+     /*******************collection centre report *******************/
+
+  Route::get('/ccentre/report',[CollectionCentreReportController::class, 'CcentreReportView'])->name('ccentre.report.view');
+
+  Route::get('/ccentre/report/farmer_list',[CollectionCentreReportController::class, 'CcentreFarmerList'])->name('ccentre.report.farmer.list');
+
+  Route::get('/ccentre/report/user_list',[CollectionCentreReportController::class, 'CcentreUserList'])->name('ccentre.report.user.list');
+ 
+   Route::post('ccentre/report/appointment',[CollectionCentreReportController::class, 'CcentreAppointment'])->name('ccentre.report.appointment');
+
+   Route::get('ccentre/report/product/transfer',[CollectionCentreReportController::class, 'CcentreProductTransfer'])->name('ccentre.report.product.transfer');
+
+   Route::post('ccentre/report/payment/register',[CollectionCentreReportController::class, 'CcentrePaymentRegister'])->name('ccentre.report.payment.register');
+
+   Route::post('ccentre/report/payment/normal',[CollectionCentreReportController::class, 'CcentrePaymentNormal'])->name('ccentre.report.payment.normal');
+
+   Route::post('ccentre/report/payment/transfer',[CollectionCentreReportController::class, 'CcentrePaymentTransfer'])->name('ccentre.report.payment.transfer');
+
+   });//regional center report route list
+
+
+   Route::prefix('ereport')->group(function(){
+        /*******************Economic centre report *******************/
+
+  Route::get('/ecentre/report',[EconomicCentreReportController::class, 'EcentreReportView'])->name('ecentre.report.view');
+
+  Route::get('/ecentre/report/buyer_list',[EconomicCentreReportController::class, 'EcentreBuyerList'])->name('ecentre.report.buyer.list');
+
+  Route::get('/ecentre/report/user_list',[EconomicCentreReportController::class, 'EcentreUserList'])->name('ecentre.report.user.list');
+ 
+   Route::post('ecentre/report/appointment',[EconomicCentreReportController::class, 'EcentreAppointment'])->name('ecentre.report.appointment');
+
+   Route::get('ecentre/report/ccentre/list',[EconomicCentreReportController::class, 'EcentreCcentreList'])->name('ecentre.report.ccentre.list');
+
+   Route::post('ecentre/report/payment/register',[EconomicCentreReportController::class, 'EcentrePaymentRegister'])->name('ecentre.report.payment.register');
+
+   Route::post('ecentre/report/payment/normal',[EconomicCentreReportController::class, 'EcentrePaymentNormal'])->name('ecentre.report.payment.normal');
+
+   });//regional center report route list
 
 });
 

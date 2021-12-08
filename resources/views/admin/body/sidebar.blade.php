@@ -331,6 +331,7 @@
           <ul class="treeview-menu">
             <li><a href="{{ route('booking.buyer.lists') }}"><i class="ti-more"></i>Sell Products Buyer(RU) </a></li>
             <li><a href="{{ route('product.sell.normal.view') }}"><i class="ti-more"></i>Sell Products Buyer(N) </a></li>
+            <li><a href="{{ route('product.transfer.market.view') }}"><i class="ti-more"></i>Distributed Retail Market </a></li>
             <li><a href="{{ route('product.summary.ecentre')}}"><i class="ti-more"></i>Invetory Summary </a></li>
           </ul>
         </li>
@@ -390,8 +391,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Farmer Report </a></li>
-            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Product Report </a></li>
+            <li><a href="{{ route('ccentre.report.view') }}"><i class="ti-more"></i>Summary Report List </a></li>
           </ul>
         </li> 
         @endif
@@ -405,9 +405,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Buyer Report </a></li>
-            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Product Report </a></li>
-            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Collection Centre Report </a></li>
+            <li><a href="{{ route('ecentre.report.view') }}"><i class="ti-more"></i>Summary Report List </a></li>
           </ul>
         </li> 
         @endif
@@ -665,11 +663,7 @@
 	
 	<div class="sidebar-footer">
 		<!-- item-->
-    @if(Auth::user()->role =='Admin')
 		<a href="{{ route('log-viewer::dashboard')}}" class="link" data-toggle="tooltip" title="" data-original-title="System logs" aria-describedby="tooltip92529" target="_blank"><i class="ti-settings"></i></a>
-    @else
-    <a href="{{ route('home')}}" class="link" data-toggle="tooltip" title="" data-original-title="System logs" aria-describedby="tooltip92529" target="_blank"><i class="ti-settings"></i></a>
-    @endif
 		<!-- item-->
 		<a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>
 		<!-- item-->

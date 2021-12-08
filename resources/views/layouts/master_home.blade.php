@@ -87,10 +87,15 @@
 							</li>
 							<li class="nav-item"><a href="#app" class="nav-link">App</a>
 							</li>
+							@if (!Auth::check())
 						    <li class="nav-item"><a href="/login" class="nav-link">Login</a>
 							</li>
 							<li class="nav-item"><a href="/register" class="nav-link">Register</a>
 							</li>
+							@else
+							<li class="nav-item"><a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+							</li>
+							@endif
 							<li class="nav-item"><a href="#contact" class="nav-link"><span class="fa fa-pencil-square-o"></span></a>
 							</li>
 						</ul>

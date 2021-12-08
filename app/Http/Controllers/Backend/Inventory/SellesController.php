@@ -326,7 +326,8 @@ class SellesController extends Controller
             $vegID=$veg->id;
             $totalStock=$this->GetTotalStock($vegID);
             $sellingStock=$this->GetSellingStock($vegID);
-            $availbleStock = $totalStock - $sellingStock;
+            $transferStock=$this->GetBulkTransferStock($vegID);
+            $availbleStock = $totalStock - ($sellingStock + $transferStock);
 
             $vagArray[]=array(
                         'id' =>$veg->id,
@@ -379,7 +380,8 @@ class SellesController extends Controller
             $vegID=$veg->id;
             $totalStock=$this->GetTotalStock($vegID);
             $sellingStock=$this->GetSellingStock($vegID);
-            $availbleStock = $totalStock - $sellingStock;
+            $transferStock=$this->GetBulkTransferStock($vegID);
+            $availbleStock = $totalStock - ($sellingStock + $transferStock);
 
             $vagArray[]=array(
                         'id' =>$veg->id,
@@ -472,5 +474,26 @@ class SellesController extends Controller
         return $sellStock;
     }
 
-    
+    public function GetBulkTransferStock($vegID){
+        
+
+       $products = DB::table('inventories')
+                   ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                   ->where('inventories.status',4)
+                   ->where('inventories.date','=', date("Y-m-d"))
+                   ->where('inventories.veg_id','=',$vegID)
+                   ->select(DB::raw('SUM(inventories.quntity) as total'))
+                   //->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+            foreach ($products as $product) 
+            {
+
+              $bulktransStock = $product->total;
+             
+            }
+
+        return $bulktransStock;
+    }
+  
 }

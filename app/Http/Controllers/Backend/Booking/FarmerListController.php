@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Backend\Booking;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
@@ -14,7 +13,8 @@ class FarmerListController extends Controller
       
       $this->middleware('auth');
 
-    }
+    }//check auth in controller
+
     public function AppList()
     {
         $mybooking  = DB::table('bookings')
