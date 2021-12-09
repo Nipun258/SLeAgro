@@ -145,6 +145,36 @@
 					</div>
 				</a>
 				</div>
+							<div class="col-xl-4 col-6">
+					<a href="#inventory-list-day" data-toggle="modal">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-soundcloud"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Inventory Transction Report(Day)</p>
+								<h2 class="text-success mb-0 font-weight-500"> <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
+							</div>
+						</div>
+					</div>
+				</a>
+				</div>
+			  <div class="col-xl-4 col-6">
+					<a href="#inventory-list-month" data-toggle="modal">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-primary-light rounded w-60 h-60">
+								<i class="text-primary mr-0 font-size-24 mdi mdi-soundcloud"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Inventory Transction Report(Month)</p>
+								<h2 class="text-success mb-0 font-weight-500"> <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
+							</div>
+						</div>
+					</div>
+				</a>
+				</div>
 
 			</div>
 
@@ -269,6 +299,68 @@
 							</div>
 						</div>
 						
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+				<div class="modal center-modal fade " id="inventory-list-day" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Inventory Transction Dialy Summary</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('ccentre.report.inventory.daily') }}">
+					@csrf
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h5>Choose Date <span class="text-danger">*</span></h5>
+										<div class="controls">
+											<input type="date" name="date" class="form-control"> <span class="text-danger">
+										@error('date'){{$message}}@enderror</span>
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+ <div class="modal center-modal fade " id="inventory-list-month" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Inventory Transction Monthly Summary</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('ccentre.report.inventory.month') }}">
+					        @csrf
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h5>Choose Relavent Month <span class="text-danger">*</span></h5>
+										<div class="controls">
+											<input type="month" name="month" class="form-control"> <span class="text-danger">
+										@error('month'){{$message}}@enderror</span>
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
 							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
 						</form>
 					</div>

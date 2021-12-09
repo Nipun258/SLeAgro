@@ -123,7 +123,7 @@ class SellesController extends Controller
 
         $user = DB::table('inventories')
                   ->Join('users','users.id','=','inventories.user_id')
-                  ->select('users.name','users.mobile','users.email','users.address','inventories.order_id','inventories.invoice_id','users.id')
+                  ->select('users.name','users.mobile','users.email','users.address','inventories.order_id','inventories.invoice_id','inventories.user_id')
                   ->orderBy('inventories.order_id', 'desc')
                   ->limit(1)
                   ->get();

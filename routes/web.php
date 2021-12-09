@@ -610,6 +610,10 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('ccentre/report/payment/transfer',[CollectionCentreReportController::class, 'CcentrePaymentTransfer'])->name('ccentre.report.payment.transfer');
 
+   Route::post('ccentre/report/inventory/daily',[CollectionCentreReportController::class, 'CcentreInventoryDaily'])->name('ccentre.report.inventory.daily');
+
+   Route::post('ccentre/report/inventory/month',[CollectionCentreReportController::class, 'CcentreInventoryMonth'])->name('ccentre.report.inventory.month');
+
    });//regional center report route list
 
 
@@ -629,6 +633,14 @@ Route::group(['middleware' => 'admin'],function(){
    Route::post('ecentre/report/payment/register',[EconomicCentreReportController::class, 'EcentrePaymentRegister'])->name('ecentre.report.payment.register');
 
    Route::post('ecentre/report/payment/normal',[EconomicCentreReportController::class, 'EcentrePaymentNormal'])->name('ecentre.report.payment.normal');
+
+   Route::post('ecentre/report/payment/transfer',[EconomicCentreReportController::class, 'EcentrePaymentTransfer'])->name('ecentre.report.payment.transfer');
+
+   Route::post('ecentre/report/inventory/daily',[EconomicCentreReportController::class, 'EcentreInventoryDaily'])->name('ecentre.report.inventory.daily');
+
+   Route::post('ecentre/report/inventory/month',[EconomicCentreReportController::class, 'EcentreInventoryMonth'])->name('ecentre.report.inventory.month');
+
+   Route::post('ecentre/report/ccentre/stock/ckeck',[EconomicCentreReportController::class, 'EcentreCcentreStockCheck'])->name('ecentre.report.ccentre.stock.check');
 
    });//regional center report route list
 

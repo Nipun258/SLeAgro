@@ -57,7 +57,7 @@
 <div class="footer">
   <p>Current State Summary Report</p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>

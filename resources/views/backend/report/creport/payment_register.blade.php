@@ -64,7 +64,7 @@
 <div class="footer">
   <p><b>Register Farmer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="5%">SN</th>

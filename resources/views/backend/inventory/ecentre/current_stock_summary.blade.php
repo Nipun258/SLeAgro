@@ -64,7 +64,7 @@ e<!DOCTYPE html>
 <div class="footer">
   <p><b>Economic Centre Current Status Summary </b></p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>

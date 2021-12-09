@@ -366,4 +366,133 @@ class CollectionCentreReportController extends Controller
         return $paymentSender;
     }
 
+
+        public function CcentreInventoryDaily(Request $request)
+    {   
+        $validatedData = $request->validate([
+            'date' => 'required'
+        ],[
+            'date.required' => 'You Must select valid date'
+        ]);
+
+        if ($request->date) {
+            
+            $book_inventories  = DB::table('inventories')
+                        ->Join('users','inventories.user_id','=','users.id')
+                        ->join('vegitables','inventories.veg_id','=','vegitables.id')
+                        ->Join('collection_centres','inventories.ccentre_id','=','collection_centres.id')
+                        ->where('inventories.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('inventories.date',$request->date)
+                        ->whereIn('inventories.status', [0,3])
+                        ->select('users.name','collection_centres.centre_name','inventories.date','inventories.created_at','vegitables.name as vegname','inventories.quntity','inventories.price','inventories.status','inventories.order_id','inventories.invoice_id')
+                        ->orderBy('inventories.created_at', 'desc')
+                        ->get();
+
+           $normal_inventories  = DB::table('inventories')
+                        ->join('vegitables','inventories.veg_id','=','vegitables.id')
+                        ->Join('collection_centres','inventories.ccentre_id','=','collection_centres.id')
+                        ->where('inventories.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('inventories.date',$request->date)
+                        ->where('inventories.user_id',0)
+                        ->whereIn('inventories.status', [0,3])
+                        ->select('collection_centres.centre_name','inventories.date','inventories.created_at','vegitables.name as vegname','inventories.quntity','inventories.price','inventories.status','inventories.order_id','inventories.invoice_id')
+                        ->orderBy('inventories.created_at', 'desc')
+                        ->get();
+            
+
+            $trans_inventories  = DB::table('inventories')
+                        ->join('vegitables','inventories.veg_id','=','vegitables.id')
+                        ->Join('collection_centres','inventories.ccentre_id','=','collection_centres.id')
+                        ->where('inventories.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('inventories.date',$request->date)
+                        ->where('inventories.status',2)
+                        ->select('collection_centres.centre_name','inventories.date','inventories.created_at','vegitables.name as vegname','inventories.quntity','inventories.price','inventories.status','inventories.order_id','inventories.invoice_id')
+                        ->orderBy('inventories.created_at', 'desc')
+                        ->get();
+
+        $req_date = $request->date;
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+
+        $pdf = PDF::loadView('backend.report.creport.inventory_daily', compact('ccenter','book_inventories','normal_inventories','trans_inventories','req_date'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Daily Inventory Summary.pdf');
+    }
+
+  }
+
+  public function CcentreInventoryMonth(Request $request)
+    {   
+        $validatedData = $request->validate([
+            'month' => 'required'
+        ],[
+            'month.required' => 'You Must select valid month'
+        ]);
+
+        if ($request->month) {
+            
+            $book_inventories  = DB::table('inventories')
+                        ->Join('users','inventories.user_id','=','users.id')
+                        ->join('vegitables','inventories.veg_id','=','vegitables.id')
+                        ->Join('collection_centres','inventories.ccentre_id','=','collection_centres.id')
+                        ->where('inventories.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->whereIn('inventories.status', [0,3])
+                        ->select('users.name','collection_centres.centre_name','inventories.date','inventories.created_at','vegitables.name as vegname','inventories.quntity','inventories.price','inventories.status','inventories.order_id','inventories.invoice_id')
+                        ->orderBy('inventories.created_at', 'desc')
+                        ->get();
+
+           $normal_inventories  = DB::table('inventories')
+                        ->join('vegitables','inventories.veg_id','=','vegitables.id')
+                        ->Join('collection_centres','inventories.ccentre_id','=','collection_centres.id')
+                        ->where('inventories.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.user_id',0)
+                        ->whereIn('inventories.status', [0,3])
+                        ->select('collection_centres.centre_name','inventories.date','inventories.created_at','vegitables.name as vegname','inventories.quntity','inventories.price','inventories.status','inventories.order_id','inventories.invoice_id')
+                        ->orderBy('inventories.created_at', 'desc')
+                        ->get();
+            
+
+            $trans_inventories  = DB::table('inventories')
+                        ->join('vegitables','inventories.veg_id','=','vegitables.id')
+                        ->Join('collection_centres','inventories.ccentre_id','=','collection_centres.id')
+                        ->where('inventories.ccentre_id', Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.status',2)
+                        ->select('collection_centres.centre_name','inventories.date','inventories.created_at','vegitables.name as vegname','inventories.quntity','inventories.price','inventories.status','inventories.order_id','inventories.invoice_id')
+                        ->orderBy('inventories.created_at', 'desc')
+                        ->get();
+
+            //dd($trans_inventories);
+
+        $req_month = $request->month;
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+
+        $pdf = PDF::loadView('backend.report.creport.inventory_monthly', compact('ccenter','book_inventories','normal_inventories','trans_inventories','req_month'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Monthly Inventory Summary.pdf');
+    }
+
+  }
+
 }

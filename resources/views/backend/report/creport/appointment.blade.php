@@ -64,7 +64,7 @@
 <div class="footer">
   <p><b>Appointment List </b>(<span style="color:yellow;">{{$req_date}}</span>)</p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="5%">SN</th>

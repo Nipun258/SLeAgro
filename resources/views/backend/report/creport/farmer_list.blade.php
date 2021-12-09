@@ -64,7 +64,7 @@
 <div class="footer">
   <p><b>Current Farmer List</b></p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>

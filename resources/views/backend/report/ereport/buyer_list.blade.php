@@ -64,7 +64,7 @@
 <div class="footer">
   <p><b>Current Registered Buyers List</b></p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>

@@ -76,7 +76,7 @@
 					  <div class="col-md-6 col-lg-3"><b>Payment Due:</b> {{ date('d/m/Y') }}</div>
 					  <div class="col-md-6 col-lg-3"><b>Account:</b> N/A</div>
 					</div>
-					<input type="hidden" name="from" value="{{$user->id}}">
+					<input type="hidden" name="from" value="{{$user->user_id}}">
 					<input type="hidden" name="invoice_id" value="{{ $invoice_id }}">
 					<input type="hidden" name="order_id" value="{{ $order_id }}">
 					<input type="hidden" name="email" value="{{ $user->email }}">

@@ -62,7 +62,7 @@
 <div class="footer">
   <p>Product Trasfer Summary Report</p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>

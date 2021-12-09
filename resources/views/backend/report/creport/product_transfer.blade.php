@@ -62,7 +62,7 @@
 <div class="footer">
   <p><b>Product Trasfer Month Summary Report </b>({{$month}})</p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>

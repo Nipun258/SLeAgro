@@ -29,14 +29,7 @@
    background-color: #3232a8;
    color: white;
    text-align: center;
-   font-size: 15px;
 }
-@page { margin: 20px 30px 40px 50px; }
-@page {
-  footer: page-footer;
-  border: 1px solid red;
-}
-
 </style>
 </head>
 <body>
@@ -50,10 +43,10 @@
 
     </h2></td> 
     <td><h2>Easy SleAgro System</h2>
-      @foreach($ccenter as $ccenter)
-<p>Centre Location : {{ $ccenter->centre_name}}</p>
-<p>Phone : {{ $ccenter->mobile}}</p>
-<p>Email : {{ $ccenter->email}}</p>
+      @foreach($ecenter as $ecenter)
+<p>Centre Location : {{ $ecenter->centre_name}}</p>
+<p>Phone : {{ $ecenter->mobile}}</p>
+<p>Email : {{ $ecenter->email}}</p>
       @endforeach
     </td> 
   </tr>
@@ -62,34 +55,21 @@
 </table>
 
 <div class="footer">
-  <p><b>Economic Centre Transfer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
+  <p>Current State Summary Report<span style="color: yellow;">({{$req_centre}} Collection Centre)</span></p>
 </div>
 <br>
 <table id="customers">
   <tr>
-    <th width="5%">SN</th>
-    <th width="10%">Collection Centre </th>
-    <th>Date</th>
-    <th>Order ID</th>
-    <th>Invoice ID</th>
-    <th>Total Payment</th>
-    <th>Payment Type</th>
-    <th width="10%">Economic Centre</th>
+    <th width="10%">SN</th>
+    <!-- <th>Photo</th> -->
+    <th>Name</th>
+    <th>Quntity(KG)</th>
   </tr>
-  @foreach(json_decode($payments) as $key => $payment)
+  @foreach($current_stock as $key => $stock)
   <tr>
     <td>{{ $key+1 }}</td>
-    <td>{{ $payment->rname }}</td>
-    <td>{{ $payment->date }}</td>
-    <td>{{ $payment->order_id }}</td>
-    <td>{{ $payment->invoice_id }}</td>
-    <td>Rs. {{ number_format($payment->net_payment , 2) }}</td>
-    @if($payment->payment_type == 1)
-    <td>Bank Payment</td>
-    @else
-    <td>Cash Payment</td>
-    @endif
-    <td>{{ $payment->sname}}</td>
+     <td>{{ $stock->name }}</td>
+     <td>{{ $stock->total }}</td>
   </tr>
   @endforeach
 </table>

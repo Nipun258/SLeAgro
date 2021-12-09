@@ -65,7 +65,7 @@
 <div class="footer">
   <p><b>Economic Centre Month Summary List</b></p>
 </div>
-
+<br>
 <table id="customers">
   <tr>
     <th width="10%">SN</th>
