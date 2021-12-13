@@ -21,12 +21,21 @@ class SummaryController extends Controller
     
     public function getVegData(){
 
+    $current_month = date("Y-m");
+    //dd($current_month);
+    $current_year = date("Y");
 
     $farmer = DB::table('users')
               ->whereIn('usertype',['Farmer','Farmer-Buyer'])
               ->select(DB::raw('COUNT(id) as value'))->get();
     $maxValue=json_decode($farmer,true);
     $farmercount=$maxValue[0]["value"];
+
+    $buyer = DB::table('users')
+              ->whereIn('usertype',['Buyer','Farmer-Buyer'])
+              ->select(DB::raw('COUNT(id) as value'))->get();
+    $maxValue=json_decode($buyer,true);
+    $buyercount=$maxValue[0]["value"];
 
     $staff = DB::table('users')->where('usertype','Admin')
               ->select(DB::raw('COUNT(id) as value'))->get();
@@ -40,6 +49,184 @@ class SummaryController extends Controller
     $ecentre = DB::table('economic_centres')->count();
 
     $ccentre = DB::table('collection_centres')->count();
+    /*********************farmer summary*************************/
+
+    if (Auth::user()->role == 'Farmer') {
+    
+    $farmer_income_month = DB::table('inventories')
+                        ->where('inventories.user_id',Auth::user()->id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.97 as count'))
+                        ->groupBy('inventories.user_id')
+                        ->get();
+    $farmer_income_month=json_decode($farmer_income_month,true);
+    $farmer_income_month=$farmer_income_month[0]["count"];
+
+   $farmer_income_year = DB::table('inventories')
+                        ->where('inventories.user_id',Auth::user()->id)
+                        ->where('inventories.date','LIKE','%'.$current_year.'%')
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.97 as count'))
+                        ->groupBy('inventories.user_id')
+                        ->get();
+    $farmer_income_year=json_decode($farmer_income_year,true);
+    $farmer_income_year=$farmer_income_year[0]["count"];
+
+    $farmer_vegetable_month = DB::table('inventories')
+                        ->where('inventories.user_id',Auth::user()->id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.quntity) as total'))
+                        ->groupBy('inventories.user_id')
+                        ->get();
+    $farmer_vegetable_month=json_decode($farmer_vegetable_month,true);
+    $farmer_vegetable_month=$farmer_vegetable_month[0]["total"];
+
+    }
+    
+
+    /********************buyer summary******************************/
+   if (Auth::user()->role == 'Buyer') {
+
+    $buyer_payment_month = DB::table('inventories')
+                        ->where('inventories.user_id',Auth::user()->id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.price)*1.01 as count'))
+                        ->groupBy('inventories.user_id')
+                        ->get();
+    $buyer_payment_month=json_decode($buyer_payment_month,true);
+    $buyer_payment_month=$buyer_payment_month[0]["count"];
+
+   $buyer_payment_year = DB::table('inventories')
+                        ->where('inventories.user_id',Auth::user()->id)
+                        ->where('inventories.date','LIKE','%'.$current_year.'%')
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.price)*1.01 as count'))
+                        ->groupBy('inventories.user_id')
+                        ->get();
+    $buyer_payment_year=json_decode($buyer_payment_year,true);
+    $buyer_payment_year=$buyer_payment_year[0]["count"];
+
+    $buyer_vegetable_month = DB::table('inventories')
+                        ->where('inventories.user_id',Auth::user()->id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.quntity) as total'))
+                        ->groupBy('inventories.user_id')
+                        ->get();
+    $buyer_vegetable_month=json_decode($buyer_vegetable_month,true);
+    $buyer_vegetable_month=$buyer_vegetable_month[0]["total"];
+
+   }
+
+   /***********************collection centre**************************/
+
+      if (Auth::user()->role == 'RC-Officer') {
+
+    $ccentre_register_payment = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.user_id','!=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.97 as pay'))
+                        ->get();
+    $ccentre_register_payment=json_decode($ccentre_register_payment,true);
+    $ccentre_register_payment=$ccentre_register_payment[0]["pay"]; 
+
+
+
+    $ccentre_normal_payment = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.user_id','=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.95 as pay'))
+                        ->get();
+    $ccentre_normal_payment=json_decode($ccentre_normal_payment,true);
+    $ccentre_normal_payment=$ccentre_normal_payment[0]["pay"];
+
+
+
+    $ccentre_transfer_payment = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.status',2)
+                        ->select(DB::raw('SUM(inventories.price) as pay'))
+                        ->get();
+    $ccentre_transfer_payment=json_decode($ccentre_transfer_payment,true);
+    $ccentre_transfer_payment=$ccentre_transfer_payment[0]["pay"];
+
+
+    $ccentre_vegetable_month = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.quntity) as total'))
+                        ->groupBy('inventories.ccentre_id')
+                        ->get();
+    $ccentre_vegetable_month=json_decode($ccentre_vegetable_month,true);
+    $ccentre_vegetable_month=$ccentre_vegetable_month[0]["total"];
+
+    $ccentre_payment = $ccentre_register_payment + $ccentre_normal_payment;
+
+    $ccentre_profit = $ccentre_transfer_payment - $ccentre_payment;
+
+   }
+
+   /**********************economic centre***************************/
+
+         if (Auth::user()->role == 'EC-Officer') {
+
+    $ecentre_register_income = DB::table('inventories')
+                        ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.user_id','!=',0)
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.price)*1.01 as pay'))
+                        ->get();
+    $ecentre_register_income=json_decode($ecentre_register_income,true);
+    $ecentre_register_income=$ecentre_register_income[0]["pay"]; 
+
+
+
+    $ecentre_normal_income = DB::table('inventories')
+                        ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.user_id','=',0)
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.price)*1.05 as pay'))
+                        ->get();
+    $ecentre_normal_income=json_decode($ecentre_normal_income,true);
+    $ecentre_normal_income=$ecentre_normal_income[0]["pay"];
+
+
+    $ecentre_transfer_payment = DB::table('inventories')
+                        ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->where('inventories.status',4)
+                        ->select(DB::raw('SUM(inventories.price) as pay'))
+                        ->get();
+    $ecentre_transfer_payment=json_decode($ecentre_transfer_payment,true);
+    $ecentre_transfer_payment=$ecentre_transfer_payment[0]["pay"];
+
+
+    $ecentre_vegetable_month = DB::table('inventories')
+                        ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_month.'%')
+                        ->whereIn('inventories.status',[1,4])
+                        ->select(DB::raw('SUM(inventories.quntity) as total'))
+                        ->groupBy('inventories.ccentre_id')
+                        ->get();
+    $ecentre_vegetable_month=json_decode($ecentre_vegetable_month,true);
+    $ecentre_vegetable_month=$ecentre_vegetable_month[0]["total"];
+
+     $ecentre_income = $ecentre_register_income + $ecentre_normal_income + $ecentre_transfer_payment;
+
+    // $ecentre_profit = $ecentre_transfer_payment - $ecentre_income;
+
+   }
 
     /****************************************************************/
 
@@ -122,8 +309,25 @@ class SummaryController extends Controller
 
         $vegitables_summary = json_encode($vagArray);
 
-         return view('admin.index',compact('farmercount','staffcount','vegitable','message','ecentre','ccentre','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept'));
+        if (Auth::user()->role == 'Farmer') {
 
+         return view('admin.index',compact('farmercount','buyercount','staffcount','vegitable','message','ecentre','ccentre','farmer_income_month','farmer_income_year','farmer_vegetable_month','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept'));
+
+        }else if (Auth::user()->role == 'Buyer') {
+            
+        return view('admin.index',compact('farmercount','buyercount','staffcount','vegitable','message','ecentre','ccentre','buyer_payment_month','buyer_payment_year','buyer_vegetable_month','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept'));
+
+        }else if (Auth::user()->role == 'RC-Officer') {
+
+        return view('admin.index',compact('farmercount','buyercount','staffcount','vegitable','message','ecentre','ccentre','ccentre_payment','ccentre_transfer_payment','ccentre_profit','ccentre_vegetable_month','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept'));
+
+        }else if (Auth::user()->role == 'EC-Officer') {
+
+           return view('admin.index',compact('farmercount','buyercount','staffcount','vegitable','message','ecentre','ccentre','ecentre_register_income','ecentre_transfer_payment','ecentre_normal_income','ecentre_income','ecentre_vegetable_month','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept')); 
+        }else{
+
+           return view('admin.index',compact('farmercount','buyercount','staffcount','vegitable','message','ecentre','ccentre','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept'));
+        }
     }
 
     public function todayMarketPrice($vegID){

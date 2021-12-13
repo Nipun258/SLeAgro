@@ -518,6 +518,7 @@ class CollectionCentreReportController extends Controller
         $payment_farmers = DB::table('inventories')
                         ->Join('users','users.id','=','inventories.user_id')
                         ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.user_id','!=',0)
                         ->whereIn('inventories.status',[0,3])
                         ->select('inventories.user_id',DB::raw('SUM(inventories.price)*0.97 as pay'),'users.name')
@@ -526,6 +527,7 @@ class CollectionCentreReportController extends Controller
 
         $total_payments = DB::table('inventories')
                         ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.user_id','!=',0)
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.price)*0.97 as pay'))
@@ -576,6 +578,7 @@ class CollectionCentreReportController extends Controller
 
         $total_payments = DB::table('inventories')
                         ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.user_id','=',0)
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.price)*0.95 as pay'))
@@ -625,6 +628,7 @@ class CollectionCentreReportController extends Controller
 
         $total_payments = DB::table('inventories')
                         ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.status',2)
                         ->select(DB::raw('SUM(inventories.price) as pay'))
                         ->get();

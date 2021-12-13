@@ -16,7 +16,7 @@
 			    </a>
 			</li>			
 			<li class="btn-group nav-item d-none d-xl-inline-block">
-				<a href="http://127.0.0.1:8000" class="waves-effect waves-light nav-link rounded svg-bt-icon" target="_blank">
+				<a href="http://127.0.0.1:8000" data-original-title="Web Site" class="waves-effect waves-light nav-link rounded svg-bt-icon" target="_blank">
 					<i class="ti-layout-media-center-alt"></i>
 			    </a>
 			</li>
@@ -112,17 +112,17 @@
 			<ul class="dropdown-menu animated flipInX">
 			  <li class="user-body">
 				 <a class="dropdown-item" href="{{ route('profile.view') }}"><i class="ti-user text-muted mr-2"></i> Profile</a>
-				 <a class="dropdown-item" href="#"><i class="ti-wallet text-muted mr-2"></i> My Wallet</a>
-				 <a class="dropdown-item" href="#"><i class="ti-settings text-muted mr-2"></i> Settings</a>
+				 <!-- <a class="dropdown-item" href="#"><i class="ti-wallet text-muted mr-2"></i> My Wallet</a>
+				 <a class="dropdown-item" href="#"><i class="ti-settings text-muted mr-2"></i> Settings</a> -->
 				 <div class="dropdown-divider"></div>
 				 <a type="button" class="dropdown-item" data-toggle="modal" data-target="#modal-center"><i class="ti-lock text-muted mr-2"></i> Logout</a>
 			  </li>
 			</ul>
           </li>	
 		  <li>
-              <a href="#" data-toggle="control-sidebar" title="Setting" class="waves-effect waves-light">
+<!--               <a href="#" data-toggle="control-sidebar" title="Setting" class="waves-effect waves-light">
 			  	<i class="ti-settings"></i>
-			  </a>
+			  </a> -->
           </li>
 			
         </ul>

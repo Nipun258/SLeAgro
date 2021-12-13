@@ -6,7 +6,210 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="row">
-				<div class="col-xl-3 col-6">
+			@if(Auth::user()->role =='Farmer')
+			<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Income</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($farmer_income_month , 2)}} <!-- <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small> --></h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-success-light rounded w-60 h-60">
+								<i class="text-success mr-0 font-size-24 mdi mdi-coin"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Annual Income</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($farmer_income_year , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+							<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-danger-light rounded w-60 h-60">
+								<i class="text-danger mr-0 font-size-24 mdi mdi-food-apple"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Selles Vegetables</p>
+								<h3 class="text-warning mb-0 font-weight-500">{{$farmer_vegetable_month}} Kg</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				@endif
+				@if(Auth::user()->role =='Buyer')
+			<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Income</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($buyer_payment_month , 2)}} <!-- <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small> --></h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-success-light rounded w-60 h-60">
+								<i class="text-success mr-0 font-size-24 mdi mdi-coin"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Annual Income</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($buyer_payment_year , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+							<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-danger-light rounded w-60 h-60">
+								<i class="text-danger mr-0 font-size-24 mdi mdi-food-apple"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Selles Vegetables</p>
+								<h3 class="text-warning mb-0 font-weight-500">{{$buyer_vegetable_month}} Kg</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				@endif
+				@if(Auth::user()->role =='RC-Officer')
+			<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Payments</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($ccentre_payment , 2)}} <!-- <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small> --></h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-success-light rounded w-60 h-60">
+								<i class="text-success mr-0 font-size-24 mdi mdi-coin"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Transfer Income</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($ccentre_transfer_payment , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-warning-light rounded w-60 h-60">
+								<i class="text-warning mr-0 font-size-24 mdi mdi-library"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Profits</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($ccentre_profit , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			 <div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-danger-light rounded w-60 h-60">
+								<i class="text-danger mr-0 font-size-24 mdi mdi-food-apple"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Selles Vegetables</p>
+								<h3 class="text-warning mb-0 font-weight-500">{{$ccentre_vegetable_month}} Kg</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				@endif
+				@if(Auth::user()->role =='EC-Officer')
+			<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Register Buyer Monthly Incomes</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($ecentre_register_income , 2)}} <!-- <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small> --></h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-success-light rounded w-60 h-60">
+								<i class="text-success mr-0 font-size-24 mdi mdi-coin"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Retials Distribution Income</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($ecentre_transfer_payment , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-warning-light rounded w-60 h-60">
+								<i class="text-warning mr-0 font-size-24 mdi mdi-library"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Normal Buyer Monthly Incomes</p>
+								<h3 class="text-warning mb-0 font-weight-500">Rs. {{ number_format($ecentre_normal_income , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-success-light rounded w-60 h-60">
+								<i class="text-success mr-0 font-size-24 mdi mdi-check-circle"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Total Monthly Incomes</p>
+								<h3 class="text-danger mb-0 font-weight-500">Rs. {{ number_format($ecentre_income , 2)}}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			 <div class="col-xl-4 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-danger-light rounded w-60 h-60">
+								<i class="text-danger mr-0 font-size-24 mdi mdi-food-apple"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Monthly Selles Vegetables</p>
+								<h3 class="text-warning mb-0 font-weight-500">{{$ecentre_vegetable_month}} Kg</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				@endif
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-primary-light rounded w-60 h-60">
@@ -14,12 +217,12 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">New Farmers</p>
-								<h2 class="text-success mb-0 font-weight-500"> {{ $farmercount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500"> {{ str_pad($farmercount , 2, "0", STR_PAD_LEFT)}} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6">
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-info-light rounded w-60 h-60">
@@ -27,12 +230,12 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">New Buyers</p>
-								<h2 class="text-success mb-0 font-weight-500"> {{ $farmercount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500"> {{ str_pad($buyercount , 2, "0", STR_PAD_LEFT)}} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6">
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-warning-light rounded w-60 h-60">
@@ -40,25 +243,12 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">New Vegetables</p>
-								<h2 class="text-success mb-0 font-weight-500">{{ $vegitable }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500">{{ str_pad($vegitable , 2, "0", STR_PAD_LEFT)}} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-       <div class="col-xl-3 col-6">
-					<div class="box overflow-hidden pull-up">
-						<div class="box-body">							
-							<div class="icon bg-info-light rounded w-60 h-60">
-								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
-							</div>
-							<div>
-								<p class="text-white mt-20 mb-0 font-size-16">Avalable Vegetable</p>
-								<h3 class="text-white mb-0 font-weight-500">$1,250 <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small></h3>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 col-6">
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-danger-light rounded w-60 h-60">
@@ -66,12 +256,12 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">New Economic Center</p>
-								<h2 class="text-success mb-0 font-weight-500">{{ $ecentre }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500">{{ str_pad($ecentre , 2, "0", STR_PAD_LEFT)}}<!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6">
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-warning-light rounded w-60 h-60">
@@ -79,12 +269,12 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">Staff Members</p>
-								<h2 class="text-success mb-0 font-weight-500">{{ $staffcount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500">{{ str_pad($staffcount , 2, "0", STR_PAD_LEFT)}} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 col-6">
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-info-light rounded w-60 h-60">
@@ -92,13 +282,13 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">Collection Center</p>
-								<h2 class="text-success mb-0 font-weight-500">{{ $ccentre }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500">{{ str_pad($ccentre , 2, "0", STR_PAD_LEFT)}} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
 				@if(Auth::user()->role =='Admin')
-				<div class="col-xl-3 col-6">
+				<div class="col-xl-4 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-primary-light rounded w-60 h-60">
@@ -106,7 +296,7 @@
 							</div>
 							<div>
 								<p class="text-white mt-20 mb-0 font-size-16">Contact Message</p>
-								<h2 class="text-success mb-0 font-weight-500">{{ $message }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +25%</small> --></h2>
+								<h2 class="text-success mb-0 font-weight-500">{{ str_pad($message , 2, "0", STR_PAD_LEFT)}} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +25%</small> --></h2>
 							</div>
 						</div>
 					</div>

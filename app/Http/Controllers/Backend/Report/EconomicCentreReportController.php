@@ -568,6 +568,7 @@ class EconomicCentreReportController extends Controller
         $payment_buyers = DB::table('inventories')
                         ->Join('users','users.id','=','inventories.user_id')
                         ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.user_id','!=',0)
                         ->where('inventories.status',1)
                         ->select('inventories.user_id',DB::raw('SUM(inventories.price)*1.01 as pay'),'users.name')
@@ -576,6 +577,7 @@ class EconomicCentreReportController extends Controller
 
         $total_payments = DB::table('inventories')
                         ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.user_id','!=',0)
                         ->where('inventories.status',1)
                         ->select(DB::raw('SUM(inventories.price)*1.01 as pay'))
@@ -626,9 +628,10 @@ class EconomicCentreReportController extends Controller
 
         $total_payments = DB::table('inventories')
                         ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.user_id','=',0)
                         ->where('inventories.status',1)
-                        ->select(DB::raw('SUM(inventories.price)*0.95 as pay'))
+                        ->select(DB::raw('SUM(inventories.price)*1.05 as pay'))
                         ->get();
 
         $total_payments=json_decode($total_payments,true);
@@ -675,6 +678,7 @@ class EconomicCentreReportController extends Controller
 
         $total_payments = DB::table('inventories')
                         ->where('inventories.ecentre_id',Auth::user()->ecentre_id)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.status',4)
                         ->select(DB::raw('SUM(inventories.price) as pay'))
                         ->get();
