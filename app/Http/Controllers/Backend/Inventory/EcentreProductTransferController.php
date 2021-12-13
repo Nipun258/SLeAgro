@@ -191,6 +191,7 @@ class EcentreProductTransferController extends Controller
                 ->Join('vegitables','vegitables.id','=','inventories.veg_id')
                 ->Join('vegitable_prices','vegitable_prices.veg_id','=','vegitables.id')
                 ->where('inventories.order_id',$order_id)
+                ->where('inventories.status',4)
                 ->select('vegitables.name','inventories.quntity','vegitable_prices.price_wholesale','inventories.price')
                 ->get();
 

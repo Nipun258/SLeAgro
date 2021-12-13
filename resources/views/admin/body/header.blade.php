@@ -16,8 +16,8 @@
 			    </a>
 			</li>			
 			<li class="btn-group nav-item d-none d-xl-inline-block">
-				<a href="#" class="waves-effect waves-light nav-link rounded svg-bt-icon" title="">
-					<i class="ti-check-box"></i>
+				<a href="http://127.0.0.1:8000" class="waves-effect waves-light nav-link rounded svg-bt-icon" target="_blank">
+					<i class="ti-layout-media-center-alt"></i>
 			    </a>
 			</li>
 			<li class="btn-group nav-item d-none d-xl-inline-block">

@@ -171,7 +171,7 @@ class BuyerBookingController extends Controller
                         ->Join('users','buyer_bookings.user_id','=','users.id')
                         ->Join('economic_centres','buyer_bookings.ecentre_id','=','economic_centres.id')
                         ->where('users.id', Auth::user()->id)
-                        ->select('users.name','economic_centres.centre_name','buyer_bookings.date','buyer_bookings.created_at','buyer_bookings.status')
+                        ->select('users.name','economic_centres.centre_name','buyer_bookings.date','buyer_bookings.created_at','buyer_bookings.status','buyer_bookings.id')
                         ->orderBy('date', 'desc')
                         ->get();
             //dd($mybooking);
@@ -221,6 +221,93 @@ class BuyerBookingController extends Controller
             }
 
         return $bookcount;
+    }
+
+    public function BuyerBookingProduct($id){
+
+        $product_list = DB::table('vegitable_book_lists')
+                     ->Join('buyer_bookings','buyer_bookings.id','=','vegitable_book_lists.booking_id')
+                     ->join('vegitables','vegitables.id','=','vegitable_book_lists.veg_id')
+                     ->where('vegitable_book_lists.booking_id',$id)
+                     ->select('vegitables.name','vegitable_book_lists.quntity','buyer_bookings.status')
+                     ->get();
+        //dd($product_list);
+
+        $date = DB::table('buyer_bookings')
+               ->where('buyer_bookings.id',$id)
+               ->select('buyer_bookings.date')
+               ->get();
+
+        $date = json_decode($date,true);
+        $bdate=$date[0]["date"];
+
+         //dd($bdate);
+         return view('backend.booking.buyer_book.book_product',compact('product_list','bdate')); 
+    }
+
+    public function BuyerBookingInvoice(){
+
+           $mybooking  = DB::table('buyer_bookings')
+                        ->Join('users','buyer_bookings.user_id','=','users.id')
+                        ->Join('economic_centres','buyer_bookings.ecentre_id','=','economic_centres.id')
+                        ->where('users.id', Auth::user()->id)
+                        ->where('buyer_bookings.status',2)
+                        ->select('users.name','economic_centres.centre_name','buyer_bookings.date','buyer_bookings.created_at','buyer_bookings.status','buyer_bookings.id')
+                        ->orderBy('date', 'desc')
+                        ->get();
+
+        return view('backend.booking.buyer_book.invoice',compact('mybooking'));
+    } 
+
+
+    public function BuyerBookingInvoiceGenerate($id){
+
+        $order_id = 'BO'.str_pad($id , 6, "0", STR_PAD_LEFT);
+
+        $invoice_id = '#IBO'.str_pad($id , 6, "0", STR_PAD_LEFT);
+
+        $date = DB::table('inventories')
+                ->where('inventories.order_id',$order_id)
+                ->where('inventories.status',1)
+                ->select('inventories.date')
+                ->limit(1)
+                ->get();
+        $date = json_decode($date,true);
+        $bdate=$date[0]["date"];
+
+        $ecenter = DB::table('users')
+                  ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','economic_centres.centre_name','users.id')
+                  ->get();
+
+        $user = DB::table('inventories')
+                  ->Join('users','users.id','=','inventories.user_id')
+                  ->where('inventories.order_id',$order_id)
+                  ->where('inventories.status',1)
+                  ->select('users.name','users.mobile','users.email','users.address','inventories.order_id','inventories.invoice_id','inventories.user_id')
+                  ->orderBy('inventories.order_id', 'desc')
+                  ->limit(1)
+                  ->get();
+
+        $orders = DB::table('inventories')
+                ->Join('vegitables','vegitables.id','=','inventories.veg_id')
+                ->Join('old_veg_prices','old_veg_prices.veg_id','=','vegitables.id')
+                ->where('inventories.order_id',$order_id)
+                ->where('inventories.status',1)
+                ->where('old_veg_prices.price_date',$bdate)
+                ->select('vegitables.name','inventories.quntity','old_veg_prices.price_wholesale','inventories.price')
+                ->get();
+
+        $total_price = DB::table('inventories')
+                       ->where('inventories.order_id',$order_id)
+                       ->where('inventories.status',1)
+                       ->select(DB::raw('SUM(inventories.price) as total'))
+                       ->get();
+
+
+        
+        return view('backend.inventory.ecentre.invoice',compact('ecenter','user','orders','total_price','order_id','invoice_id','bdate'));
     }
 
 }

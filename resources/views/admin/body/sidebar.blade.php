@@ -3,13 +3,14 @@
  $route = Route::current()->getName();
 
  @endphp
+
   <aside class="main-sidebar">
     <!-- sidebar-->
     <section class="sidebar">	
 		
         <div class="user-profile">
 			<div class="ulogo">
-				 <a href="http://127.0.0.1:8000">
+				 <a href="{{ route('dashboard') }}">
 				  <!-- logo for regular state and mobile devices -->
 					 <div class="d-flex align-items-center justify-content-center">					 	
 						  <img src="{{ asset('backend/images/logo-dark.png')}}" alt="">
@@ -139,7 +140,7 @@
         <li class="treeview {{ ($prefix == '/messages')?'active':'' }}">
           <a href="#">
             <i data-feather="send"></i>
-            <span>Message Managment</span>
+            <span>Messages @if($route == "dashboard")<span class="label label-danger">{{ $messages }}</span>@endif</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
@@ -256,8 +257,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            @if(isset(Auth::user()->ccentre_id))
             <li><a href="{{ route('booking.view') }}"><i class="ti-more"></i>Make Booking </a></li>
+            @else
+            <li><a href="{{ route('farmer.setup') }}"><i class="ti-more"></i>Make Booking</a></li>
+            @endif
             <li><a href="{{ route('booking.list') }}"><i class="ti-more"></i>Booking List </a></li>
+            <li><a href="{{ route('farmer.booking.invoice') }}"><i class="ti-more"></i>Check invoice</a></li>
           </ul>
         </li> 
         @endif
@@ -265,26 +271,26 @@
         <li class="treeview {{ ($prefix == '/farmerapps')?'active':'' }}">
           <a href="#">
             <i data-feather="filter"></i>
-            <span>Farmer App List</span>
+            <span>Farmer's Booking @if($route == "dashboard")<span class="label label-danger">{{ $todaybooking }}</span>@endif</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('app.list.today') }}"><i class="ti-more"></i>Today Appointment </a></li>
+            <li><a href="{{ route('app.list.today') }}"><i class="ti-more"></i>Today Appointment  @if($route == "dashboard")<span class="label label-info">{{ $todaybooking }}</span>@endif</a></li>
             <li><a href="{{ route('app.list') }}"><i class="ti-more"></i>All Appointment </a></li>
           </ul>
         </li>
         <li class="treeview {{ ($prefix == '/cinventory')?'active':'' }}">
           <a href="#">
             <i data-feather="home"></i>
-            <span>Inventory</span>
+            <span>Inventory @if($route == "app.list.today" || $route == "dashboard")<span class="label label-danger">{{ $todaybookingaccept }}</span>@endif</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('booking.lists') }}"><i class="ti-more"></i>Add New Products(RU) </a></li>
+            <li><a href="{{ route('booking.lists') }}"><i class="ti-more"></i>Add New Products(RU)  @if($route == "app.list.today" || $route == "dashboard")<span class="label label-info">{{ $todaybookingaccept }}</span>@endif</a></li>
             <li><a href="{{ route('product.add.normal.view') }}"><i class="ti-more"></i>Add New Products(N) </a></li>
             <li><a href="{{ route('product.transfer.ecenter.view') }}"><i class="ti-more"></i>Transfer Products </a></li>
             <li><a href="{{ route('product.summary')}}"><i class="ti-more"></i>Invetory Summary </a></li>
@@ -310,26 +316,26 @@
         <li class="treeview {{ ($prefix == '/buyerreqs')?'active':'' }}">
           <a href="#">
             <i data-feather="filter"></i>
-            <span>Buyer Request List</span>
+            <span>Buyer Request List @if($route == "dashboard")<span class="label label-danger">{{ $todaybuyerbooking }}</span>@endif</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('product.request.list.today') }}"><i class="ti-more"></i>Today Request </a></li>
+            <li><a href="{{ route('product.request.list.today') }}"><i class="ti-more"></i>Today Request  @if($route == "dashboard")<span class="label label-info">{{ $todaybuyerbooking }}</span>@endif</a></li>
             <li><a href="{{ route('product.request.list') }}"><i class="ti-more"></i>All Request List </a></li>
           </ul>
         </li>
         <li class="treeview {{ ($prefix == '/einventory')?'active':'' }}">
           <a href="#">
             <i data-feather="home"></i>
-            <span>Inventory</span>
+            <span>Inventory @if($route == "product.request.list.today" || $route == "dashboard" && $todaybuyerbookingaccept != 0)<span class="label label-danger">{{ $todaybuyerbookingaccept }}</span>@endif</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('booking.buyer.lists') }}"><i class="ti-more"></i>Sell Products Buyer(RU) </a></li>
+            <li><a href="{{ route('booking.buyer.lists') }}"><i class="ti-more"></i>Sell Products Buyer(RU)  @if($route == "product.request.list.today" || $route == "dashboard" && $todaybuyerbookingaccept != 0)<span class="label label-info">{{ $todaybuyerbookingaccept }}</span>@endif</a></li>
             <li><a href="{{ route('product.sell.normal.view') }}"><i class="ti-more"></i>Sell Products Buyer(N) </a></li>
             <li><a href="{{ route('product.transfer.market.view') }}"><i class="ti-more"></i>Distributed Retail Market </a></li>
             <li><a href="{{ route('product.summary.ecentre')}}"><i class="ti-more"></i>Invetory Summary </a></li>
@@ -346,8 +352,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            @if(isset(Auth::user()->ecentre_id))
             <li><a href="{{ route('buyer.booking.view') }}"><i class="ti-more"></i>Make Booking </a></li>
+            @else
+            <li><a href="{{ route('buyer.setup') }}"><i class="ti-more"></i>Make Booking </a></li>
+            @endif
             <li><a href="{{ route('buyer.booking.list') }}"><i class="ti-more"></i>Booking List </a></li>
+            <li><a href="{{ route('buyer.booking.invoices') }}"><i class="ti-more"></i>Check invoice</a></li>
           </ul>
         </li> 
         @endif
@@ -420,8 +431,37 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Product Report </a></li>
+
             <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Economic Centre Report </a></li>
             <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Collection Centre Report </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Farmer' )
+        <li class="treeview {{ ($prefix == '/freport')?'active':'' }}">
+          <a href="#">
+            <i data-feather="file-plus"></i>
+            <span>Summary Report</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('farmer.report.view') }}"><i class="ti-more"></i>Summary Report List </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Buyer' )
+        <li class="treeview {{ ($prefix == '/breport')?'active':'' }}">
+          <a href="#">
+            <i data-feather="file-plus"></i>
+            <span>Summary Report</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('buyer.report.view') }}"><i class="ti-more"></i>Summary Report List </a></li>
           </ul>
         </li> 
         @endif

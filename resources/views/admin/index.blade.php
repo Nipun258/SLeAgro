@@ -6,99 +6,113 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="row">
-				<div class="col-xl-4 col-6">
+				<div class="col-xl-3 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-primary-light rounded w-60 h-60">
 								<i class="text-primary mr-0 font-size-24 mdi mdi-account"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Registered Farmer</p>
+								<p class="text-white mt-20 mb-0 font-size-16">New Farmers</p>
 								<h2 class="text-success mb-0 font-weight-500"> {{ $farmercount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-6">
+				<div class="col-xl-3 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-clipboard-account"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">New Buyers</p>
+								<h2 class="text-success mb-0 font-weight-500"> {{ $farmercount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-warning-light rounded w-60 h-60">
 								<i class="text-warning mr-0 font-size-24 mdi mdi-leaf"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Available Vegetables</p>
+								<p class="text-white mt-20 mb-0 font-size-16">New Vegetables</p>
 								<h2 class="text-success mb-0 font-weight-500">{{ $vegitable }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-{{-- 				<div class="col-xl-3 col-6">
+       <div class="col-xl-3 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-info-light rounded w-60 h-60">
 								<i class="text-info mr-0 font-size-24 mdi mdi-sale"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Avalable Vegetable</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Avalable Vegetable</p>
 								<h3 class="text-white mb-0 font-weight-500">$1,250 <small class="text-danger"><i class="fa fa-caret-down"></i> -0.5%</small></h3>
 							</div>
 						</div>
 					</div>
-				</div> --}}
-				<div class="col-xl-4 col-6">
+				</div>
+				<div class="col-xl-3 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-danger-light rounded w-60 h-60">
 								<i class="text-danger mr-0 font-size-24 mdi mdi-phone-incoming"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Economic Center</p>
+								<p class="text-white mt-20 mb-0 font-size-16">New Economic Center</p>
 								<h2 class="text-success mb-0 font-weight-500">{{ $ecentre }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-6">
+				<div class="col-xl-3 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-warning-light rounded w-60 h-60">
 								<i class="text-warning mr-0 font-size-24 mdi mdi-account-multiple"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Registered Staff</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Staff Members</p>
 								<h2 class="text-success mb-0 font-weight-500">{{ $staffcount }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
-				@if(Auth::user()->role =='Admin')
-				<div class="col-xl-4 col-6">
-					<div class="box overflow-hidden pull-up">
-						<div class="box-body">							
-							<div class="icon bg-primary-light rounded w-60 h-60">
-								<i class="text-primary mr-0 font-size-24 mdi mdi-email-secure"></i>
-							</div>
-							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Contact Message</p>
-								<h2 class="text-success mb-0 font-weight-500">{{ $message }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +25%</small> --></h2>
-							</div>
-						</div>
-					</div>
-				</div>
-				@endif
-				<div class="col-xl-4 col-6">
+				<div class="col-xl-3 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
 							<div class="icon bg-info-light rounded w-60 h-60">
 								<i class="text-info mr-0 font-size-24 mdi mdi mdi-group"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Collection Center</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Collection Center</p>
 								<h2 class="text-success mb-0 font-weight-500">{{ $ccentre }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
 					</div>
 				</div>
+				@if(Auth::user()->role =='Admin')
+				<div class="col-xl-3 col-6">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-primary-light rounded w-60 h-60">
+								<i class="text-primary mr-0 font-size-24 mdi mdi-email-secure"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Contact Message</p>
+								<h2 class="text-success mb-0 font-weight-500">{{ $message }} <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +25%</small> --></h2>
+							</div>
+						</div>
+					</div>
+				</div>
+				@endif
+
 <!-- {{-- 				<div class="col-xl-2 col-6">
 					<div class="box overflow-hidden pull-up">
 						<div class="box-body">							
@@ -106,7 +120,7 @@
 								<i class="text-success mr-0 font-size-24 mdi mdi-phone-outgoing"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Outbound Call</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Outbound Call</p>
 								<h3 class="text-white mb-0 font-weight-500">1,700 <small class="text-success"><i class="fa fa-caret-up"></i> +0.5%</small></h3>
 							</div>
 						</div>
@@ -119,7 +133,7 @@
 								<i class="text-white mr-0 font-size-24 mdi mdi-chart-line"></i>
 							</div>
 							<div>
-								<p class="text-mute mt-20 mb-0 font-size-16">Total Revune</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Total Revune</p>
 								<h3 class="text-white mb-0 font-weight-500">$4,500k <small class="text-success"><i class="fa fa-caret-up"></i> +2.5%</small></h3>
 							</div>
 						</div>
@@ -185,7 +199,7 @@
 								<div class="box-body pb-0">	
 									<div>
 										<h2 class="text-white mb-0 font-weight-500">18.8k</h2>
-										<p class="text-mute mb-0 font-size-20">Total users</p>
+										<p class="text-white mb-0 font-size-20">Total users</p>
 									</div>
 								</div>
 								<div class="box-body p-0">
@@ -198,7 +212,7 @@
 								<div class="box-body pb-0">	
 									<div>
 										<h2 class="text-white mb-0 font-weight-500">35.8k</h2>
-										<p class="text-mute mb-0 font-size-20">Average reach per post</p>
+										<p class="text-white mb-0 font-size-20">Average reach per post</p>
 									</div>
 								</div>
 								<div class="box-body p-0">

@@ -35,6 +35,8 @@ use App\Http\Controllers\Backend\Inventory\EcentreProductTransferController;
 use App\Http\Controllers\Backend\Report\CollectionCentreReportController;
 use App\Http\Controllers\Backend\Report\EconomicCentreReportController;
 use App\Http\Controllers\Backend\Report\AdminReportController;
+use App\Http\Controllers\Backend\Report\FarmerReportController;
+use App\Http\Controllers\Backend\Report\BuyerReportController;
 use Illuminate\Support\Facades\DB; //query builder in here
 use App\Mail\registerMail;
 use Illuminate\Support\Facades\Mail;
@@ -429,6 +431,10 @@ Route::group(['middleware' => 'farmer'],function(){
 
  Route::get('/mybooking',[BookingController::class, 'BookingList'])->name('booking.list');
 
+ Route::get('/mybooking/invoice',[BookingController::class, 'BookingInvoice'])->name('farmer.booking.invoice');
+
+ Route::get('/booking/invoice/generate/{id}',[BookingController::class, 'BookingInvoiceGenerate'])->name('farmer.booking.invoice.generate');
+
    });//regional center officer appointment setup data controlling route list
 
 });
@@ -584,7 +590,14 @@ Route::group(['middleware' => 'buyer'],function(){
 
   Route::get('/mybooking/buyer',[BuyerBookingController::class, 'BuyerBookingList'])->name('buyer.booking.list');
 
-   });//regional center officer appointment setup data controlling route list
+  Route::get('/buyer/book/product/{id}',[BuyerBookingController::class, 'BuyerBookingProduct'])->name('buyer.booking.product');
+
+  Route::get('/mybooking/invoice',[BuyerBookingController::class, 'BuyerBookingInvoice'])->name('buyer.booking.invoices');
+
+  Route::get('/booking/invoice/generate/{id}',[BuyerBookingController::class, 'BuyerBookingInvoiceGenerate'])->name('buyer.booking.invoice.generate');
+
+
+   });//buyer booking realeted activity
 
 });
 
@@ -614,10 +627,17 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('ccentre/report/inventory/month',[CollectionCentreReportController::class, 'CcentreInventoryMonth'])->name('ccentre.report.inventory.month');
 
+   Route::post('ccentre/report/payment/summary/register',[CollectionCentreReportController::class, 'CcentrePaymentSummaryRegister'])->name('ccentre.report.payment.summary.register');
+
+   Route::post('ccentre/report/payment/summary/normal',[CollectionCentreReportController::class, 'CcentrePaymentSummaryNormal'])->name('ccentre.report.payment.summary.normal');
+
+   Route::post('ccentre/report/payment/summary/transfer',[CollectionCentreReportController::class, 'CcentrePaymentSummaryTransfer'])->name('ccentre.report.payment.summary.transfer');
+
    });//regional center report route list
 
 
    Route::prefix('ereport')->group(function(){
+
         /*******************Economic centre report *******************/
 
   Route::get('/ecentre/report',[EconomicCentreReportController::class, 'EcentreReportView'])->name('ecentre.report.view');
@@ -642,7 +662,57 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('ecentre/report/ccentre/stock/ckeck',[EconomicCentreReportController::class, 'EcentreCcentreStockCheck'])->name('ecentre.report.ccentre.stock.check');
 
+   Route::post('ecentre/report/payment/summary/register',[EconomicCentreReportController::class, 'EcentrePaymentSummaryRegister'])->name('ecentre.report.payment.summary.register');
+
+   Route::post('ecentre/report/payment/summary/normal',[EconomicCentreReportController::class, 'EcentrePaymentSummaryNormal'])->name('ecentre.report.payment.summary.normal');
+
+   Route::post('ecentre/report/payment/summary/transfer',[EconomicCentreReportController::class, 'EcentrePaymentSummaryTransfer'])->name('ecentre.report.payment.summary.transfer');
+
    });//regional center report route list
+
+});
+
+Route::group(['middleware' => 'farmer'],function(){
+
+   Route::prefix('freport')->group(function(){
+     
+     /*******************farmer report setup *******************/
+
+  Route::get('/farmer/report',[FarmerReportController::class, 'FarmerReportView'])->name('farmer.report.view');
+
+  Route::post('farmer/report/appointment',[FarmerReportController::class, 'FarmerAppointment'])->name('farmer.report.appointment');
+
+  Route::post('farmer/report/payment/register',[FarmerReportController::class, 'FarmerPaymentRegister'])->name('farmer.report.payment.register');
+
+  Route::post('farmer/report/inventory/daily',[FarmerReportController::class, 'FarmerInventoryDaily'])->name('farmer.report.inventory.daily');
+
+   Route::post('farmer/report/inventory/month',[FarmerReportController::class, 'FarmerInventoryMonth'])->name('farmer.report.inventory.month');
+
+   Route::post('farmer/report/payment/summary',[FarmerReportController::class, 'FarmerPaymentSummary'])->name('farmer.report.payment.summary');
+
+   });//regional center officer appointment setup data controlling route list
+
+});
+
+Route::group(['middleware' => 'buyer'],function(){
+
+   Route::prefix('breport')->group(function(){
+     
+     /*******************buyer report setup *******************/
+
+  Route::get('/buyer/report',[BuyerReportController::class, 'BuyerReportView'])->name('buyer.report.view');
+
+  Route::post('buyer/report/appointment',[BuyerReportController::class, 'BuyerAppointment'])->name('buyer.report.appointment');
+
+  Route::post('buyer/report/payment/register',[BuyerReportController::class, 'BuyerPaymentRegister'])->name('buyer.report.payment.register');
+
+  Route::post('buyer/report/inventory/daily',[BuyerReportController::class, 'BuyerInventoryDaily'])->name('buyer.report.inventory.daily');
+
+   Route::post('buyer/report/inventory/month',[BuyerReportController::class, 'BuyerInventoryMonth'])->name('buyer.report.inventory.month');
+
+   Route::post('buyer/report/payment/summary',[BuyerReportController::class, 'BuyerPaymentSummary'])->name('buyer.report.payment.summary');
+
+   });//regional center officer appointment setup data controlling route list
 
 });
 

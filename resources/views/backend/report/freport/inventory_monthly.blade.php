@@ -31,6 +31,13 @@
    text-align: center;
    font-size: 15px;
 }
+.footer1 {
+   width: 100%;
+   background-color: #9534eb;
+   color: white;
+   text-align: center;
+   font-size: 13px;
+}
 @page { margin: 20px 30px 40px 50px; }
 @page {
   footer: page-footer;
@@ -50,11 +57,12 @@
 
     </h2></td> 
     <td><h2>Easy SleAgro System</h2>
-      @foreach($ccenter as $ccenter)
-<p>Centre Location : {{ $ccenter->centre_name}}</p>
-<p>Phone : {{ $ccenter->mobile}}</p>
-<p>Email : {{ $ccenter->email}}</p>
-      @endforeach
+      @foreach($farmer as $farmer)
+<p>Name : {{ $farmer->name}}</p>
+<p>Phone : {{ $farmer->mobile}}</p>
+<p>Email : {{ $farmer->email}}</p>
+<p>Collection Centre : {{ $farmer->centre_name}}</p>
+    @endforeach
     </td> 
   </tr>
   
@@ -62,34 +70,31 @@
 </table>
 
 <div class="footer">
-  <p><b>Economic Centre Transfer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
+  <p><b>Inventory Transction Monthly Summary</b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
 </div>
 <br>
+
 <table id="customers">
   <tr>
     <th width="5%">SN</th>
-    <th width="10%">Collection Centre Officer</th>
+    <!-- <th>Economic Centre</th> -->
     <th>Date</th>
     <th>Order ID</th>
     <th>Invoice ID</th>
-    <th>Total Payment</th>
-    <th>Payment Type</th>
-    <th width="10%">Economic Centre Officer</th>
+    <th>Vegitable</th>
+    <th>Quntity(Kg)</th>
+    <!-- <th>Price</th> -->
+    <th>Inventory Create At</th>
   </tr>
-  @foreach(json_decode($payments) as $key => $payment)
+  @foreach($book_inventories as $key => $inventory)
   <tr>
     <td>{{ $key+1 }}</td>
-    <td>{{ $payment->rname }}</td>
-    <td>{{ $payment->date }}</td>
-    <td>{{ $payment->order_id }}</td>
-    <td>{{ $payment->invoice_id }}</td>
-    <td>Rs. {{ number_format($payment->net_payment , 2) }}</td>
-    @if($payment->payment_type == 1)
-    <td>Bank Payment</td>
-    @else
-    <td>Cash Payment</td>
-    @endif
-    <td>{{ $payment->sname}}</td>
+    <td>{{ $inventory->date }}</td>
+    <td>{{ $inventory->order_id }}</td>
+    <td>{{ $inventory->invoice_id }}</td>
+    <td>{{ $inventory->vegname }}</td>
+    <td>{{ $inventory->quntity }}</td>
+    <td>{{ $inventory->created_at}}</td>
   </tr>
   @endforeach
 </table>

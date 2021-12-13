@@ -152,4 +152,68 @@ class BookingController extends Controller
         //dd($mybooking);
         return view('backend.booking.book.list',compact('mybooking'));
     }
+
+        public function BookingInvoice(){
+
+        $mybooking  = DB::table('bookings')
+                        ->Join('users','bookings.user_id','=','users.id')
+                        ->Join('collection_centres','bookings.ccentre_id','=','collection_centres.id')
+                         ->where('users.id', Auth::user()->id)
+                         ->where('bookings.status',2)
+                        ->select('users.name','collection_centres.centre_name','bookings.date','bookings.time','bookings.created_at','bookings.status','bookings.id')
+                        ->orderBy('date', 'desc')
+                        ->get();
+
+        return view('backend.booking.book.invoice',compact('mybooking'));
+    } 
+
+    public function BookingInvoiceGenerate($id){
+
+        $order_id = 'BO'.str_pad($id , 6, "0", STR_PAD_LEFT);
+
+        $invoice_id = '#IBO'.str_pad($id , 6, "0", STR_PAD_LEFT);
+
+        $date = DB::table('inventories')
+                ->where('inventories.order_id',$order_id)
+                ->whereIn('inventories.status',[0,3])
+                ->select('inventories.date')
+                ->limit(1)
+                ->get();
+
+        $date = json_decode($date,true);
+        $bdate=$date[0]["date"];
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name','users.id')
+                  ->get();
+
+        $user = DB::table('inventories')
+                  ->Join('users','users.id','=','inventories.user_id')
+                  ->Join('farmers','farmers.user_id','=','users.id')
+                  ->where('inventories.order_id',$order_id)
+                  ->whereIn('inventories.status',[0,3])
+                  ->select('users.name','users.mobile','users.email','users.address','farmers.account_number','inventories.order_id','inventories.invoice_id','users.id')
+                  ->orderBy('inventories.order_id', 'desc')
+                  ->limit(1)
+                  ->get();
+
+        $orders = DB::table('inventories')
+                ->Join('vegitables','vegitables.id','=','inventories.veg_id')
+                ->Join('old_veg_prices','old_veg_prices.veg_id','=','vegitables.id')
+                ->where('inventories.order_id',$order_id)
+                ->whereIn('inventories.status',[0,3])
+                ->where('old_veg_prices.price_date',$bdate)
+                ->select('vegitables.name','inventories.quntity','old_veg_prices.price_wholesale','inventories.price')
+                ->get();
+
+        $total_price = DB::table('inventories')
+                       ->where('inventories.order_id',$order_id)
+                       ->whereIn('inventories.status',[0,3])
+                       ->select(DB::raw('SUM(inventories.price) as total'))
+                       ->get();
+        
+        return view('backend.inventory.ccentre.invoice',compact('ccenter','user','orders','total_price','bdate'));
+    }
 }

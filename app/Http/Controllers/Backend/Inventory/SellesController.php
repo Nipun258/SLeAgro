@@ -115,6 +115,10 @@ class SellesController extends Controller
 
     public function BuyerBookingInvoiceGen()
     {   
+        $order_id = Session::get('order_id');
+
+        $invoice_id = Session::get('invoice_id');
+
         $ecenter = DB::table('users')
                   ->Join('economic_centres','economic_centres.id','=','users.ecentre_id')
                   ->where('users.id',Auth::user()->id)
@@ -123,16 +127,12 @@ class SellesController extends Controller
 
         $user = DB::table('inventories')
                   ->Join('users','users.id','=','inventories.user_id')
+                  ->where('inventories.order_id',$order_id)
+                  ->where('inventories.status',1)
                   ->select('users.name','users.mobile','users.email','users.address','inventories.order_id','inventories.invoice_id','inventories.user_id')
                   ->orderBy('inventories.order_id', 'desc')
                   ->limit(1)
                   ->get();
-
-        $order_id = Session::get('order_id');
-
-        $invoice_id = Session::get('invoice_id');
-
-        //dd($order_id);
 
         $orders = DB::table('inventories')
                 ->Join('vegitables','vegitables.id','=','inventories.veg_id')
@@ -141,7 +141,7 @@ class SellesController extends Controller
                 ->where('inventories.status',1)
                 ->select('vegitables.name','inventories.quntity','vegitable_prices.price_wholesale','inventories.price')
                 ->get();
-        //dd($orders);
+
         $total_price = DB::table('inventories')
                        ->where('inventories.order_id',$order_id)
                        ->where('inventories.status',1)
@@ -182,6 +182,9 @@ class SellesController extends Controller
        $mail = new PaymentSellMail($data);
     
        Mail::to($request->email)->send($mail);
+
+        //Session::forget('order_id');
+        //Session::forget('invoice_id');
          
         $notification = array(
            'message' => 'New buyer payment completed Successfully',

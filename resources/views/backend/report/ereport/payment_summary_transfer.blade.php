@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+e<!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -31,6 +31,20 @@
    text-align: center;
    font-size: 15px;
 }
+.footer1 {
+   width: 100%;
+   background-color: #3232a8;
+   color: white;
+   text-align: center;
+   font-size: 15px;
+}
+.footer2 {
+   width: 100%;
+   background-color: #ff6600;
+   color: white;
+   text-align: center;
+   font-size: 15px;
+}
 @page { margin: 20px 30px 40px 50px; }
 @page {
   footer: page-footer;
@@ -50,10 +64,10 @@
 
     </h2></td> 
     <td><h2>Easy SleAgro System</h2>
-      @foreach($ccenter as $ccenter)
-<p>Centre Location : {{ $ccenter->centre_name}}</p>
-<p>Phone : {{ $ccenter->mobile}}</p>
-<p>Email : {{ $ccenter->email}}</p>
+      @foreach($ecenter as $ecenter)
+<p>Centre Location : {{ $ecenter->centre_name}}</p>
+<p>Phone : {{ $ecenter->mobile}}</p>
+<p>Email : {{ $ecenter->email}}</p>
       @endforeach
     </td> 
   </tr>
@@ -62,38 +76,34 @@
 </table>
 
 <div class="footer">
-  <p><b>Economic Centre Transfer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
+  <p><b>Transfer Payment Reviced Summary Report</b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
 </div>
 <br>
+<div class="footer2">
+  <p><b>Product Wise Payment Summary</b></p>
+</div>
 <table id="customers">
   <tr>
     <th width="5%">SN</th>
-    <th width="10%">Collection Centre Officer</th>
-    <th>Date</th>
-    <th>Order ID</th>
-    <th>Invoice ID</th>
-    <th>Total Payment</th>
-    <th>Payment Type</th>
-    <th width="10%">Economic Centre Officer</th>
+    <!-- <th>Image</th> -->
+    <th>Vegitable</th>
+    <th>Vegitable Stock(Kg)</th>
+    <th>Total Earn Money (Rs.)</th>
   </tr>
-  @foreach(json_decode($payments) as $key => $payment)
+  @foreach($payments as $key => $payment)
   <tr>
     <td>{{ $key+1 }}</td>
-    <td>{{ $payment->rname }}</td>
-    <td>{{ $payment->date }}</td>
-    <td>{{ $payment->order_id }}</td>
-    <td>{{ $payment->invoice_id }}</td>
-    <td>Rs. {{ number_format($payment->net_payment , 2) }}</td>
-    @if($payment->payment_type == 1)
-    <td>Bank Payment</td>
-    @else
-    <td>Cash Payment</td>
-    @endif
-    <td>{{ $payment->sname}}</td>
+    <!-- <td> <img src="{{ asset($payment->image) }}" style="height:40px; width:70px;" > </td> -->
+    <td>{{ $payment->name }}</td>
+    <td>{{ $payment->total }}</td>
+    <td>Rs. {{ number_format($payment->count , 2) }}</td>
   </tr>
   @endforeach
 </table>
 <br> <br>
+<div class="footer1">
+  <p>{{date("Y F", strtotime($req_month))}} Economic Centre total product Value <span style="color:yellow;font-size: 25px;font-weight: bold;">Rs. {{ number_format($total_payments , 2)}}</span></p>
+</div>
   <i style="font-size: 10px; float: right;">Print Data : {{ date("d M Y") }}</i>
 <htmlpagefooter name="page-footer">
   <table width="100%">

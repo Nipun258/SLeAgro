@@ -7,14 +7,12 @@
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        
-
-
       <div class="col-12">
 
        <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Farmer Havest selling Appointment Booking List <span class="text-danger">({{$mybooking->count()}})</span></h3>
+          <h3 class="box-title">Buyer Booking vegitable product List <span class="text-danger">( {{$bdate}} )</span></h3>
+          <a href="{{ route('buyer.booking.list') }}" style="float: right;" class="btn btn-success mb-5">Back Boooking List</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -23,28 +21,24 @@
             <thead>
               <tr>
                 <th width="5%">SN</th>
-                <th>Location</th>
-                <th>Date For</th>
-                <th>Time</th>
-                <th>Created Date</th>
-                <th>Status</th>
+                <th>Vegitable Name</th>
+                <th>Quntity(Kg)</th>
+                <th width="20%">Status</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($mybooking as $key => $booking)
+              @foreach($product_list as $key => $product)
               <tr>
                 <td>{{ $key+1 }}</td>
-                <td>{{ $booking->centre_name }}</td>
-                <td>{{ $booking->date }}</td>
-                <td>{{ $booking->time}}</td>
-                <td>{{ $booking->created_at}}</td>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->quntity }}</td>
                 <td>
-                  @if($booking->status == 0)
-                  <a type="button" class="btn btn-danger btn-sm">Not Visited</a>
-                  @elseif($booking->status == 1)
+                  @if($product->status == 0)
+                  <a type="button" class="btn btn-danger btn-sm">Waiting buy</a>
+                  @elseif($product->status == 1)
                   <a type="button" class="btn btn-info btn-sm">Checked</a>
                   @else
-                   <a type="button" class="btn btn-success btn-sm">Product Sold</a>
+                   <a type="button" class="btn btn-success btn-sm">Product Buy</a>
                   @endif
                 </td>
               </tr>
@@ -69,3 +63,4 @@
     </div>
   </div>
 @endsection
+

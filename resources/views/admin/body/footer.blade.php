@@ -9,5 +9,5 @@
 		  </li>
 		</ul>
     </div>
-	  &copy; 2020 <a href="#">Department Of Agriculture</a>. All Rights Reserved.
+	  &copy; 2021 <a href="#">Department Of Agriculture</a>. All Rights Reserved.
   </footer>

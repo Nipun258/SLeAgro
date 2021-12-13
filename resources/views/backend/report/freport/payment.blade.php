@@ -50,11 +50,12 @@
 
     </h2></td> 
     <td><h2>Easy SleAgro System</h2>
-      @foreach($ccenter as $ccenter)
-<p>Centre Location : {{ $ccenter->centre_name}}</p>
-<p>Phone : {{ $ccenter->mobile}}</p>
-<p>Email : {{ $ccenter->email}}</p>
-      @endforeach
+      @foreach($farmer as $farmer)
+<p>Name : {{ $farmer->name}}</p>
+<p>Phone : {{ $farmer->mobile}}</p>
+<p>Email : {{ $farmer->email}}</p>
+<p>Collection Centre : {{ $farmer->centre_name}}</p>
+    @endforeach
     </td> 
   </tr>
   
@@ -62,24 +63,21 @@
 </table>
 
 <div class="footer">
-  <p><b>Economic Centre Transfer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
+  <p><b>Farmer Payment List </b>(<span style="color:yellow;">{{$req_month}}</span>)</p>
 </div>
 <br>
 <table id="customers">
   <tr>
     <th width="5%">SN</th>
-    <th width="10%">Collection Centre Officer</th>
     <th>Date</th>
     <th>Order ID</th>
     <th>Invoice ID</th>
     <th>Total Payment</th>
     <th>Payment Type</th>
-    <th width="10%">Economic Centre Officer</th>
   </tr>
   @foreach(json_decode($payments) as $key => $payment)
   <tr>
     <td>{{ $key+1 }}</td>
-    <td>{{ $payment->rname }}</td>
     <td>{{ $payment->date }}</td>
     <td>{{ $payment->order_id }}</td>
     <td>{{ $payment->invoice_id }}</td>
@@ -89,7 +87,6 @@
     @else
     <td>Cash Payment</td>
     @endif
-    <td>{{ $payment->sname}}</td>
   </tr>
   @endforeach
 </table>

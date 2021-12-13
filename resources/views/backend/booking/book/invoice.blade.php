@@ -27,7 +27,7 @@
                 <th>Date For</th>
                 <th>Time</th>
                 <th>Created Date</th>
-                <th>Status</th>
+                <th width="20%">View Invoice</th>
               </tr>
             </thead>
             <tbody>
@@ -38,15 +38,7 @@
                 <td>{{ $booking->date }}</td>
                 <td>{{ $booking->time}}</td>
                 <td>{{ $booking->created_at}}</td>
-                <td>
-                  @if($booking->status == 0)
-                  <a type="button" class="btn btn-danger btn-sm">Not Visited</a>
-                  @elseif($booking->status == 1)
-                  <a type="button" class="btn btn-info btn-sm">Checked</a>
-                  @else
-                   <a type="button" class="btn btn-success btn-sm">Product Sold</a>
-                  @endif
-                </td>
+                <td><a href="{{route('farmer.booking.invoice.generate',$booking->id)}}" type="button" class="btn btn-primary btn-md">Invoice</a></td>
               </tr>
               @endforeach
             </tbody>

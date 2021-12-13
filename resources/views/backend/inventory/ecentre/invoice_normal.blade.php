@@ -92,7 +92,7 @@
 					  <th>No</th>
 					  <th>Description</th>
 					  <th class="text-right">Quantity(Kg)</th>
-					  <th class="text-right">Unit Cost</th>
+					  <th class="text-right">Vegitable Price(p/Kg)</th>
 					  <th class="text-right">Subtotal</th>
 					</tr>
 					@foreach($orders as $key => $order)
@@ -100,7 +100,7 @@
 					  <td>{{ $key+1 }}</td>
 					  <td>{{ $order->name }}</td>
 					  <td class="text-right">{{ $order->quntity }}</td>
-					  <td class="text-right">{{ $order->price_wholesale }}</td>
+					  <td class="text-right">Rs. {{ number_format($order->price_wholesale , 2) }}</td>
 					  <td class="text-right">{{ $order->price }}</td>
 					</tr>
 					@endforeach

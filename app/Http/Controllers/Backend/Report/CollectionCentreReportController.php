@@ -495,4 +495,161 @@ class CollectionCentreReportController extends Controller
 
   }
 
+  public function CcentrePaymentSummaryRegister(Request $request)
+    {   
+        $validatedData = $request->validate([
+            'month' => 'required'
+        ],[
+            'month.required' => 'You Must select valid month'
+        ]);
+
+        if ($request->month) {
+
+        $payments = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.user_id','!=',0)
+                   ->whereIn('inventories.status',[0,3])
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*0.97 as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $payment_farmers = DB::table('inventories')
+                        ->Join('users','users.id','=','inventories.user_id')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.user_id','!=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select('inventories.user_id',DB::raw('SUM(inventories.price)*0.97 as pay'),'users.name')
+                        ->groupBy('inventories.user_id','users.name')
+                        ->get();
+
+        $total_payments = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.user_id','!=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.97 as pay'))
+                        ->get();
+
+        $total_payments=json_decode($total_payments,true);
+        $total_payments=$total_payments[0]["pay"];
+
+        //dd($total_payments);
+        $req_month = $request->month;
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.report.creport.payment_summary_register', compact('ccenter','payments','req_month','total_payments','payment_farmers'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Collection Centre Register Payment Summary.pdf');
+    }
+
+  }
+
+  public function CcentrePaymentSummaryNormal(Request $request)
+    {   
+        $validatedData = $request->validate([
+            'month' => 'required'
+        ],[
+            'month.required' => 'You Must select valid month'
+        ]);
+
+        if ($request->month) {
+
+        $payments = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.user_id','=',0)
+                   ->whereIn('inventories.status',[0,3])
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*0.95 as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $total_payments = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.user_id','=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.95 as pay'))
+                        ->get();
+
+        $total_payments=json_decode($total_payments,true);
+        $total_payments=$total_payments[0]["pay"];
+
+        //dd($payments);
+        $req_month = $request->month;
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.report.creport.payment_summary_normal', compact('ccenter','payments','req_month','total_payments'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Collection Centre NormaL Payment Summary.pdf');
+    }
+
+  }
+
+  public function CcentrePaymentSummaryTransfer(Request $request)
+    {   
+        $validatedData = $request->validate([
+            'month' => 'required'
+        ],[
+            'month.required' => 'You Must select valid month'
+        ]);
+
+        if ($request->month) {
+
+        $payments = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.status',2)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price) as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $total_payments = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.status',2)
+                        ->select(DB::raw('SUM(inventories.price) as pay'))
+                        ->get();
+
+        $total_payments=json_decode($total_payments,true);
+        $total_payments=$total_payments[0]["pay"];
+
+        //dd($payments);
+        $req_month = $request->month;
+
+        $ccenter = DB::table('users')
+                  ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address','collection_centres.centre_name')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.report.creport.payment_summary_transfer', compact('ccenter','payments','req_month','total_payments'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Collection Centre Transfer Payment Summary.pdf');
+    }
+
+  }
+
 }

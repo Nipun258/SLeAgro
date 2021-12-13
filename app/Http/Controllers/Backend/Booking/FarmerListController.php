@@ -39,7 +39,17 @@ class FarmerListController extends Controller
                         ->orderBy('date', 'desc')
                         ->get();
 
-        return view('backend.booking.farmer_list.today_list',compact('mybooking'));
+       $todaybookingaccept  = DB::table('bookings')
+                    ->where('bookings.ccentre_id', Auth::user()->ccentre_id)
+                    ->where('bookings.date',date('Y-m-d'))
+                    ->where('bookings.status',1)
+                    ->select(DB::raw('COUNT(id) as value'))
+                    ->get();
+        $todaybookingaccept = json_decode($todaybookingaccept,true);
+           
+        $todaybookingaccept = $todaybookingaccept[0]["value"];
+
+        return view('backend.booking.farmer_list.today_list',compact('mybooking','todaybookingaccept'));
     }
 
     public function AppFilter(Request $request){

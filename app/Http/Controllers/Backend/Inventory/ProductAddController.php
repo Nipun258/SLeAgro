@@ -200,6 +200,10 @@ class ProductAddController extends Controller
 
     public function BookingInvoiceGen()
     {   
+        $order_id = Session::get('order_id');
+
+        $invoice_id = Session::get('invoice_id');
+
         $ccenter = DB::table('users')
                   ->Join('collection_centres','collection_centres.id','=','users.ccentre_id')
                   ->where('users.id',Auth::user()->id)
@@ -209,14 +213,12 @@ class ProductAddController extends Controller
         $user = DB::table('inventories')
                   ->Join('users','users.id','=','inventories.user_id')
                   ->Join('farmers','farmers.user_id','=','users.id')
+                  ->where('inventories.order_id',$order_id)
+                  ->where('inventories.status',0)
                   ->select('users.name','users.mobile','users.email','users.address','farmers.account_number','inventories.order_id','inventories.invoice_id','users.id')
                   ->orderBy('inventories.order_id', 'desc')
                   ->limit(1)
                   ->get();
-
-        $order_id = Session::get('order_id');
-
-        $invoice_id = Session::get('invoice_id');
 
         $orders = DB::table('inventories')
                 ->Join('vegitables','vegitables.id','=','inventories.veg_id')
@@ -252,6 +254,7 @@ class ProductAddController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
+
         $data = [
 
             'order_id' => $request->order_id,
@@ -266,6 +269,9 @@ class ProductAddController extends Controller
        $mail = new PaymentPayMail($data);
     
        Mail::to($request->email)->send($mail);
+
+        //Session::forget('order_id');
+        //Session::forget('invoice_id');
          
         $notification = array(
            'message' => 'New payment completed Successfully',

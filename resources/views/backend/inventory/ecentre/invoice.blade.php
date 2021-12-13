@@ -29,7 +29,9 @@
 				 @csrf
 				  <div class="bb-1 clearFix">
 					<div class="text-right pb-15">
-						<a class="btn btn-rounded btn-success" type="button"> <span><i class="fa fa-print"></i> Save</span> </a>
+						@if(Auth::user()->role =='Buyer')
+						<a href="{{route('buyer.booking.invoice')}}"class="btn btn-rounded btn-success" type="button"> <span>Back Order List</span> </a>
+						@endif
 						<a id="print2" class="btn btn-rounded btn-warning" type="button"> <span><i class="fa fa-print"></i> Print</span> </a>
 					</div>	
 				  </div>
@@ -38,7 +40,11 @@
 				  <div class="page-header">
 					<h2 class="d-inline"><span class="font-size-30">Selling Invoice</span></h2>
 					<div class="pull-right text-right">
+						@if(Auth::user()->role =='EC-Officer')
 						<h3>{{ date('d F Y') }}</h3>
+						@elseif(Auth::user()->role =='Buyer')
+						<h3>{{ date("d F Y", strtotime($bdate)) }}</h3>
+						@endif
 					</div>	
 				  </div>
 				</div>
@@ -48,7 +54,7 @@
 			  <div class="row invoice-info">
 				<div class="col-md-6 invoice-col">
 				@foreach($ecenter as $key => $ecenter)
-				  <strong class="text-danger">From</strong>	
+				  <strong class="text-danger">To</strong>	
 				  <address>
 					<strong class="text-blue font-size-24">{{ $ecenter->centre_name }} Economic Centre</strong><br>
 					<strong class="d-inline">{{ $ecenter->address }}</strong><br>
@@ -61,7 +67,7 @@
 				<!-- /.col -->
 				<div class="col-md-6 invoice-col text-right">
 				@foreach($user as $key => $user)
-				  <strong class="text-danger">To</strong>
+				  <strong class="text-danger">From</strong>
 				  <address>
 					<strong class="text-blue font-size-24">{{ $user->name}}</strong><br>
 					{{ $user->address}}<br>
@@ -73,7 +79,11 @@
 					<div class="invoice-details row no-margin">
 					  <div class="col-md-6 col-lg-3"><b>Invoice </b>{{ $invoice_id }}</div>
 					  <div class="col-md-6 col-lg-3"><b>Order ID:</b> {{ $order_id }}</div>
+					  @if(Auth::user()->role =='EC-Officer')
 					  <div class="col-md-6 col-lg-3"><b>Payment Due:</b> {{ date('d/m/Y') }}</div>
+					  @elseif(Auth::user()->role =='Buyer')
+					  <div class="col-md-6 col-lg-3"><b>Payment Due:</b> {{ date("d/m/Y", strtotime($bdate)) }}</div>
+					  @endif
 					  <div class="col-md-6 col-lg-3"><b>Account:</b> N/A</div>
 					</div>
 					<input type="hidden" name="from" value="{{$user->user_id}}">
@@ -94,8 +104,8 @@
 					<tr>
 					  <th>#</th>
 					  <th>Description</th>
-					  <th class="text-right">Quantity</th>
-					  <th class="text-right">Unit Cost</th>
+					  <th class="text-right">Quantity(Kg)</th>
+					  <th class="text-right">Vegitable Price(p/Kg)</th>
 					  <th class="text-right">Subtotal</th>
 					</tr>
 					@foreach($orders as $key => $order)
@@ -103,7 +113,7 @@
 					  <td>{{ $key+1 }}</td>
 					  <td>{{ $order->name }}</td>
 					  <td class="text-right">{{ $order->quntity }}</td>
-					  <td class="text-right">{{ $order->price_wholesale }}</td>
+					  <td class="text-right">Rs. {{ number_format($order->price_wholesale , 2) }}</td>
 					  <td class="text-right">{{ $order->price }}</td>
 					</tr>
 					@endforeach
@@ -138,7 +148,9 @@
 			  <!-- this row will not appear when printing -->
 			  <div class="row no-print">
 				<div class="col-12">
+				@if(Auth::user()->role =='EC-Officer')
 				  <input type="submit" class="btn btn-rounded btn-success pull-right" value="Submit Payment">
+				@endif
 				</div>
 			  </div>
 			</form>

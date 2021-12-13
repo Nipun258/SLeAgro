@@ -26,6 +26,7 @@
                 <th>Location</th>
                 <th>Date For</th>
                 <th>Created Date</th>
+                <th>View Booking Item</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -36,13 +37,14 @@
                 <td>{{ $booking->centre_name }}</td>
                 <td>{{ $booking->date }}</td>
                 <td>{{ $booking->created_at}}</td>
+                <td><a href="{{route('buyer.booking.product',$booking->id)}}" type="button" class="btn btn-info btn-md">View Booking Item</a></td>
                 <td>
                   @if($booking->status == 0)
-                  <button class="btn btn-danger btn-sm">Not Visited</button>
+                  <a type="button" class="btn btn-danger btn-sm">Not Visited</a>
                   @elseif($booking->status == 1)
-                  <button class="btn btn-info btn-sm">Checked</button>
+                  <a type="button" class="btn btn-info btn-sm">Checked</a>
                   @else
-                   <button class="btn btn-success btn-sm">Product Buy</button>
+                   <a type="button" class="btn btn-success btn-sm">Product Buy</a>
                   @endif
                 </td>
               </tr>

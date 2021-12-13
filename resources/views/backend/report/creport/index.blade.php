@@ -175,6 +175,51 @@
 					</div>
 				</a>
 				</div>
+			<div class="col-xl-4 col-6">
+					<a href="#" data-target="#payment-summary-register" data-toggle="modal">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-warning-light rounded w-60 h-60">
+								<i class="text-warning mr-0 font-size-24 mdi mdi-cake-layered"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Registered Farmer Buying Payment Summary Report</p>
+								<h2 class="text-success mb-0 font-weight-500"><!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				<div class="col-xl-4 col-6">
+					<a href="#" data-target="#payment-summary-normal" data-toggle="modal">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-info-light rounded w-60 h-60">
+								<i class="text-info mr-0 font-size-24 mdi mdi-forklift"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Normal Farmer Buying Payment Summary Report</p>
+								<h2 class="text-success mb-0 font-weight-500"><!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				<div class="col-xl-4 col-6">
+					<a href="#" data-target="#payment-summary-transfer" data-toggle="modal">
+					<div class="box overflow-hidden pull-up">
+						<div class="box-body">							
+							<div class="icon bg-success-light rounded w-60 h-60">
+								<i class="text-success mr-0 font-size-24 mdi mdi-monitor-multiple"></i>
+							</div>
+							<div>
+								<p class="text-white mt-20 mb-0 font-size-16">Transfer Payment Reviced Summary Report</p>
+								<h2 class="text-success mb-0 font-weight-500"><!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
 
 			</div>
 
@@ -361,6 +406,103 @@
 								</div>
 							</div>
 						</div>
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal center-modal fade" id="payment-summary-register" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Select Month</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('ccentre.report.payment.summary.register') }}">
+					        @csrf
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h5>Choose Relavent Month <span class="text-danger">*</span></h5>
+										<div class="controls">
+											<input type="month" name="month" class="form-control"> <span class="text-danger">
+										@error('month'){{$message}}@enderror</span>
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal center-modal fade" id="payment-summary-normal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Select Month</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('ccentre.report.payment.summary.normal') }}">
+					        @csrf
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h5>Choose Relavent Month <span class="text-danger">*</span></h5>
+										<div class="controls">
+											<input type="month" name="month" class="form-control"> <span class="text-danger">
+										@error('month'){{$message}}@enderror</span>
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal center-modal fade" id="payment-summary-transfer" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Select Month</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('ccentre.report.payment.summary.transfer') }}">
+					        @csrf
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h5>Choose Relavent Month <span class="text-danger">*</span></h5>
+										<div class="controls">
+											<input type="month" name="month" class="form-control"> <span class="text-danger">
+										@error('month'){{$message}}@enderror</span>
+										<br>
+									</div>
+								</div>
+							</div>
+						</div>
+						
 							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
 						</form>
 					</div>

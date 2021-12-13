@@ -43,6 +43,59 @@ class SummaryController extends Controller
 
     /****************************************************************/
 
+        $messages = DB::table('contact_forms')
+                       ->where('contact_forms.status',0)
+                       ->select(DB::raw('COUNT(id) as value'))->get();
+    
+        $messages = json_decode($messages,true);
+           
+        $messages = $messages[0]["value"];
+
+
+        $todaybooking = DB::table('bookings')
+                    ->where('bookings.ccentre_id', Auth::user()->ccentre_id)
+                    ->where('bookings.date',date('Y-m-d'))
+                    ->where('bookings.status',0)
+                    ->select(DB::raw('COUNT(id) as value'))
+                    ->get();
+        $todaybooking = json_decode($todaybooking,true);
+           
+        $todaybooking = $todaybooking[0]["value"];
+
+
+        $todaybuyerbooking = DB::table('buyer_bookings')
+                    ->where('buyer_bookings.ecentre_id', Auth::user()->ecentre_id)
+                    ->where('buyer_bookings.date',date('Y-m-d'))
+                    ->where('buyer_bookings.status',0)
+                    ->select(DB::raw('COUNT(id) as value'))
+                    ->get();
+        $todaybuyerbooking = json_decode($todaybuyerbooking,true);
+           
+        $todaybuyerbooking = $todaybuyerbooking[0]["value"];
+
+        $todaybuyerbookingaccept = DB::table('buyer_bookings')
+                    ->where('buyer_bookings.ecentre_id', Auth::user()->ecentre_id)
+                    ->where('buyer_bookings.date',date('Y-m-d'))
+                    ->where('buyer_bookings.status',1)
+                    ->select(DB::raw('COUNT(id) as value'))
+                    ->get();
+        $todaybuyerbookingaccept = json_decode($todaybuyerbookingaccept,true);
+           
+        $todaybuyerbookingaccept = $todaybuyerbookingaccept[0]["value"];
+
+
+        $todaybookingaccept  = DB::table('bookings')
+                    ->where('bookings.ccentre_id', Auth::user()->ccentre_id)
+                    ->where('bookings.date',date('Y-m-d'))
+                    ->where('bookings.status',1)
+                    ->select(DB::raw('COUNT(id) as value'))
+                    ->get();
+        $todaybookingaccept = json_decode($todaybookingaccept,true);
+           
+        $todaybookingaccept = $todaybookingaccept[0]["value"];
+
+    /*******************************************************************/
+
     	$vagArray=array();
 
         $vegitables_data = DB::table('vegitables')
@@ -69,7 +122,7 @@ class SummaryController extends Controller
 
         $vegitables_summary = json_encode($vagArray);
 
-         return view('admin.index',compact('farmercount','staffcount','vegitable','message','ecentre','ccentre','vegitables_summary'));
+         return view('admin.index',compact('farmercount','staffcount','vegitable','message','ecentre','ccentre','vegitables_summary','messages','todaybooking','todaybuyerbooking','todaybuyerbookingaccept','todaybookingaccept'));
 
     }
 
@@ -148,6 +201,7 @@ class SummaryController extends Controller
 
         return $todayVegPrice;
     }
+
 
     function test(){
         
