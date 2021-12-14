@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use PDF;
-//use App\Models\CollectionCentre;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -137,7 +136,7 @@ class EconomicCentreReportController extends Controller
           'orientation' => 'L'
         ]);
         $pdf->SetProtection(['copy', 'print'], '', 'pass');
-        return $pdf->stream('Transfer Product Sum Summary.pdf');
+        return $pdf->stream('Collection Centre List.pdf');
     }
 
     public function EcentrePaymentRegister(Request $request)
@@ -622,7 +621,7 @@ class EconomicCentreReportController extends Controller
                    ->where('inventories.date','LIKE','%'.$request->month.'%')
                    ->where('inventories.user_id','=',0)
                    ->where('inventories.status',1)
-                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*0.95 as count'))
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*1.05 as count'))
                    ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
                    ->get();
 

@@ -222,7 +222,7 @@
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="farm-section-title">
-							<h2 class="section-title">Latest Products</h2>
+							<h2 class="section-title">Latest Vegetables</h2>
 							<h4>Directly from the farm, freshly grown for Sri Lankan Farmer</h4>
 						</div>
 					</div>
@@ -440,8 +440,8 @@
 					</div>
 					<div class="mx-md-auto col-lg-6 col-md-6">
 						<div class="farm-price-content">
-								<h2 class="content-title">Vegitables Price List</h2>
-								<h4>We grow over 50 different vegitables and fruits  &amp; several varieties of each item; this is just a partial of price list.If you want view full analysit price list register our system </h4>
+								<h2 class="content-title">Vegetables Price List</h2>
+								<h4>We grow over 50 different vegetables and fruits  &amp; several varieties of each item; this is just a partial of price list.If you want view full analysit price list register our system </h4>
 								<h4>These prices are update in daily .Get register system and get lastet price of each product very easily.</h4>
 							<div class="contact-botton text-left wow zoomIn">	<a href="#">Contact us</a>
 							</div>

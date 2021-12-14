@@ -91,7 +91,7 @@
         <li class="treeview {{ ($prefix == '/setups')?'active':'' }}">
           <a href="#">
             <i data-feather="anchor"></i>
-            <span>Setup Management</span>
+            <span>Website Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-right pull-right"></i>
             </span>
@@ -121,7 +121,7 @@
           </ul>
         </li> 
         @endif
-
+        @if(Auth::user()->role =='Farmer' || Auth::user()->role =='Buyer')
         <li class="treeview {{ ($prefix == '/calculator')?'active':'' }}">
           <a href="#">
             <i data-feather="calendar"></i>
@@ -133,20 +133,6 @@
           <ul class="treeview-menu">
             <li><a href="{{ route('calculator.view') }}"><i class="ti-more"></i>havest Predictor Calculator</a></li>
             <li><a href="{{ route('price.calculator.view') }}"><i class="ti-more"></i>Price Calculator</a></li>
-          </ul>
-        </li> 
-
-        @if(Auth::user()->role =='Admin')
-        <li class="treeview {{ ($prefix == '/messages')?'active':'' }}">
-          <a href="#">
-            <i data-feather="send"></i>
-            <span>Messages @if($route == "dashboard")<span class="label label-danger">{{ $messages }}</span>@endif</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ route('contact.message.view') }}"><i class="ti-more"></i>Contact Message </a></li>
           </ul>
         </li> 
         @endif
@@ -430,10 +416,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('app.setup') }}"><i class="ti-more"></i>Product Report </a></li>
-
-            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Economic Centre Report </a></li>
-            <li><a href="{{ route('app.check.view') }}"><i class="ti-more"></i>Collection Centre Report </a></li>
+            <li><a href="{{ route('admin.report.admin.view') }}"><i class="ti-more"></i>Administrative Report </a></li>
           </ul>
         </li> 
         @endif
@@ -462,6 +445,20 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('buyer.report.view') }}"><i class="ti-more"></i>Summary Report List </a></li>
+          </ul>
+        </li> 
+        @endif
+        @if(Auth::user()->role =='Admin')
+        <li class="treeview {{ ($prefix == '/messages')?'active':'' }}">
+          <a href="#">
+            <i data-feather="send"></i>
+            <span>Messages @if($route == "dashboard")<span class="label label-danger">{{ $messages }}</span>@endif</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('contact.message.view') }}"><i class="ti-more"></i>Contact Message </a></li>
           </ul>
         </li> 
         @endif

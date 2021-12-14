@@ -61,14 +61,14 @@ Route::get('/', function () {
 	$contacts = DB::table('contact_us')->first();
 	$message = "Welcome SLeAgro System";
 
-        Log::emergency($message);
-        Log::alert($message    );
-        Log::critical($message);
-        Log::error($message);
-        Log::warning($message);
-        Log::notice($message);
+        //Log::emergency($message);
+        //Log::alert($message    );
+        //Log::critical($message);
+        //Log::error($message);
+        //Log::warning($message);
+        //Log::notice($message);
         Log::info($message);
-        Log::debug($message);
+        //Log::debug($message);
 
     return view('layouts.master_home',compact('abouts','contacts'));
 
@@ -668,7 +668,53 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('ecentre/report/payment/summary/transfer',[EconomicCentreReportController::class, 'EcentrePaymentSummaryTransfer'])->name('ecentre.report.payment.summary.transfer');
 
-   });//regional center report route list
+   });//regional economic center report route list
+
+      Route::prefix('areport')->group(function(){
+
+        /*******************Admin report List *******************/
+
+  Route::get('/admin/report/administrative',[AdminReportController::class, 'AdminAdministrativeReportView'])->name('admin.report.admin.view');
+
+  Route::get('/admin/report/user_list',[AdminReportController::class, 'AdminUserList'])->name('admin.report.user.list');
+
+  Route::get('/admin/report/centre/list',[AdminReportController::class, 'AdminCentreList'])->name('admin.report.centre.list');
+
+  Route::get('/admin/report/vegitable/list',[AdminReportController::class, 'AdminVegList'])->name('admin.report.vegitable.list');
+
+   Route::post('admin/report/vegetables/price',[AdminReportController::class, 'AdminVegPrice'])->name('admin.report.vegitable.price');
+
+   Route::post('admin/report/ecentre/summary/day',[AdminReportController::class, 'AdminEcentreSummaryDay'])->name('admin.report.ecentre.summary.day');
+
+   Route::post('admin/report/ccentre/summary/day',[AdminReportController::class, 'AdminCcentreSummaryDay'])->name('admin.report.ccentre.summary.day');
+
+   Route::post('admin/report/ecentre/summary/month',[AdminReportController::class, 'AdminEcentreSummaryMonth'])->name('admin.report.ecentre.summary.month');
+
+   Route::post('admin/report/ccentre/summary/month',[AdminReportController::class, 'AdminCcentreSummaryMonth'])->name('admin.report.ccentre.summary.month');
+
+   });//admin report route list
+
+});
+
+Route::group(['middleware' => 'farmer'],function(){
+
+   Route::prefix('freport')->group(function(){
+     
+     /*******************farmer report setup *******************/
+
+  Route::get('/farmer/report',[FarmerReportController::class, 'FarmerReportView'])->name('farmer.report.view');
+
+  Route::post('farmer/report/appointment',[FarmerReportController::class, 'FarmerAppointment'])->name('farmer.report.appointment');
+
+  Route::post('farmer/report/payment/register',[FarmerReportController::class, 'FarmerPaymentRegister'])->name('farmer.report.payment.register');
+
+  Route::post('farmer/report/inventory/daily',[FarmerReportController::class, 'FarmerInventoryDaily'])->name('farmer.report.inventory.daily');
+
+   Route::post('farmer/report/inventory/month',[FarmerReportController::class, 'FarmerInventoryMonth'])->name('farmer.report.inventory.month');
+
+   Route::post('farmer/report/payment/summary',[FarmerReportController::class, 'FarmerPaymentSummary'])->name('farmer.report.payment.summary');
+
+   });//regional center officer appointment setup data controlling route list
 
 });
 

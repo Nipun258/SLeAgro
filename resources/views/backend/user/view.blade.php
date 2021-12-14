@@ -43,7 +43,7 @@
 								<th>Role</th>
 								<th>Name</th>
 								<th>Email</th>
-								<th>Code</th>
+								<!-- <th>Code</th> -->
 								<th width="25%">Action</th>
 							</tr>
 						</thead>
@@ -55,7 +55,7 @@
 								<td>{{ $user->role }}</td>
 								<td>{{ $user->name }}</td>
 								<td>{{ $user->email }}</td>
-								<td>{{ $user->code }}</td>
+								<!-- <td>{{ $user->code }}</td> -->
 								<td>
 									<a href="{{ route('user.edit',$user->id) }}" class="btn btn-info">Edit</a>
 									<a href="{{ route('user.delete',$user->id) }}" class="btn btn-danger" id="delete">Delete</a>
@@ -68,7 +68,7 @@
 								<td>{{ $user->role }}</td>
 								<td>{{ $user->name }}</td>
 								<td>{{ $user->email }}</td>
-								<td>{{ $user->code }}</td>
+								<!-- <td>{{ $user->code }}</td> -->
 								<td>
 									<a href="{{ route('user.edit',$user->id) }}" class="btn btn-info">Edit</a>
 									<a href="{{ route('user.delete',$user->id) }}" class="btn btn-danger" id="delete">Delete</a>
@@ -81,7 +81,7 @@
 								<td>{{ $user->role }}</td>
 								<td>{{ $user->name }}</td>
 								<td>{{ $user->email }}</td>
-								<td>{{ $user->code }}</td>
+								<!-- <td>{{ $user->code }}</td> -->
 								<td>
 									<a href="{{ route('user.edit',$user->id) }}" class="btn btn-info">Edit</a>
 									<a href="{{ route('user.delete',$user->id) }}" class="btn btn-danger" id="delete">Delete</a>
@@ -96,7 +96,7 @@
 								<th>Role</th>
 								<th>Name</th>
 								<th>Email</th>
-								<th>Code</th>
+								<!-- <th>Code</th> -->
 								<th width="25%">Action</th>
 							</tr>
 						</tfoot>
