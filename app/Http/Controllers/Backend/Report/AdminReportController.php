@@ -374,4 +374,216 @@ class AdminReportController extends Controller
 
    }
 
+   public function AdminEcentreSummaryMonth(Request $request)
+    {   
+        
+         $validatedData = $request->validate([
+            'ecentre' => 'required',
+            'month' => 'required'
+        ],[
+            'month.required' => 'You Must select Relavent Month',
+            'ecentre.ecentre' => 'You Must select Relevent Ecomonic Centre'
+        ]);
+
+         //dd($request->date);
+
+        if ($request->ecentre && $request->month) {
+            
+            $ecentre_register_income = DB::table('inventories')
+                        ->where('inventories.ecentre_id',$request->ecentre)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.user_id','!=',0)
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.price)*1.01 as pay'))
+                        ->get();
+    $ecentre_register_income=json_decode($ecentre_register_income,true);
+    $ecentre_register_income=$ecentre_register_income[0]["pay"]; 
+
+    //dd($ecentre_register_income);
+
+    $ecentre_normal_income = DB::table('inventories')
+                        ->where('inventories.ecentre_id',$request->ecentre)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.user_id','=',0)
+                        ->where('inventories.status',1)
+                        ->select(DB::raw('SUM(inventories.price)*1.05 as pay'))
+                        ->get();
+    $ecentre_normal_income=json_decode($ecentre_normal_income,true);
+    $ecentre_normal_income=$ecentre_normal_income[0]["pay"];
+
+
+    $ecentre_transfer_payment = DB::table('inventories')
+                        ->where('inventories.ecentre_id',$request->ecentre)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.status',4)
+                        ->select(DB::raw('SUM(inventories.price) as pay'))
+                        ->get();
+    $ecentre_transfer_payment=json_decode($ecentre_transfer_payment,true);
+    $ecentre_transfer_payment=$ecentre_transfer_payment[0]["pay"];
+
+
+    $ecentre_income = $ecentre_register_income + $ecentre_normal_income + $ecentre_transfer_payment;
+
+       $payment_registers = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ecentre_id',$request->ecentre)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.user_id','!=',0)
+                   ->where('inventories.status',1)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*1.01 as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $payment_normals = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ecentre_id',$request->ecentre)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.user_id','=',0)
+                   ->where('inventories.status',1)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*1.05 as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $payment_transfers = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ecentre_id',$request->ecentre)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.status',4)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price) as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $req_month = $request->month;
+        
+        $ecentre = DB::table('economic_centres')
+                   ->where('economic_centres.id',$request->ecentre)
+                   ->select('economic_centres.centre_name')
+                   ->get();
+
+        $ecentre=json_decode($ecentre,true);
+        $ecentre=$ecentre[0]["centre_name"];
+
+        $admin = DB::table('users')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.report.areport.ecentre_monthly', compact('admin','ecentre','req_month','ecentre_income','payment_registers','payment_normals','payment_transfers'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Economic Centre Monthly Summary Report.pdf');
+    }
+
+   }
+
+    public function AdminCcentreSummaryMonth(Request $request)
+    {   
+        
+         $validatedData = $request->validate([
+            'ccentre' => 'required',
+            'month' => 'required'
+        ],[
+            'month.required' => 'You Must select Relavent Month',
+            'ccentre.required' => 'You Must select Relavent Collection Centre'
+        ]);
+
+         //dd($request->date);
+
+        if ($request->ccentre && $request->month) {
+            
+            $ccentre_register_payment = DB::table('inventories')
+                        ->where('inventories.ccentre_id',$request->ccentre)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.user_id','!=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.97 as pay'))
+                        ->get();
+    $ccentre_register_payment=json_decode($ccentre_register_payment,true);
+    $ccentre_register_payment=$ccentre_register_payment[0]["pay"]; 
+
+
+
+    $ccentre_normal_payment = DB::table('inventories')
+                        ->where('inventories.ccentre_id',$request->ccentre)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.user_id','=',0)
+                        ->whereIn('inventories.status',[0,3])
+                        ->select(DB::raw('SUM(inventories.price)*0.95 as pay'))
+                        ->get();
+    $ccentre_normal_payment=json_decode($ccentre_normal_payment,true);
+    $ccentre_normal_payment=$ccentre_normal_payment[0]["pay"];
+
+
+
+    $ccentre_transfer_payment = DB::table('inventories')
+                        ->where('inventories.ccentre_id',$request->ccentre)
+                        ->where('inventories.date','LIKE','%'.$request->month.'%')
+                        ->where('inventories.status',2)
+                        ->select(DB::raw('SUM(inventories.price) as pay'))
+                        ->get();
+    $ccentre_transfer_payment=json_decode($ccentre_transfer_payment,true);
+    $ccentre_transfer_payment=$ccentre_transfer_payment[0]["pay"];
+
+    $ccentre_payment = $ccentre_register_payment + $ccentre_normal_payment;
+
+    $ccentre_profit = $ccentre_transfer_payment - $ccentre_payment;
+
+       $payment_registers = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',$request->ccentre)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.user_id','!=',0)
+                   ->whereIn('inventories.status',[0,3])
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*0.97 as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $payment_normals = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',$request->ccentre)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.user_id','=',0)
+                   ->whereIn('inventories.status',[0,3])
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price)*0.95 as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $payment_transfers = DB::table('inventories')
+                   ->Join('vegitables','inventories.veg_id','=','vegitables.id')
+                   ->where('inventories.ccentre_id',$request->ccentre)
+                   ->where('inventories.date','LIKE','%'.$request->month.'%')
+                   ->where('inventories.status',2)
+                   ->select('vegitables.name','vegitables.image',DB::raw('SUM(inventories.quntity) as total'),DB::raw('SUM(inventories.price) as count'))
+                   ->groupBy('inventories.veg_id','vegitables.name','vegitables.image')
+                   ->get();
+
+        $req_month = $request->month;
+        
+        $ccentre = DB::table('collection_centres')
+                   ->where('collection_centres.id',$request->ecentre)
+                   ->select('collection_centres.centre_name')
+                   ->get();
+
+        $ccentre=json_decode($ccentre,true);
+        $ccentre=$ccentre[0]["centre_name"];
+
+        $admin = DB::table('users')
+                  ->where('users.id',Auth::user()->id)
+                  ->select('users.name','users.mobile','users.email','users.address')
+                  ->get();
+
+        $pdf = PDF::loadView('backend.report.areport.ccentre_monthly', compact('admin','ccentre','req_month','ccentre_payment','ccentre_transfer_payment','ccentre_profit','payment_registers','payment_normals','payment_transfers'),[], 
+        [ 
+          'format' => 'A4-L',
+          'orientation' => 'L'
+        ]);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('Collection Centre Monthly Summary Report.pdf');
+    }
+
+   }
+
 }

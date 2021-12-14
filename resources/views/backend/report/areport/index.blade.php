@@ -261,6 +261,100 @@
 </div>
 </div>
 
+<div class="modal center-modal fade " id="ecentre-summary-monthly" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Economic Centre Summary</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('admin.report.ecentre.summary.month') }}">
+					@csrf
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h5>Choose Date <span class="text-danger">*</span></h5>
+								<div class="controls">
+									<input type="month" name="month" class="form-control"> <span class="text-danger">
+								@error('month'){{$message}}@enderror</span>
+								<br>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<h5>Collection Centre Name<span class="text-danger">*</span></h5>
+							<select name="ecentre" id="ecentre" class="form-control">
+								<option value="" selected="" disabled="">Select Collection Centre</option>
+								@foreach($economic_centres as $ecentre)
+								<option value="{{ $ecentre->id }}">{{$ecentre->centre_name }} </option>
+								@endforeach
+							</select>
+							<span class="text-danger">@error('ecentre'){{$message}}@enderror</span>
+						</div>
+					</div>
+				</div>
+				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="modal center-modal fade " id="ccentre-summary-monthly" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content bg-dark">
+			<div class="modal-header">
+				<h5 class="modal-title">Collection Centre Summary</h5>
+				<a type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</a>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('admin.report.ccentre.summary.month') }}">
+					@csrf
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<h5>Choose Month <span class="text-danger">*</span></h5>
+								<div class="controls">
+									<input type="month" name="month" class="form-control"> <span class="text-danger">
+								@error('date'){{$message}}@enderror</span>
+								<br>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<h5>Collection Centre Name<span class="text-danger">*</span></h5>
+							<select name="ecentre" id="ecentre-dd1" class="form-control">
+								<option value="" selected="" disabled="">Select Collection Centre</option>
+								@foreach($economic_centres as $ecentre)
+								<option value="{{ $ecentre->id }}">{{$ecentre->centre_name }} </option>
+								@endforeach
+							</select>
+							<span class="text-danger">@error('ecentre'){{$message}}@enderror</span>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="ccentre">Nearest Collection Centre </label><span class="text-danger">*</span>
+							<select class="custom-select form-control" name="ccentre" id="ccentre-dd1">
+							</select>
+						</div>
+						<span class="text-danger">@error('ccentre'){{$message}}@enderror</span>
+					</div>
+				</div>
+				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+			</form>
+		</div>
+	</div>
+</div>
+</div>
+
 
 		</section>
 		<!-- /.content -->
@@ -291,6 +385,27 @@
                         $('#ccentre-dd').html('<option value="" selected="" disabled="">Select Collection Centre</option>');
                         $.each(result.collection_centres, function (key, value) {
                             $("#ccentre-dd").append('<option value="' + value
+                                .id + '">' + value.centre_name + '</option>');
+                        });
+                    }
+                });
+        });
+
+        $('#ecentre-dd1').on('change', function () {
+                var idCollectionCentre = this.value;
+                $("#ccentre-dd1").html('');
+                $.ajax({
+                    url: "{{url('api/fetch-collection_centres')}}",
+                    type: "POST",
+                    data: {
+                        economic_centre_id: idCollectionCentre,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#ccentre-dd1').html('<option value="" selected="" disabled="">Select Collection Centre</option>');
+                        $.each(result.collection_centres, function (key, value) {
+                            $("#ccentre-dd1").append('<option value="' + value
                                 .id + '">' + value.centre_name + '</option>');
                         });
                     }
