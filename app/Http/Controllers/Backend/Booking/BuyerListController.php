@@ -87,4 +87,26 @@ class BuyerListController extends Controller
 
         return redirect()->back();
     }
+
+        public function BuyerBookingProductView($id){
+
+        $product_list = DB::table('vegitable_book_lists')
+                     ->Join('buyer_bookings','buyer_bookings.id','=','vegitable_book_lists.booking_id')
+                     ->join('vegitables','vegitables.id','=','vegitable_book_lists.veg_id')
+                     ->where('vegitable_book_lists.booking_id',$id)
+                     ->select('vegitables.name','vegitable_book_lists.quntity','buyer_bookings.status')
+                     ->get();
+        //dd($product_list);
+
+        $date = DB::table('buyer_bookings')
+               ->where('buyer_bookings.id',$id)
+               ->select('buyer_bookings.date')
+               ->get();
+
+        $date = json_decode($date,true);
+        $bdate=$date[0]["date"];
+
+         //dd($bdate);
+         return view('backend.booking.buyer_book.book_product',compact('product_list','bdate')); 
+    }
 }

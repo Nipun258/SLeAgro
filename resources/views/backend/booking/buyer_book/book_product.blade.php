@@ -12,7 +12,7 @@
        <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Buyer Booking vegitable product List <span class="text-danger">( {{$bdate}} )</span></h3>
-          <a href="{{ route('buyer.booking.list') }}" style="float: right;" class="btn btn-success mb-5">Back Boooking List</a>
+          <a href="{{ url()->previous() }}" style="float: right;" class="btn btn-success mb-5">Back Boooking List</a>
         </div>
         <!-- /.box-header -->
         <div class="box-body">

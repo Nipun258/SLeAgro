@@ -95,6 +95,8 @@
    <script src="{{ asset('../assets/vendor_components/fullcalendar/fullcalendar.min.js')}}"></script>
    <script src="{{ asset('../assets/vendor_plugins/JqueryPrintArea/demo/jquery.PrintArea.js')}}"></script>
    <script src="{{ asset('backend/js/pages/invoice.js')}}"></script>
+   <script src="{{ asset('../assets/vendor_components/chart.js-master/Chart.min.js')}}"></script>
+   <script src="{{ asset('backend/js/pages/widget-charts2.js')}}"></script>
 
 	
   <script type="text/javascript">

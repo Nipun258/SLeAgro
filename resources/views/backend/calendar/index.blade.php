@@ -7,7 +7,7 @@
 		<!-- Content Header (Page header) -->
 		<div class="content-header">
 			<div class="d-flex align-items-center">
-				<div class="mr-auto">
+				<div class="col-xl-10">
 					<h3 class="page-title">Calendar</h3>
 					<div class="d-inline-block align-items-center">
 						<nav>
@@ -19,6 +19,11 @@
 						</nav>
 					</div>
 				</div>
+                <div class="col-xl-2s">
+                    <a href="#" data-toggle="modal" data-target="#add-new-events" class="btn btn-rounded btn-success btn-block my-10">
+                    <i class="ti-plus"></i> Add New Event
+                    </a>
+                </div>
 			</div>
 		</div>
 
@@ -27,49 +32,70 @@
 
 		  <div class="row">
 			
-			<div class="col-12">
-				<div class="box">
-					<div class="box-body">
-						<div class="row">
-							<div class="col-xl-9 col-lg-8 col-12">	
-								<div id='full_calendar_events'></div>
-							</div>
-							<div class="col-xl-3 col-lg-4 col-12">
-								<div class="box no-border no-shadow">
-									<div class="box-header with-border">
-									  <h4 class="box-title">Farmer Events </h4>
-									</div>
-									<div class="box-body p-0">
-									  <!-- the events -->
-									  <div id="external-events">
-										<div class="external-event m-15 bg-primary" data-class="bg-primary"><i class="fa fa-hand-o-right"></i>Cultivation</div>
-										<div class="external-event m-15 bg-warning" data-class="bg-warning"><i class="fa fa-hand-o-right"></i>Irrigation</div>
-										<div class="external-event m-15 bg-info" data-class="bg-info"><i class="fa fa-hand-o-right"></i>Fertilizer</div>
-										<div class="external-event m-15 bg-success" data-class="bg-success"><i class="fa fa-hand-o-right"></i>Frost Protection</div>
-										<div class="external-event m-15 bg-danger" data-class="bg-danger"><i class="fa fa-hand-o-right"></i>Harvesting</div>
-									  </div>
-									  <div class="event-fc-bt mx-15 my-20">
-										<!-- checkbox -->
-										<div class="checkbox">
-											<input id="drop-remove" type="checkbox">
-											<label for="drop-remove">
-												Remove after drop
-											</label>
-										</div>
-										<a href="#" data-toggle="modal" data-target="#add-new-events" class="btn btn-rounded btn-success btn-block my-10">
-											<i class="ti-plus"></i> Add New Event
-										</a>
-									  </div>
-								   </div>
-							  </div>								
-							</div>
-						</div>
-					</div>
-				</div>  
-			  </div>  
+<div class="col-12">
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xl-12 col-lg-8 col-12">
+                    <div id='full_calendar_events'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 			  
 			</div>
 		  <!-- /.row -->
+          <div class="modal center-modal fade " id="add-new-events" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Craete New Event</h5>
+                <a type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ route('calendar.create') }}" >
+                    @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h5>Event Title <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <input type="text" name="title" class="form-control"> <span class="text-danger">
+                                        @error('title'){{$message}}@enderror</span>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h5>Event Start Date <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <input type="datetime-local" name="start" class="form-control"> <span class="text-danger">
+                                        @error('start'){{$message}}@enderror</span>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="form-group">
+                                        <h5>Event End Date <span class="text-danger">*</span></h5>
+                                        <div class="controls">
+                                            <input type="datetime-local" name="end" class="form-control"> <span class="text-danger">
+                                        @error('end'){{$message}}@enderror</span>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 		</section>
 		<!-- /.content -->
@@ -101,84 +127,83 @@
                     right:'month,agendaWeek,agendaDay,listMonth'
                 },
                 timezone: 'local',
-                events: SITEURL + "/calendar-event",
+                events: SITEURL + "/calendar",
                 displayEventTime: true,
+                //editable: true,
                 eventRender: function (event, element, view) {
-                    if (event.allDay === 'true') {
-                        event.allDay = true;
-                    } else {
-                        event.allDay = false;
-                    }
+                if (event.allDay === 'true') {
+                    event.allDay = true;
+                } else {
+                    event.allDay = false;
+                }
                 },
                 selectable: true,
                 selectHelper: true,
-                select: function (event_start, event_end, allDay) {
-                    var event_name = prompt('Event Name:');
-                    if (event_name) {
-                        var event_start = $.fullCalendar.formatDate(event_start, "Y-MM-DD HH:mm:ss");
-                        var event_end = $.fullCalendar.formatDate(event_end, "Y-MM-DD HH:mm:ss");
-                        $.ajax({
-                            url: SITEURL + "/calendar-crud-ajax",
-                            data: {
-                                event_name: event_name,
-                                event_start: event_start,
-                                event_end: event_end,
-                                type: 'create'
-                            },
-                            type: "POST",
-                            success: function (data) {
-                                displayMessage("Event created.");
-
-                                calendar.fullCalendar('renderEvent', {
-                                    id: data.id,
-                                    title: event_name,
-                                    start: event_start,
-                                    end: event_end,
-                                    allDay: allDay
-                                }, true);
-                                calendar.fullCalendar('unselect');
-                            }
-                        });
-                    }
-                },
-                eventDrop: function (event, delta) {
-                    var event_start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
-                    var event_end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
-
+                select: function (start, end, allDay) {
+                var title = prompt('Event Title:');
+ 
+                if (title) {
+                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+ 
                     $.ajax({
-                        url: SITEURL + '/calendar-crud-ajax',
-                        data: {
-                            title: event.event_name,
-                            start: event_start,
-                            end: event_end,
-                            id: event.id,
-                            type: 'edit'
-                        },
+                        url: SITEURL + "/calendar/create",
+                        data: 'title=' + title + '&start=' + start + '&end=' + end,
                         type: "POST",
-                        success: function (response) {
-                            displayMessage("Event updated");
+                        success: function (data) {
+                            displayMessage("Added Successfully");
                         }
                     });
-                },
-                eventClick: function (event) {
-                    var eventDelete = confirm("Are you sure?");
-                    if (eventDelete) {
-                        $.ajax({
-                            type: "POST",
-                            url: SITEURL + '/calendar-crud-ajax',
-                            data: {
-                                id: event.id,
-                                type: 'delete'
+                    calendar.fullCalendar('renderEvent',
+                            {
+                                title: title,
+                                start: start,
+                                end: end,
+                                allDay: allDay
                             },
+                    true
+                            );
+                }
+                calendar.fullCalendar('unselect');
+            },
+             
+            eventDrop: function (event, delta) {
+                        var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                        var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                        $.ajax({
+                            url: SITEURL + '/calendar/update',
+                            data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id,
+                            type: "POST",
                             success: function (response) {
-                                calendar.fullCalendar('removeEvents', event.id);
-                                displayMessage("Event removed");
+                                displayMessage("Updated Successfully");
                             }
                         });
-                    }
+                    },
+                eventClick: function (event) {
+                var deleteMsg = confirm("Do you really want to delete?");
+                if (deleteMsg) {
+                    $.ajax({
+                        type: "POST",
+                        url: SITEURL + '/calendar/delete',
+                        data: "&id=" + event.id,
+                        success: function (response) {
+                            if(parseInt(response) > 0) {
+                                $('#calendar').fullCalendar('removeEvents', event.id);
+                                displayMessage("Deleted Successfully");
+                            }
+                        }
+                    });
                 }
+            }
+
             });
         });
+
+        function displayMessage(message) {
+                
+            $(".response").html(""+message+"");
+            setInterval(function() { $(".success").fadeOut(); }, 1000);
+       }
 
     </script>
 

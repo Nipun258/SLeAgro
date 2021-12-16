@@ -28,7 +28,7 @@
                 <th>Email</th>
                 <th>Mobile</th>
                 <th>Date For</th>
-                <th>Created Date</th>
+                <th>View Product</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -41,7 +41,7 @@
                 <td>{{ $booking->email }}</td>
                 <td>{{ $booking->mobile }}</td>
                 <td>{{ $booking->date }}</td>
-                <td>{{ $booking->created_at}}</td>
+                <td><a href="{{route('buyer.booking.product.view',$booking->id)}}" type="button" class="btn btn-primary btn-md">View Product</a></td>
                 <td>
                   @if($booking->status == 0)
                   <a href="{{route('product.request.update.status',$booking->id)}}" type="button" class="btn btn-danger btn-sm">Pending</a>

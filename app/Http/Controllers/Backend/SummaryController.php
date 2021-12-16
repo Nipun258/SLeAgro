@@ -9,6 +9,7 @@ use App\Models\Branch;
 use App\Models\CollectionCentre;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Farmer;
+use Carbon\Carbon;
 
 class SummaryController extends Controller
 {  
@@ -297,6 +298,7 @@ class SummaryController extends Controller
             $averageMarketPrice=$this->averageMarketPrice($vegID);
 
         	$vagArray[]=array(
+                        'id' => $veg->id,
         				'name' =>$veg->name, 
         				'image' =>$veg->image, 
         				'catagory' =>$veg->catagory, 
@@ -407,7 +409,86 @@ class SummaryController extends Controller
     }
 
 
-    function test(){
+    public function VegPriceAnalysis($id){
+       
+        $vagArray=array();
+
+        $vegitables_data = DB::table('vegitables')
+                        ->select('vegitables.id','vegitables.name','vegitables.image','vegitables.catagory')
+                        ->where('vegitables.id',$id)
+                        ->get();
+
+        foreach ($vegitables_data as $veg) {
+
+            $vegID=$veg->id;
+            $yesterdayMarketPrice=$this->yesterdayMarketPrice($vegID);
+            $todayMarketPrice=$this->todayMarketPrice($vegID);
+            $averageMarketPrice=$this->averageMarketPrice($vegID);
+
+            $vagArray[]=array(
+                        'id' => $veg->id,
+                        'name' =>$veg->name, 
+                        'image' =>$veg->image, 
+                        'catagory' =>$veg->catagory, 
+                        'todayPrice' =>$todayMarketPrice, 
+                        'yesterdayPrice' =>$yesterdayMarketPrice, 
+                        'avg' => $averageMarketPrice
+                    );
+            
+         }
+
+        $vegitables_summary = json_encode($vagArray);
+
+        $date = Carbon::now()->subDays(9);
+        
+        $veg_price_date = DB::table('old_veg_prices')
+                     ->where('old_veg_prices.veg_id',$id)
+                     ->where('old_veg_prices.price_date', '>=', $date)
+                     ->select('old_veg_prices.price_date')
+                     ->get();
+
+        $veg_price_date = json_decode($veg_price_date,true);
+           
+         $simple_array = array(); //simple array
+
+        foreach($veg_price_date as $veg_price_date)
+        {
+            $simple_array[] = $veg_price_date['price_date'];   
+        }
+
+         $veg_price = DB::table('old_veg_prices')
+                     ->where('old_veg_prices.veg_id',$id)
+                     ->where('old_veg_prices.price_date', '>=', $date)
+                     ->select('old_veg_prices.price_wholesale')
+                     ->get();
+
+        $veg_price = json_decode($veg_price,true);
+           
+         $simple_array2 = array(); //simple array
+
+        foreach($veg_price as $veg_price)
+        {
+            $simple_array2[] = $veg_price['price_wholesale'];   
+        }
+
+        $vegitables_data = DB::table('old_veg_prices')
+                           ->select(DB::raw('round(AVG(price_wholesale),0) as average'))
+                           ->where('old_veg_prices.price_date', '>=', $date)
+                           ->where('old_veg_prices.veg_id',$id)
+                           ->get();
+
+       foreach ($vegitables_data as  $veg) {
+
+              $VegPriceAverage =$veg->average;
+         }
+
+         //dd($VegPriceAverage);
+
+        return view('backend.product.vegitable_price_analysis.index',compact('vegitables_summary','simple_array','simple_array2','VegPriceAverage'));
+    }
+
+
+    public function test(){
         
         $data = DB::table('vegitables')
     ->Join('old_veg_prices', 'old_veg_prices.veg_id', '=', 'vegitables.id')

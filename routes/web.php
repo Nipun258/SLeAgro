@@ -84,6 +84,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //test query 
 Route::get('/test',[SummaryController::class, 'test'])->name('test');
 
+//user contact message store
 Route::post('/contact/message/store',[ContactFormController::class, 'ContactMessageStore'])->name('contact.message.store');
 
 Route::group(['middleware' => 'auth'],function(){
@@ -91,12 +92,20 @@ Route::group(['middleware' => 'auth'],function(){
 //Admin logout 
 Route::get('/admin/logout',[ AdminController::class, 'Logout'])->name('admin.logout');
 
-
 Route::get('/dashboard',[SummaryController::class, 'getVegData'])->name('dashboard');
 
-Route::get('calendar-event', [CalenderController::class, 'calendarIndex'])->name('calendar');
+Route::get('/price/analysis/{id}',[SummaryController::class, 'VegPriceAnalysis'])->name('vegetable.price.analysis');
 
-Route::post('calendar-crud-ajax', [CalenderController::class, 'calendarEvents'])->name('calendar.store');
+/*************************************full calendar*****************************************/
+
+Route::get('/calendar', [CalenderController::class, 'calendarIndex'])->name('calendar');
+
+Route::post('/calendar/create', [CalenderController::class, 'calendarCreate'])->name('calendar.create');
+
+Route::post('/calendar/update', [CalenderController::class, 'calendarUpdate'])->name('calendar.update');
+
+Route::post('/calendar/delete', [CalenderController::class, 'calendarDelete'])->name('calendar.destroy');
+
 
 /*****************************user mangement ***********************/
 
@@ -510,6 +519,7 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/product/request/status/update/{id}',[BuyerListController::class, 'ProductReqToggleStatus'])->name('product.request.update.status');
 
+	Route::get('/buyer/book/product/{id}',[BuyerListController::class, 'BuyerBookingProductView'])->name('buyer.booking.product.view');
 
    });
 

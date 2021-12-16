@@ -21,6 +21,7 @@
 					<div class="widget-user-image">
 					  <img class="rounded-circle" src="{{ (!empty($user->image))? url('upload/user_images/'.$user->image):url('upload/images.png')}}" alt="User Avatar">
 					</div>
+					<br><br>
 					<div class="box-footer">
 					  <div class="row">
 						<div class="col-sm-4">
