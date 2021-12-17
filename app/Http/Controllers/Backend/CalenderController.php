@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Events;
 use Redirect,Response;
 use Auth;
+use Illuminate\Support\Carbon;
 
 class CalenderController extends Controller
 {
@@ -22,7 +23,7 @@ class CalenderController extends Controller
          $data = Events::whereDate('start', '>=', $start)
                         ->whereDate('end',   '<=', $end)
                         ->where('user_id',Auth::user()->id)
-                        ->get(['id','title','start', 'end']);
+                        ->get(['id','title','start', 'end','event_type']);
 
          return Response::json($data);
         }
@@ -34,17 +35,44 @@ class CalenderController extends Controller
         $insertArr = [ 'user_id' => Auth::user()->id,
                        'title' => $request->title,
                        'start' => $request->start,
-                       'end' => $request->end
+                       'end' => $request->end,
+                       'event_type' => 1,
+                       'created_at' => Carbon::now()
                     ];
         $event = Events::insert($insertArr);   
         return Response::json($event);
+    }
+
+    public function calendarCreateNormal(Request $request)
+    {  
+       $validatedData = $request->validate([
+            'title' => 'required',
+            'start' => 'required',
+            'end' => 'required'
+        ]);
+
+        Events::insert([
+            'user_id' => Auth::user()->id,
+            'title' => $request->title,
+            'start' => $request->start,
+            'end' => $request->end,
+            'event_type' => 1,
+            'created_at' => Carbon::now()
+        ]);
+         
+        $notification = array(
+           'message' => 'New Event Added Successfully',
+           'alert-type' => 'success'
+        );
+
+        return redirect()->route('calendar')->with($notification);
     }
      
  
     public function calendarUpdate(Request $request)
     {   
         $where = array('id' => $request->id);
-        $updateArr = ['user_id' => Auth::user()->id,'title' => $request->title,'start' => $request->start, 'end' => $request->end];
+        $updateArr = ['user_id' => Auth::user()->id,'title' => $request->title,'start' => $request->start, 'end' => $request->end,'updated_at' => Carbon::now()];
         $event  = Events::where($where)->update($updateArr);
  
         return Response::json($event);
@@ -56,5 +84,6 @@ class CalenderController extends Controller
         $event = Events::where('id',$request->id)->delete();
    
         return Response::json($event);
-    }    
+    } 
+
 }

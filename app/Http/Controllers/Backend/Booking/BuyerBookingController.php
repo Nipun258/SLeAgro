@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\BuyerBooking;
 use App\Models\VegitableBookList;
+use App\Models\Events;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Mail\BuyerBookingMail;
 use Illuminate\Support\Facades\Mail;
 use App\Rules\ArrayAtLeastOneRequired;
+use Carbon\Carbon;
 
 class BuyerBookingController extends Controller
 {
@@ -102,6 +104,19 @@ class BuyerBookingController extends Controller
              'ecentre_id' => auth()->user()->ecentre_id,
              'date' => $request->date,
          ]);
+
+        $booking_Start = date('Y-m-d H:i:s', strtotime("$request->date"));
+
+        $booking_End = date("Y-m-d H:i:s", strtotime($booking_Start . "+1 day"));
+
+        Events::insert([
+            'user_id' => Auth::user()->id,
+            'title' => 'Vegetable Buying Book',
+            'start' => $booking_Start,
+            'end' => $booking_End,
+            'event_type' => 2,
+            'created_at' => Carbon::now()
+        ]);
 
         $booking_id = DB::table('buyer_bookings')
                       ->latest('id')

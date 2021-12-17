@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Time;
+use App\Models\Events;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
@@ -54,6 +56,8 @@ class AppointmentController extends Controller
              'date' => $request->date
          ]);
 
+
+
         foreach ($request->time as $time) {
             Time::create([
              'appointment_id' => $appointment->id,
@@ -61,6 +65,19 @@ class AppointmentController extends Controller
              //'status' => 0
             ]);
         }
+
+        $booking_Start = date('Y-m-d H:i:s', strtotime("$request->date"));
+
+        $booking_End = date("Y-m-d H:i:s", strtotime($booking_Start . "+1 day"));
+
+        Events::insert([
+            'user_id' => Auth::user()->id,
+            'title' => 'Farmer Appointment',
+            'start' => $booking_Start,
+            'end' => $booking_End,
+            'event_type' => 2,
+            'created_at' => Carbon::now()
+        ]);
 
          
         $notification = array(

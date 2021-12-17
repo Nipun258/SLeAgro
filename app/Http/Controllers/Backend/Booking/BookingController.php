@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Booking;
 use App\Models\CollectionCentre;
 use App\Models\Time;
+use App\Models\Events;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Mail\FarmerBookingMail;
@@ -102,26 +103,28 @@ class BookingController extends Controller
                'location' => $cname
             ];
 
-       //  $basic  = new \Nexmo\Client\Credentials\Basic(getenv("NEXMO_KEY"), getenv("NEXMO_SECRET"));
-       //  $client = new \Nexmo\Client($basic);
+       $booking_Start = date('Y-m-d H:i:s', strtotime("$request->date $request->time"));
 
-       // $receiverNumber = "94766453075";
-       // $message = 'You vegitable Selling Order place Successfully.You booking Date :'.$request->date.'and time :'.$request->time.'and Booking Location :'.$cname.'Thank you'.auth()->user()->name.'Making order with us';
-
-       //  $client->message()->send([
-
-       //          'to' => $receiverNumber,
-       //          'from' => 'SLeAgro System',
-       //          'text' => $message
-       //  ]);
+       $booking_End = date("Y-m-d H:i:s", strtotime($booking_Start . "+30 minutes"));
     
        $mail = new FarmerBookingMail($data1);
+
+       //dd($booking_End);
     
        Mail::to(auth()->user()->email)->send($mail);
 
-        Time::where('appointment_id',$request->appointmentId)
+       Time::where('appointment_id',$request->appointmentId)
               ->where('time',$request->time)
               ->update(['status'=> 1]);
+
+        Events::insert([
+            'user_id' => Auth::user()->id,
+            'title' => 'Vegetable selling Book',
+            'start' => $booking_Start,
+            'end' => $booking_End,
+            'event_type' => 2,
+            'created_at' => Carbon::now()
+        ]);
          
         $notification = array(
            'message' => 'New appointment booking make Successfully',

@@ -102,10 +102,11 @@ Route::get('/calendar', [CalenderController::class, 'calendarIndex'])->name('cal
 
 Route::post('/calendar/create', [CalenderController::class, 'calendarCreate'])->name('calendar.create');
 
+Route::post('/calendar/create/normal', [CalenderController::class, 'calendarCreateNormal'])->name('calendar.create.normal');
+
 Route::post('/calendar/update', [CalenderController::class, 'calendarUpdate'])->name('calendar.update');
 
 Route::post('/calendar/delete', [CalenderController::class, 'calendarDelete'])->name('calendar.destroy');
-
 
 /*****************************user mangement ***********************/
 
