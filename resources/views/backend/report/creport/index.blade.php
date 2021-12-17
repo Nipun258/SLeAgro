@@ -233,7 +233,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.appointment') }}">
+				<form method="post" action="{{ route('ccentre.report.appointment') }}" target="_blank">
 					@csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -248,7 +248,7 @@
 							</div>
 						</div>
 					
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="app-date-button">
 						</form>
 					</div>
 				</div>
@@ -265,7 +265,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.payment.register') }}">
+				<form method="post" action="{{ route('ccentre.report.payment.register') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -280,7 +280,7 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-register-button">
 						</form>
 					</div>
 				</div>
@@ -297,7 +297,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.payment.normal') }}">
+				<form method="post" action="{{ route('ccentre.report.payment.normal') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -312,7 +312,7 @@
 							</div>
 						</div>
 					
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-normal-button">
 						</form>
 					</div>
 				</div>
@@ -329,7 +329,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.payment.transfer') }}">
+				<form method="post" action="{{ route('ccentre.report.payment.transfer') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -344,14 +344,14 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-transfer-button">
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 
-				<div class="modal center-modal fade " id="inventory-list-day" tabindex="-1">
+  <div class="modal center-modal fade " id="inventory-list-day" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content bg-dark">
 			<div class="modal-header">
@@ -361,7 +361,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.inventory.daily') }}">
+				<form method="post" action="{{ route('ccentre.report.inventory.daily') }}" target="_blank">
 					@csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -375,7 +375,7 @@
 								</div>
 							</div>
 						</div>
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="inventory-list-day-button">
 						</form>
 					</div>
 				</div>
@@ -392,7 +392,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.inventory.month') }}">
+				<form method="post" action="{{ route('ccentre.report.inventory.month') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -406,7 +406,7 @@
 								</div>
 							</div>
 						</div>
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="inventory-list-month-button">
 						</form>
 					</div>
 				</div>
@@ -423,7 +423,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.payment.summary.register') }}">
+				<form method="post" action="{{ route('ccentre.report.payment.summary.register') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -438,7 +438,7 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-summary-register-button">
 						</form>
 					</div>
 				</div>
@@ -456,13 +456,13 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.payment.summary.normal') }}">
+				<form method="post" action="{{ route('ccentre.report.payment.summary.normal') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
 										<h5>Choose Relavent Month <span class="text-danger">*</span></h5>
-										<div class="controls">
+										<div class="controls"> 
 											<input type="month" name="month" class="form-control"> <span class="text-danger">
 										@error('month'){{$message}}@enderror</span>
 										<br>
@@ -471,7 +471,7 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-summary-normal-button">
 						</form>
 					</div>
 				</div>
@@ -488,7 +488,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('ccentre.report.payment.summary.transfer') }}">
+				<form method="post" action="{{ route('ccentre.report.payment.summary.transfer') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -503,7 +503,7 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-summary-transfer-button">
 						</form>
 					</div>
 				</div>
@@ -519,10 +519,94 @@
   	$(document).ready(function () {
     
     $('#app-date').on('hidden.bs.modal', function () {
-       
-       $(this).find('form').trigger('reset');
-
+                 
+            $(this).find('form').trigger('reset');
      });
+
+    $('#payment-register').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+    $('#payment-normal').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+    $('#payment-transfer').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+     $('#inventory-list-day').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+     $('#inventory-list-month').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+     $('#payment-summary-register').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+     $('#payment-summary-normal').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+     $('#payment-summary-transfer').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+     });
+
+     $('#app-date-button').click(function() {
+               
+           $('#app-date').modal('hide');
+      });
+
+     $('#payment-register-button').click(function() {
+               
+           $('#payment-register').modal('hide');
+      });
+
+     $('#payment-normal-button').click(function() {
+               
+           $('#payment-normal').modal('hide');
+      });
+
+      $('#payment-transfer-button').click(function() {
+               
+           $('#payment-transfer').modal('hide');
+      });
+
+      $('#inventory-list-day-button').click(function() {
+               
+           $('#inventory-list-day').modal('hide');
+      });
+
+      $('#inventory-list-month-button').click(function() {
+               
+           $('#inventory-list-month').modal('hide');
+      });
+
+      $('#payment-summary-register-button').click(function() {
+               
+           $('#payment-summary-register').modal('hide');
+      });
+
+      $('#payment-summary-normal-button').click(function() {
+               
+           $('#payment-summary-normal').modal('hide');
+      });
+
+       $('#payment-summary-transfer-button').click(function() {
+               
+           $('#payment-summary-transfer').modal('hide');
+      });
 
   });
 

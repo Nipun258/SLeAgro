@@ -98,7 +98,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('buyer.report.appointment') }}">
+				<form method="post" action="{{ route('buyer.report.appointment') }}" target="_blank">
 					@csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -113,7 +113,7 @@
 							</div>
 						</div>
 					
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="app-date-button">
 						</form>
 					</div>
 				</div>
@@ -130,7 +130,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('buyer.report.payment.register') }}">
+				<form method="post" action="{{ route('buyer.report.payment.register') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -145,16 +145,14 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-register-button">
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 
-   
-
-				<div class="modal center-modal fade " id="inventory-list-day" tabindex="-1">
+ <div class="modal center-modal fade " id="inventory-list-day" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content bg-dark">
 			<div class="modal-header">
@@ -164,7 +162,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('buyer.report.inventory.daily') }}">
+				<form method="post" action="{{ route('buyer.report.inventory.daily') }}" target="_blank">
 					@csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -178,7 +176,7 @@
 								</div>
 							</div>
 						</div>
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="inventory-list-day-button">
 						</form>
 					</div>
 				</div>
@@ -195,7 +193,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('buyer.report.inventory.month') }}">
+				<form method="post" action="{{ route('buyer.report.inventory.month') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -209,7 +207,7 @@
 								</div>
 							</div>
 						</div>
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="inventory-list-month-button">
 						</form>
 					</div>
 				</div>
@@ -226,7 +224,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('buyer.report.payment.summary') }}">
+				<form method="post" action="{{ route('buyer.report.payment.summary') }}" target="_blank">
 					        @csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -241,7 +239,7 @@
 							</div>
 						</div>
 						
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="payment-summary-button">
 						</form>
 					</div>
 				</div>
@@ -256,11 +254,51 @@
 
   	$(document).ready(function () {
     
-    $('#app-date').on('hidden.bs.modal', function () {
-       
-       $(this).find('form').trigger('reset');
+        
+      $('#app-date').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+       });
 
-     });
+       $('#payment-register').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+       });
+
+       $('#inventory-list-day').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+       });
+
+       $('#inventory-list-month').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+       });
+
+       $('#payment-summary').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+       });
+
+        $('#app-date-button').click(function() {
+               $('#app-date').modal('hide');
+        });
+
+        $('#payment-register-button').click(function() {
+               $('#payment-register').modal('hide');
+        });
+
+        $('#inventory-list-day-button').click(function() {
+               $('#inventory-list-day').modal('hide');
+        });
+
+        $('#inventory-list-month-button').click(function() {
+               $('#inventory-list-month').modal('hide');
+        });
+
+        $('#payment-summary-button').click(function() {
+               $('#payment-summary').modal('hide');
+        });
 
   });
 

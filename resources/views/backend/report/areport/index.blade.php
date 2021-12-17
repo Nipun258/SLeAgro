@@ -146,7 +146,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('admin.report.vegitable.price') }}" >
+				<form method="post" action="{{ route('admin.report.vegitable.price') }}" target="_blank">
 					@csrf
 							<div class="row">
 								<div class="col-md-12">
@@ -160,7 +160,7 @@
 								</div>
 							</div>
 						</div>
-							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" >
+							<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="price-check-button">
 						</form>
 					</div>
 				</div>
@@ -177,7 +177,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('admin.report.ecentre.summary.day') }}">
+				<form method="post" action="{{ route('admin.report.ecentre.summary.day') }}" target="_blank">
 					@csrf
 					<div class="row">
 						<div class="col-md-12">
@@ -203,7 +203,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="ecentre-summary-daily-button">
 			</form>
 		</div>
 	</div>
@@ -220,7 +220,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('admin.report.ccentre.summary.day') }}">
+				<form method="post" action="{{ route('admin.report.ccentre.summary.day') }}" target="_blank">
 					@csrf
 					<div class="row">
 						<div class="col-md-12">
@@ -254,7 +254,7 @@
 						<span class="text-danger">@error('ccentre'){{$message}}@enderror</span>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="ccentre-summary-daily-button">
 			</form>
 		</div>
 	</div>
@@ -271,7 +271,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('admin.report.ecentre.summary.month') }}">
+				<form method="post" action="{{ route('admin.report.ecentre.summary.month') }}" target="_blank">
 					@csrf
 					<div class="row">
 						<div class="col-md-12">
@@ -297,7 +297,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" id="ecentre-summary-monthly-button">
 			</form>
 		</div>
 	</div>
@@ -314,7 +314,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('admin.report.ccentre.summary.month') }}">
+				<form method="post" action="{{ route('admin.report.ccentre.summary.month') }}" target="_blank">
 					@csrf
 					<div class="row">
 						<div class="col-md-12">
@@ -348,7 +348,7 @@
 						<span class="text-danger">@error('ccentre'){{$message}}@enderror</span>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit">
+				<input type="submit" class="btn btn-rounded btn-success mx-auto d-block" value="Submit" data-bs-dismiss="modal" id="ccentre-summary-monthly-button">
 			</form>
 		</div>
 	</div>
@@ -364,11 +364,50 @@
 
   	$(document).ready(function () {
     
-    $('#app-date').on('hidden.bs.modal', function () {
-       
-       $(this).find('form').trigger('reset');
+        $('#price-check').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+        });
 
-     });
+        $('#ecentre-summary-daily').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+        });
+
+        $('#ccentre-summary-daily').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+        });
+
+         $('#ecentre-summary-monthly').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+        });
+
+        $('#ccentre-summary-monthly').on('hidden.bs.modal', function () {
+                 
+            $(this).find('form').trigger('reset');
+        });
+
+        $('#price-check-button').click(function() {
+               $('#price-check').modal('hide');
+        });
+
+        $('#ecentre-summary-daily-button').click(function() {
+               $('#ecentre-summary-daily').modal('hide');
+        });
+
+        $('#ccentre-summary-daily-button').click(function() {
+               $('#ccentre-summary-monthly').modal('hide');
+        });
+
+        $('#ecentre-summary-monthly-button').click(function() {
+               $('#ecentre-summary-monthly').modal('hide');
+        });
+
+        $('#ccentre-summary-monthly-button').click(function() {
+               $('#ccentre-summary-monthly').modal('hide');
+        });
 
     $('#ecentre-dd').on('change', function () {
                 var idCollectionCentre = this.value;

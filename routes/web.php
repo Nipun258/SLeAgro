@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\Log;
 
 Route::group(['middleware' => 'prevent-back-history'],function(){
 
-
+//Welcome Page Route
 Route::get('/', function () {
 
 	$abouts = DB::table('about_us')->first();
@@ -74,6 +74,7 @@ Route::get('/', function () {
 
 })->name('home');
 
+//Authotication Check Route
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
      return view('admin.index');
@@ -81,22 +82,22 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-//test query 
+//Testing Fuction Route
 Route::get('/test',[SummaryController::class, 'test'])->name('test');
 
-//user contact message store
+//Contact Message Store 
 Route::post('/contact/message/store',[ContactFormController::class, 'ContactMessageStore'])->name('contact.message.store');
-
+//This Middleware check user Login or Not
 Route::group(['middleware' => 'auth'],function(){
 
 //Admin logout 
 Route::get('/admin/logout',[ AdminController::class, 'Logout'])->name('admin.logout');
-
+//Collect all dynamic data in Admin Dashboard
 Route::get('/dashboard',[SummaryController::class, 'getVegData'])->name('dashboard');
-
+//Price Analysis by each vegetable product weekly
 Route::get('/price/analysis/{id}',[SummaryController::class, 'VegPriceAnalysis'])->name('vegetable.price.analysis');
 
-/*************************************full calendar*****************************************/
+/*************************************Event Management unit*****************************************/
 
 Route::get('/calendar', [CalenderController::class, 'calendarIndex'])->name('calendar');
 
@@ -129,7 +130,7 @@ Route::prefix('users')->group(function(){
 
    });//user controller route list
 
-});
+});//This route only Access in Admistrative Users only
 /*****************************user profile and change the password***********************/
 
 Route::prefix('profile')->group(function(){
@@ -144,11 +145,13 @@ Route::prefix('profile')->group(function(){
 	
 	Route::post('/password/update',[ProfileController::class, 'PasswordUpdate'])->name('password.update');
 
-});
+});//user profule controller route list
 
 Route::group(['middleware' => 'admin'],function(){
 
 Route::prefix('centres')->group(function(){
+
+	/*******************************Economic Centre Unit****************************/
 
 	Route::get('economic/centre/view',[EconomicCenterController::class, 'EconomicCentreView'])->name('ecomomic.centre.view');
 
@@ -166,7 +169,7 @@ Route::prefix('centres')->group(function(){
 
 	Route::get('economic/centre/delete/{id}',[EconomicCenterController::class, 'EconomicCentreDelete'])->name('ecomomic.centre.delete');
 
-	/********************************************************************************/
+	/*******************************Collection Centre Unit****************************/
 
 	Route::get('collection/centre/view',[CollectionCentreController::class, 'CollectionCentreView'])->name('collection.centre.view');
 
@@ -182,7 +185,7 @@ Route::prefix('centres')->group(function(){
 
    });//economic centre and collection centre routes
 
-});
+});//This route only Access in Admistrative Users only
      /******************************Dynamic drop down data fetch***********************************/
 	 Route::post('api/fetch-districts', [EconomicCenterController::class, 'fetchDistrict']);
 
@@ -192,10 +195,14 @@ Route::prefix('centres')->group(function(){
 
      Route::post('api/fetch-bank_branches', [FarmerUpadateController::class, 'fetchBankBranch']);
 
-     /**************************************************************************************/
+     
 Route::group(['middleware' => 'admin'],function(){
 
    Route::prefix('setups')->group(function(){
+
+   /***********************************Home Page Website controlling Unit****************************/
+
+   /***************************Home Slider Management Modual***************************/ 
 
 	Route::get('/slider/view',[HomeController::class, 'SliderView'])->name('slider.view');
 
@@ -209,21 +216,15 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/slider/delete/{id}',[HomeController::class, 'SliderDelete'])->name('slider.delete');
 
-    /************************************************************************/
+    /****************************About Us Detial's Managemant Modual******************************/
 
     Route::get('/about/view',[AboutController::class, 'AboutView'])->name('about.view');
-
-	// Route::get('/about/add',[AboutController::class, 'AboutAdd'])->name('about.add');
-
-	// Route::post('/about/store',[AboutController::class, 'AboutStore'])->name('about.store');
 
 	Route::get('/about/edit/{id}',[AboutController::class, 'AboutEdit'])->name('about.edit');
 
 	Route::post('/about/update/{id}',[AboutController::class, 'AboutUpdate'])->name('about.update');
 
-	// Route::get('/about/delete/{id}',[AboutController::class, 'AboutDelete'])->name('about.delete');
-
-	/**********************************************************************************/
+	/*****************************Contact Us Detial's Management Modual**************************/
 
 	Route::get('/contact/view',[ContactController::class, 'ContactView'])->name('contact.view');
 
@@ -231,7 +232,7 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::post('/contact/update/{id}',[ContactController::class, 'ContactUpdate'])->name('contact.update');
     
-    /*************************************************************************************/
+    /*******************************F&Q Section Management Modual*******************************/
 
     Route::get('/question/view',[QuestionController::class, 'QuestionView'])->name('question.view');
 
@@ -247,7 +248,7 @@ Route::group(['middleware' => 'admin'],function(){
 
      });//font end setting controlling route list
 
-});
+});//This route only Access in Admistrative Users only
 /*************************************************************************************/
 Route::group(['middleware' => 'admin'],function(){
 
@@ -263,11 +264,14 @@ Route::group(['middleware' => 'admin'],function(){
 
    });//contact message controlling route
 
-});
+});//This route only Access in Admistrative Users only
+
    /*************************************************************************************/
 Route::group(['middleware' => 'admin'],function(){
 
     Route::prefix('products')->group(function(){
+
+   /**************************Vegetable Product Management Modual****************************************/
 
     Route::get('/vegitable/view',[VegitableController::class, 'VegitableView'])->name('vegitable.view');
 
@@ -281,7 +285,7 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/vegitable/delete/{id}',[VegitableController::class, 'VegitableDelete'])->name('vegitable.delete');
 
-	/*****************************vegitable price******************************************/
+	/**************************Vegetable Price Controlling Modual****************************************/
     Route::get('/vegitable/price/view',[VegitablePriceController::class, 'VegitablePriceView'])->name('vegitable.price.view');
 
 	Route::get('/vegitable/price/add',[VegitablePriceController::class, 'VegitablePriceAdd'])->name('vegitable.price.add');
@@ -294,7 +298,7 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/vegitable/price/delete/{id}',[VegitablePriceController::class, 'VegitablePriceDelete'])->name('vegitable.price.delete');
 
-	/****************************************Fruits detials***********************************/
+	/****************************Fruits Product Management Modual***********************************/
 
 	Route::get('/fruit/view',[FruitController::class, 'FruitView'])->name('fruit.view');
 
@@ -309,7 +313,7 @@ Route::group(['middleware' => 'admin'],function(){
 	Route::get('/fruit/delete/{id}',[FruitController::class, 'FruitDelete'])->name('fruit.delete');
 
 
-	/****************************************Fruit Price***********************************/
+	/***********************************Fruits Price Controlling Modual***********************************/
    
     Route::get('/fruit/price/view',[FruitPriceController::class, 'FruitPriceView'])->name('fruit.price.view');
 
@@ -325,26 +329,31 @@ Route::group(['middleware' => 'admin'],function(){
 
    });//vegitable and fruits detials and price controlling route list
 
-});
+});//This route only Access in Admistrative Users only
+
    Route::prefix('calculator')->group(function(){
 
-	/*****************************price calculator***********************************************/
+	/*****************************Price Calculator Modual******************************************/
+
+	/*****************************Harvest Predictor Calculator Modual***********************************/
     
     Route::get('harvast/calculator',[CalculaorController::class, 'CalculatorView'])->name('calculator.view');
 
     Route::post('harvast/calculator/result',[CalculaorController::class, 'CalculatorResult'])->name('calculator.result');
 
+    /*****************************Harvest Normal Calculator Modual***********************************/
+
     Route::get('price/calculator',[CalculaorController::class, 'PriceCalculatorView'])->name('price.calculator.view');
 
     Route::post('price/calculator/result',[CalculaorController::class, 'PriceCalculatorResult'])->name('price.calculator.result');
 
-   });
+   });//Calculator Controller Route List
 
 Route::group(['middleware' => 'farmer'],function(){
 
    Route::prefix('farmers')->group(function(){
      
-     /*****************************************Farmer Profile Update********************************/
+     /**************************Farmer Profile Update Modual********************************/
 
 	Route::get('/farmer/setup',[FarmerUpadateController::class, 'FarmerSetup'])->name('farmer.setup');
 
@@ -354,7 +363,7 @@ Route::group(['middleware' => 'farmer'],function(){
 
      Route::post('/farmer/update/',[FarmerUpadateController::class, 'FarmerUpdate'])->name('farmer.update');
 
-     /*****************************************Farmer Crop add**************************************/ 
+     /************************Farmer Harvest Area Management Modual****************************/ 
     
     Route::get('/farmer/land/view',[FarmerCropController::class, 'FarmerLandView'])->name('farmer.land.view');
 
@@ -371,13 +380,13 @@ Route::group(['middleware' => 'farmer'],function(){
 
    });//farmer accout setup and update /crop data update controlling route list
 
-});
+});//This route only Access in Farmers only
 
 Route::group(['middleware' => 'buyer'],function(){
 
    Route::prefix('buyers')->group(function(){
      
-     /*********************************Buyer Profile Update********************************/
+     /***************************Buyer Profile Update Modual********************************/
 
 	Route::get('/buyers/setup',[BuyerUpdateController::class, 'BuyerSetup'])->name('buyer.setup');
 
@@ -387,7 +396,7 @@ Route::group(['middleware' => 'buyer'],function(){
 
      Route::post('/buyers/update/',[BuyerUpdateController::class, 'BuyerUpdate'])->name('buyer.update');
 
-     /*****************************************Buyer Product add*******************************/ 
+     /********************Buyer Product Requrnment Management Modual*************************/ 
     
     Route::get('/buyer/product/view',[BuyerProductController::class, 'BuyerProductView'])->name('buyer.product.view');
 
@@ -404,13 +413,13 @@ Route::group(['middleware' => 'buyer'],function(){
 
    });//buyer account setup update and product requirement data controlling route list
 
-});
+});//This route only Access in Buyers only
 
 Route::group(['middleware' => 'admin'],function(){
 
    Route::prefix('appointments')->group(function(){
      
-     /*******************appointment setup *******************/
+     /*******************Farmer's Appointment Setup Modual(Collection Centre) ************/
 
 	Route::get('/appointment/setup',[AppointmentController::class, 'AppSetup'])->name('app.setup');
 
@@ -418,20 +427,40 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/appointment/check/view',[AppointmentController::class, 'AppCheckView'])->name('app.check.view');
 
-     Route::post('appointment/check',[AppointmentController::class, 'AppCheck'])->name('app.check');
+   Route::post('appointment/check',[AppointmentController::class, 'AppCheck'])->name('app.check');
 
-     Route::post('appointment/update',[AppointmentController::class, 'AppTimeUpdate'])->name('app.time.update');
+   Route::post('appointment/update',[AppointmentController::class, 'AppTimeUpdate'])->name('app.time.update');
 
 
    });//regional center officer appointment setup data controlling route list
 
-});
+});//This route only Access in Admistrative Users only(Collection Centre Officer Only)
+
+
+Route::group(['middleware' => 'admin'],function(){
+
+   Route::prefix('bappointments')->group(function(){
+     
+     /*******************Buyer's Appointment Setup Modual(Economic Centre) *******************/
+
+	Route::get('/buyer/appointment/setup',[BuyerAppointmentController::class, 'BuyerAppSetup'])->name('buyer.app.setup');
+
+	Route::post('buyer/appointment/store',[BuyerAppointmentController::class, 'BuyerAppStore'])->name('buyer.app.store');
+
+	Route::get('/buyer/appointment/check/view',[BuyerAppointmentController::class, 'BuyerAppCheckView'])->name('buyer.app.check.view');
+
+	Route::get('/buyer/appointment/delete/{id}',[BuyerAppointmentController::class, 'BuyerAppDelete'])->name('buyer.app.delete');
+
+
+   });//regional center officer appointment setup data controlling route list
+
+});//This route only Access in Admistrative Users only(Economic Centre Officer Only)
 
 Route::group(['middleware' => 'farmer'],function(){
 
    Route::prefix('bookings')->group(function(){
      
-     /*******************booking setup *******************/
+   /*******************Farmer's Booking Creation to Collection Centre*******************/
 
  Route::get('booking/view',[BookingController::class, 'BookingView'])->name('booking.view');
 
@@ -445,15 +474,40 @@ Route::group(['middleware' => 'farmer'],function(){
 
  Route::get('/booking/invoice/generate/{id}',[BookingController::class, 'BookingInvoiceGenerate'])->name('farmer.booking.invoice.generate');
 
-   });//regional center officer appointment setup data controlling route list
+   });//Farmer booking managment and controlling route list
 
-});
+});//This route only Access in Farmers only
+
+Route::group(['middleware' => 'buyer'],function(){
+
+   Route::prefix('bbookings')->group(function(){
+     
+     /*******************Buyer's Booking Creation to Economic Centre*******************/
+
+  Route::get('buyer/booking/view',[BuyerBookingController::class, 'BuyerBookingView'])->name('buyer.booking.view');
+
+  Route::get('/booking/product/{id}',[BuyerBookingController::class, 'BookingProductView'])->name('booking.product.view');
+
+  Route::post('book/buyer/appointment',[BuyerBookingController::class, 'BookingBuyerApp'])->name('booking.buyer.app');
+
+  Route::get('/mybooking/buyer',[BuyerBookingController::class, 'BuyerBookingList'])->name('buyer.booking.list');
+
+  Route::get('/buyer/book/product/{id}',[BuyerBookingController::class, 'BuyerBookingProduct'])->name('buyer.booking.product');
+
+  Route::get('/mybooking/invoice',[BuyerBookingController::class, 'BuyerBookingInvoice'])->name('buyer.booking.invoices');
+
+  Route::get('/booking/invoice/generate/{id}',[BuyerBookingController::class, 'BuyerBookingInvoiceGenerate'])->name('buyer.booking.invoice.generate');
+
+
+   });//Buyer's Booking Creation to Economic Centre Controlling Route List
+
+});//This route only Access in Buyers only
 
 Route::group(['middleware' => 'admin'],function(){
 
    Route::prefix('farmerapps')->group(function(){
      
-     /*******************booking mangement setup *******************/
+     /***************Farmer's Booking Check and confirmation of Farmer Praticipation ************/
 
 	Route::get('/appointment/list',[FarmerListController::class, 'AppList'])->name('app.list');
 
@@ -464,15 +518,15 @@ Route::group(['middleware' => 'admin'],function(){
 	Route::get('/status/update/{id}',[FarmerListController::class, 'ToggleStatus'])->name('update.status');
 
 
-   });
+   });//Farmer's Booking Check and confirmation of Farmer Praticipation contolling route list
 
    Route::prefix('cinventory')->group(function(){
      
-     /*******************inventory mangement setup *******************/
-
+     /*******************Inventory Mangement Modual in Collection Centre*******************/
+   
 	Route::get('/booking/today/list',[ProductAddController::class, 'BookingList'])->name('booking.lists');
 
-     Route::get('/product/add/view/{id}',[ProductAddController::class, 'ProductAddView'])->name('product.add.view');
+   Route::get('/product/add/view/{id}',[ProductAddController::class, 'ProductAddView'])->name('product.add.view');
 	
 	Route::post('booking/product/store',[ProductAddController::class, 'BookingProductStore'])->name('booking.product.store');
 
@@ -480,23 +534,23 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::post('normal/product/store',[ProductAddController::class, 'NormalProductStore'])->name('normal.product.store');
     
-     Route::get('/normal/invoice',[ProductAddController::class, 'NormalInvoiceGen'])->name('normal.invoice');
+   Route::get('/normal/invoice',[ProductAddController::class, 'NormalInvoiceGen'])->name('normal.invoice');
 
-     Route::get('/booking/invoice',[ProductAddController::class, 'BookingInvoiceGen'])->name('booking.invoice');
+   Route::get('/booking/invoice',[ProductAddController::class, 'BookingInvoiceGen'])->name('booking.invoice');
 
-     Route::post('booking/payment/store',[ProductAddController::class, 'BookingPaymentStore'])->name('booking.payment.store');
+   Route::post('booking/payment/store',[ProductAddController::class, 'BookingPaymentStore'])->name('booking.payment.store');
 
-     Route::post('normal/payment/store',[ProductAddController::class, 'NormalPaymentStore'])->name('normal.payment.store');
+   Route::post('normal/payment/store',[ProductAddController::class, 'NormalPaymentStore'])->name('normal.payment.store');
 
-     Route::get('/product/summary',[ProductAddController::class, 'ProductSummary'])->name('product.summary');
+   Route::get('/product/summary',[ProductAddController::class, 'ProductSummary'])->name('product.summary');
 
-     Route::get('/product/list/filter',[ProductAddController::class, 'ProductListFilter'])->name('product.list.filter');
+   Route::get('/product/list/filter',[ProductAddController::class, 'ProductListFilter'])->name('product.list.filter');
 
-     Route::get('/product/summary/report',[ProductAddController::class, 'ProductSummaryReport'])->name('product.summary.report');
+   Route::get('/product/summary/report',[ProductAddController::class, 'ProductSummaryReport'])->name('product.summary.report');
 
-     Route::get('/product/month/summary/report',[ProductAddController::class, 'ProductMonthSummaryReport'])->name('product.month.summary.report');
+   Route::get('/product/month/summary/report',[ProductAddController::class, 'ProductMonthSummaryReport'])->name('product.month.summary.report');
 
-     /***************************************************************************/
+     /****************Collection Centre Inventory Transfer to Economic Centre*****************/
      
      Route::get('/product/transfer/ecentre/view',[ProductiTransferController::class, 'ProductTransferEcenterView'])->name('product.transfer.ecenter.view');
 
@@ -506,11 +560,11 @@ Route::group(['middleware' => 'admin'],function(){
 
      Route::post('transfer/payment/store',[ProductiTransferController::class, 'TransferPaymentStore'])->name('transfer.payment.store');
 
-   });
+   });//Collection Centre Inventory Controlling Route List(Access Only Collection Centre)
 
     Route::prefix('buyerreqs')->group(function(){
      
-     /*******************buyer booking mangement setup *******************/
+     /****Buyer's Booking Check and confirmation of Farmer Praticipation and Booking Product View *****/
 
 	Route::get('/product/request/list',[BuyerListController::class, 'ProductReqList'])->name('product.request.list');
 
@@ -522,11 +576,11 @@ Route::group(['middleware' => 'admin'],function(){
 
 	Route::get('/buyer/book/product/{id}',[BuyerListController::class, 'BuyerBookingProductView'])->name('buyer.booking.product.view');
 
-   });
+   });//Buyer's Booking Check and confirmation of Farmer Praticipation and Booking Product View(Access Only Economic Centre)
 
     Route::prefix('einventory')->group(function(){
      
-     /*******************inventory mangement setup *******************/
+     /*******************Inventory Mangement Modual in Economic Centre*******************/
 
      Route::get('/buyer/booking/today/list',[SellesController::class, 'BuyerBookingList'])->name('booking.buyer.lists');
 
@@ -555,7 +609,7 @@ Route::group(['middleware' => 'admin'],function(){
       Route::get('/product/summary/month/report',[SellesController::class, 'ProductSummaryMonthReportEcentre'])->name('product.summary.month.ecenre.report');
 
 
-           /***************************************************************************/
+      /******************Economic Centre Inventory Transfer to Reteils Market********************/
      
      Route::get('/product/transfer/market/view',[EcentreProductTransferController::class, 'ProductTransferMarketView'])->name('product.transfer.market.view');
 
@@ -564,59 +618,18 @@ Route::group(['middleware' => 'admin'],function(){
      Route::get('/transfer/market/invoice',[EcentreProductTransferController::class, 'TransferMarketInvoiceGen'])->name('transfer.market.invoice');
 
      Route::post('transfer/market/payment/store',[EcentreProductTransferController::class, 'TransferMarketPaymentStore'])->name('transfer.market.payment.store');
-   });
+   });//Economic Centre Inventory Controlling Route List 
 
-});
+});//This route only Access in Admistrative Users only
 
-Route::group(['middleware' => 'admin'],function(){
-
-   Route::prefix('bappointments')->group(function(){
-     
-     /*******************appointment setup *******************/
-
-	Route::get('/buyer/appointment/setup',[BuyerAppointmentController::class, 'BuyerAppSetup'])->name('buyer.app.setup');
-
-	Route::post('buyer/appointment/store',[BuyerAppointmentController::class, 'BuyerAppStore'])->name('buyer.app.store');
-
-	Route::get('/buyer/appointment/check/view',[BuyerAppointmentController::class, 'BuyerAppCheckView'])->name('buyer.app.check.view');
-
-	Route::get('/buyer/appointment/delete/{id}',[BuyerAppointmentController::class, 'BuyerAppDelete'])->name('buyer.app.delete');
-
-
-   });//regional center officer appointment setup data controlling route list
-
-});
-
-Route::group(['middleware' => 'buyer'],function(){
-
-   Route::prefix('bbookings')->group(function(){
-     
-     /*******************buyer booking setup *******************/
-
-  Route::get('buyer/booking/view',[BuyerBookingController::class, 'BuyerBookingView'])->name('buyer.booking.view');
-
-  Route::get('/booking/product/{id}',[BuyerBookingController::class, 'BookingProductView'])->name('booking.product.view');
-
-  Route::post('book/buyer/appointment',[BuyerBookingController::class, 'BookingBuyerApp'])->name('booking.buyer.app');
-
-  Route::get('/mybooking/buyer',[BuyerBookingController::class, 'BuyerBookingList'])->name('buyer.booking.list');
-
-  Route::get('/buyer/book/product/{id}',[BuyerBookingController::class, 'BuyerBookingProduct'])->name('buyer.booking.product');
-
-  Route::get('/mybooking/invoice',[BuyerBookingController::class, 'BuyerBookingInvoice'])->name('buyer.booking.invoices');
-
-  Route::get('/booking/invoice/generate/{id}',[BuyerBookingController::class, 'BuyerBookingInvoiceGenerate'])->name('buyer.booking.invoice.generate');
-
-
-   });//buyer booking realeted activity
-
-});
 
 Route::group(['middleware' => 'admin'],function(){
 
    Route::prefix('creport')->group(function(){
      
-     /*******************collection centre report *******************/
+     /*******************Administrtive User Report Generation*******************/
+
+     /*******************Collection Centre Summary Report Generation*******************/
 
   Route::get('/ccentre/report',[CollectionCentreReportController::class, 'CcentreReportView'])->name('ccentre.report.view');
 
@@ -644,12 +657,12 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('ccentre/report/payment/summary/transfer',[CollectionCentreReportController::class, 'CcentrePaymentSummaryTransfer'])->name('ccentre.report.payment.summary.transfer');
 
-   });//regional center report route list
+   });//Collection Centre Summary Report Generation Controlling Route List
 
 
    Route::prefix('ereport')->group(function(){
 
-        /*******************Economic centre report *******************/
+       /*******************Economic Centre Summary Report Generation*******************/
 
   Route::get('/ecentre/report',[EconomicCentreReportController::class, 'EcentreReportView'])->name('ecentre.report.view');
 
@@ -679,11 +692,11 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('ecentre/report/payment/summary/transfer',[EconomicCentreReportController::class, 'EcentrePaymentSummaryTransfer'])->name('ecentre.report.payment.summary.transfer');
 
-   });//regional economic center report route list
+   });//Economic Centre Summary Report Generation Controlling Route List
 
       Route::prefix('areport')->group(function(){
 
-        /*******************Admin report List *******************/
+        /*******************System Adminstrator Summary Report Generation*******************/
 
   Route::get('/admin/report/administrative',[AdminReportController::class, 'AdminAdministrativeReportView'])->name('admin.report.admin.view');
 
@@ -703,15 +716,15 @@ Route::group(['middleware' => 'admin'],function(){
 
    Route::post('admin/report/ccentre/summary/month',[AdminReportController::class, 'AdminCcentreSummaryMonth'])->name('admin.report.ccentre.summary.month');
 
-   });//admin report route list
+   });//System Admin Summary Report Generation Controlling Route List
 
-});
+});//This route only Access in Admistrative Users only
 
 Route::group(['middleware' => 'farmer'],function(){
 
    Route::prefix('freport')->group(function(){
      
-     /*******************farmer report setup *******************/
+     /*******************Farmer's Summary Report Generation *******************/
 
   Route::get('/farmer/report',[FarmerReportController::class, 'FarmerReportView'])->name('farmer.report.view');
 
@@ -725,37 +738,16 @@ Route::group(['middleware' => 'farmer'],function(){
 
    Route::post('farmer/report/payment/summary',[FarmerReportController::class, 'FarmerPaymentSummary'])->name('farmer.report.payment.summary');
 
-   });//regional center officer appointment setup data controlling route list
+   });//Farmer's Summary Report Generation Controlling Route List
 
-});
+});//This route only Access in Farmers only
 
-Route::group(['middleware' => 'farmer'],function(){
-
-   Route::prefix('freport')->group(function(){
-     
-     /*******************farmer report setup *******************/
-
-  Route::get('/farmer/report',[FarmerReportController::class, 'FarmerReportView'])->name('farmer.report.view');
-
-  Route::post('farmer/report/appointment',[FarmerReportController::class, 'FarmerAppointment'])->name('farmer.report.appointment');
-
-  Route::post('farmer/report/payment/register',[FarmerReportController::class, 'FarmerPaymentRegister'])->name('farmer.report.payment.register');
-
-  Route::post('farmer/report/inventory/daily',[FarmerReportController::class, 'FarmerInventoryDaily'])->name('farmer.report.inventory.daily');
-
-   Route::post('farmer/report/inventory/month',[FarmerReportController::class, 'FarmerInventoryMonth'])->name('farmer.report.inventory.month');
-
-   Route::post('farmer/report/payment/summary',[FarmerReportController::class, 'FarmerPaymentSummary'])->name('farmer.report.payment.summary');
-
-   });//regional center officer appointment setup data controlling route list
-
-});
 
 Route::group(['middleware' => 'buyer'],function(){
 
    Route::prefix('breport')->group(function(){
      
-     /*******************buyer report setup *******************/
+     /*******************Buyer's Summary Report Generation *******************/
 
   Route::get('/buyer/report',[BuyerReportController::class, 'BuyerReportView'])->name('buyer.report.view');
 
@@ -769,12 +761,12 @@ Route::group(['middleware' => 'buyer'],function(){
 
    Route::post('buyer/report/payment/summary',[BuyerReportController::class, 'BuyerPaymentSummary'])->name('buyer.report.payment.summary');
 
-   });//regional center officer appointment setup data controlling route list
+   });//Buyer's Summary Report Generation Controlling Route List
 
-});
+});//This route only Access in Buyer's only
 
 
     });//end auth middeleware check
 
-});//end middelware cheack
+});//end middelware cheack(Issue fix middelware)
 

@@ -563,7 +563,7 @@ class AdminReportController extends Controller
         $req_month = $request->month;
         
         $ccentre = DB::table('collection_centres')
-                   ->where('collection_centres.id',$request->ecentre)
+                   ->where('collection_centres.id',$request->ccentre)
                    ->select('collection_centres.centre_name')
                    ->get();
 
