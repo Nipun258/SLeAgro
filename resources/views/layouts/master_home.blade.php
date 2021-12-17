@@ -679,7 +679,7 @@
 			</div>
 		</section><!-- testimonial top area end -->
 		<!-- sponsor area start -->
-		<div id="sponsor" class="farm-sponsor-section">
+		<!-- <div id="sponsor" class="farm-sponsor-section">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
@@ -706,7 +706,7 @@
 					</div>
 				</div>
 			</div>
-		</div><!-- sponsor area end -->
+		</div> --><!-- sponsor area end -->
 		<!-- app area start -->
 		<section id="app" class="farm-android-mokup">
 			<div class="container RTC">

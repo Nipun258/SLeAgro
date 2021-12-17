@@ -398,7 +398,7 @@
         });
 
         $('#ccentre-summary-daily-button').click(function() {
-               $('#ccentre-summary-monthly').modal('hide');
+               $('#ccentre-summary-daily').modal('hide');
         });
 
         $('#ecentre-summary-monthly-button').click(function() {

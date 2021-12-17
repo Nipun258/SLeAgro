@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Support\Facades\Log;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -19,7 +20,8 @@ class CreateNewUser implements CreatesNewUsers
      * @return \App\Models\User
      */
     public function create(array $input)
-    {
+    {   
+        Log::info('CreateNewUserController -> NewAccoutCreation started');
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -35,5 +37,8 @@ class CreateNewUser implements CreatesNewUsers
             'usertype' => $input['role'],
             'password' => Hash::make($input['password']),
         ]);
+
+        Log::info('CreateNewUserController -> Craete New System User Name With - ' . $input['name'] .' With Email '.$input['email'].' and Role '.$input['role']. 'and User Type '.$input['role']);
+       Log::info('CreateNewUserController -> NewUserCreation ended');
     }
 }
