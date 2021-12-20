@@ -23,6 +23,7 @@ class SummaryController extends Controller
     public function getVegData(){
 
     $current_month = date("Y-m");
+    $current_date = date("Y-m-d");
     //dd($current_month);
     $current_year = date("Y");
 

@@ -249,6 +249,7 @@ Route::group(['middleware' => 'admin'],function(){
      });//font end setting controlling route list
 
 });//This route only Access in Admistrative Users only
+
 /*************************************************************************************/
 Route::group(['middleware' => 'admin'],function(){
 

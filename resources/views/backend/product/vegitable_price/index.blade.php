@@ -64,8 +64,8 @@
                 @endif
                 <td> {{ $price->price_date }} </td>
                 <td>
-                  <a href="{{ route('vegitable.price.edit',$price->id) }}" class="btn btn-info btn-sm">Set</a>
-                  <a href="{{ route('vegitable.price.delete',$price->id) }}" class="btn btn-danger btn-sm" id="delete">Delete</a>
+                  <a href="{{ route('vegitable.price.edit',$price->id) }}" class="btn btn-info btn-md">Set Price</a>
+                  <!-- <a href="{{ route('vegitable.price.delete',$price->id) }}" class="btn btn-danger btn-sm" id="delete">Delete</a> -->
                 </td>
               </tr>
               @endforeach

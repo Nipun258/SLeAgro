@@ -87,6 +87,7 @@ class BuyerBookingController extends Controller
         ]);
 
         $check = $this->CheckBookingTimeInterval();
+        $validate = $this->CheckBookingLimitExist($request->quntity,$request->cus_order);
 
         if($check){
             $notification = array(
@@ -97,6 +98,16 @@ class BuyerBookingController extends Controller
         return redirect()->route('buyer.booking.list')->with($notification);
         }
 
+        if($validate == 1){
+            $notification = array(
+           'message' => 'You can not enter value than availbleStock value',
+           'alert-type' => 'warning'
+        );
+
+        return redirect()->back()->with($notification);
+        }
+
+        
         $booking = BuyerBooking::create([
              'user_id' => auth()->user()->id,
              // 'booking_id' => $request->appointmentId,
@@ -178,6 +189,20 @@ class BuyerBookingController extends Controller
                ->where('user_id',auth()->user()->id)
                ->whereDate('created_at',date('Y-m-d'))
                ->exists(); 
+    }
+
+
+    public function CheckBookingLimitExist($quntity,$cus_order)
+    {   
+         //dd(count($veg_id));
+         for($i=0; $i < count($quntity); $i++){
+
+            if ($quntity[$i] < $cus_order[$i]) {
+                
+                return 1;
+            }
+
+         }
     }
 
     public function BuyerBookingList()

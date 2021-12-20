@@ -40,6 +40,9 @@ class VegitablePriceController extends Controller
             'price_wholesale' => 'required',
             'price_retial' => 'required',
             'price_location' => 'required',
+        ],[
+
+            'veg_id.unique' => 'This Vegetable Product Price Already Add to System'
         ]);
  
         VegitablePrice::insert([

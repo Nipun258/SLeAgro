@@ -32,7 +32,7 @@
 								<i class="text-warning mr-0 font-size-24 mdi mdi-leaf"></i>
 							</div>
 							<div>
-								<p class="text-white mt-20 mb-0 font-size-16">User's List Report</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Collection Centre List Report</p>
 								<h2 class="text-success mb-0 font-weight-500"> <!-- <small class="text-success"><i class="fa fa-caret-up"></i> +50%</small> --></h2>
 							</div>
 						</div>

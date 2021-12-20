@@ -18,7 +18,7 @@
 						<!-- Step 2 -->
 						<div class="form-section">
 							<h3 class="title text-warning">Vegitable Detials</h3>
-							<h6 class="title text-">Please Enter your Vegitable requirment.if you order more than 100kg need pre payment for booking</h6>
+							<h6 class="title text-">Please Enter your Vegitable requirment.please selecct only requried amount only</h6>
 							<hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
 
