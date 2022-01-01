@@ -103,7 +103,7 @@ e<!DOCTYPE html>
 </table>
 <br>
 <div class="footer2">
-  <p><b>Register Farmer Payment Summary</b></p>
+  <p><b>Unregister Farmer Payment Summary</b></p>
 </div>
 <table id="customers">
   <tr>
