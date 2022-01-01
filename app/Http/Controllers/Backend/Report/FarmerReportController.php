@@ -205,7 +205,7 @@ public function FarmerInventoryMonth(Request $request)
                         ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.price)*0.97 as count'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
         $total_payments=json_decode($total_payments,true);
         $total_payments=$total_payments[0]["count"];

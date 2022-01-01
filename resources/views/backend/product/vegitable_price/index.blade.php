@@ -64,23 +64,19 @@
                 @endif
                 <td> {{ $price->price_date }} </td>
                 <td>
+                  @php 
+                   $today = date("Y-m-d");
+                  @endphp
+                  @if($price->price_date != $today)
                   <a href="{{ route('vegitable.price.edit',$price->id) }}" class="btn btn-info btn-md">Set Price</a>
+                  @else
+                  <a href="" class="btn btn-primary btn-md disabled" >Price Today</a>
+                  @endif
                   <!-- <a href="{{ route('vegitable.price.delete',$price->id) }}" class="btn btn-danger btn-sm" id="delete">Delete</a> -->
                 </td>
               </tr>
               @endforeach
             </tbody>
-{{--            <tfoot>
-              <tr>
-                <th width="10%">Centre Id</th>
-                <th>Centre Name</th>
-                <th width="10%">Centre Type</th>
-                <th>Provice</th>
-                <th>District</th>
-                <th>City</th>
-                <th width="25%">Action</th>
-              </tr>
-            </tfoot> --}}
             </table>
           </div>
         </div>
@@ -100,7 +96,3 @@
     </div>
   </div>
 @endsection
-
-
-{{-- Fresh vegetables & fruits
-Freshly grown for customers --}}

@@ -559,6 +559,9 @@
 						</div>
 					</div>  
 				</div>
+				<div class="col-12">
+				<!-- <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/8200520"><script src="https://public.flourish.studio/resources/embed.js"></script></div> -->
+			</div>
 			</div>
 		</section>
 		<!-- /.content -->

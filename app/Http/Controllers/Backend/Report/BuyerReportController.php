@@ -205,7 +205,7 @@ class BuyerReportController extends Controller
                         ->where('inventories.date','LIKE','%'.$request->month.'%')
                         ->where('inventories.status',1)
                         ->select(DB::raw('SUM(inventories.price)*1.01 as count'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
         $total_payments=json_decode($total_payments,true);
         $total_payments=$total_payments[0]["count"];

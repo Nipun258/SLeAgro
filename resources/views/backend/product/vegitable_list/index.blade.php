@@ -102,7 +102,3 @@
     </div>
   </div>
 @endsection
-
-
-{{-- Fresh vegetables & fruits
-Freshly grown for customers --}}

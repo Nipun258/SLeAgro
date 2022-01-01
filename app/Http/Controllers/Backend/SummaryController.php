@@ -60,7 +60,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_month.'%')
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.price)*0.97 as count'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
     $farmer_income_month=json_decode($farmer_income_month,true);
     $farmer_income_month=$farmer_income_month[0]["count"];
@@ -70,7 +70,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_year.'%')
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.price)*0.97 as count'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
     $farmer_income_year=json_decode($farmer_income_year,true);
     $farmer_income_year=$farmer_income_year[0]["count"];
@@ -80,7 +80,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_month.'%')
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.quntity) as total'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
     $farmer_vegetable_month=json_decode($farmer_vegetable_month,true);
     $farmer_vegetable_month=$farmer_vegetable_month[0]["total"];
@@ -96,7 +96,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_month.'%')
                         ->where('inventories.status',1)
                         ->select(DB::raw('SUM(inventories.price)*1.01 as count'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
     $buyer_payment_month=json_decode($buyer_payment_month,true);
     $buyer_payment_month=$buyer_payment_month[0]["count"];
@@ -106,7 +106,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_year.'%')
                         ->where('inventories.status',1)
                         ->select(DB::raw('SUM(inventories.price)*1.01 as count'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
     $buyer_payment_year=json_decode($buyer_payment_year,true);
     $buyer_payment_year=$buyer_payment_year[0]["count"];
@@ -116,7 +116,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_month.'%')
                         ->where('inventories.status',1)
                         ->select(DB::raw('SUM(inventories.quntity) as total'))
-                        ->groupBy('inventories.user_id')
+                        //->groupBy('inventories.user_id')
                         ->get();
     $buyer_vegetable_month=json_decode($buyer_vegetable_month,true);
     $buyer_vegetable_month=$buyer_vegetable_month[0]["total"];
@@ -166,7 +166,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_month.'%')
                         ->whereIn('inventories.status',[0,3])
                         ->select(DB::raw('SUM(inventories.quntity) as total'))
-                        ->groupBy('inventories.ccentre_id')
+                        //->groupBy('inventories.ccentre_id')
                         ->get();
     $ccentre_vegetable_month=json_decode($ccentre_vegetable_month,true);
     $ccentre_vegetable_month=$ccentre_vegetable_month[0]["total"];
@@ -219,7 +219,7 @@ class SummaryController extends Controller
                         ->where('inventories.date','LIKE','%'.$current_month.'%')
                         ->whereIn('inventories.status',[1,4])
                         ->select(DB::raw('SUM(inventories.quntity) as total'))
-                        ->groupBy('inventories.ccentre_id')
+                        //->groupBy('inventories.ccentre_id')
                         ->get();
     $ecentre_vegetable_month=json_decode($ecentre_vegetable_month,true);
     $ecentre_vegetable_month=$ecentre_vegetable_month[0]["total"];
