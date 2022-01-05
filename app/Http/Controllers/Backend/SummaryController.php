@@ -137,6 +137,16 @@ class SummaryController extends Controller
     $ccentre_register_payment=json_decode($ccentre_register_payment,true);
     $ccentre_register_payment=$ccentre_register_payment[0]["pay"]; 
 
+    $ccentre_register_payment_today = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_date.'%')
+                        ->where('inventories.user_id','!=',0)
+                        ->where('inventories.status',0)
+                        ->select(DB::raw('SUM(inventories.price)*0.97 as pay'))
+                        ->get();
+    $ccentre_register_payment_today=json_decode($ccentre_register_payment_today,true);
+    $ccentre_register_payment_today=$ccentre_register_payment_today[0]["pay"]; 
+
 
 
     $ccentre_normal_payment = DB::table('inventories')
@@ -148,6 +158,16 @@ class SummaryController extends Controller
                         ->get();
     $ccentre_normal_payment=json_decode($ccentre_normal_payment,true);
     $ccentre_normal_payment=$ccentre_normal_payment[0]["pay"];
+
+    $ccentre_normal_payment_today = DB::table('inventories')
+                        ->where('inventories.ccentre_id',Auth::user()->ccentre_id)
+                        ->where('inventories.date','LIKE','%'.$current_date.'%')
+                        ->where('inventories.user_id','=',0)
+                        ->where('inventories.status',0)
+                        ->select(DB::raw('SUM(inventories.price)*0.95 as pay'))
+                        ->get();
+    $ccentre_normal_payment_today=json_decode($ccentre_normal_payment_today,true);
+    $ccentre_normal_payment_today=$ccentre_normal_payment_today[0]["pay"];
 
 
 
@@ -171,7 +191,7 @@ class SummaryController extends Controller
     $ccentre_vegetable_month=json_decode($ccentre_vegetable_month,true);
     $ccentre_vegetable_month=$ccentre_vegetable_month[0]["total"];
 
-    $ccentre_payment = $ccentre_register_payment + $ccentre_normal_payment;
+    $ccentre_payment = $ccentre_register_payment + $ccentre_normal_payment -($ccentre_register_payment_today + $ccentre_normal_payment_today);
 
     $ccentre_profit = $ccentre_transfer_payment - $ccentre_payment;
 
