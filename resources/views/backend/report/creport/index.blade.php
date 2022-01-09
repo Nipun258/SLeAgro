@@ -183,7 +183,7 @@
 								<i class="text-warning mr-0 font-size-24 mdi mdi-cake-layered"></i>
 							</div>
 							<div>
-								<p class="text-white mt-20 mb-0 font-size-16">Registered Farmer Buying Payment Summary Report</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Registered Farmer Selling Payment Summary Report</p>
 								<h2 class="text-success mb-0 font-weight-500"><!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
@@ -198,7 +198,7 @@
 								<i class="text-info mr-0 font-size-24 mdi mdi-forklift"></i>
 							</div>
 							<div>
-								<p class="text-white mt-20 mb-0 font-size-16">Normal Farmer Buying Payment Summary Report</p>
+								<p class="text-white mt-20 mb-0 font-size-16">Normal Farmer Selling Payment Summary Report</p>
 								<h2 class="text-success mb-0 font-weight-500"><!-- <small class="text-success"><i class="fa fa-caret-up"></i> +100%</small> --></h2>
 							</div>
 						</div>
