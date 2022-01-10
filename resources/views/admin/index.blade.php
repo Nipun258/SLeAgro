@@ -518,7 +518,7 @@
 											<td>
 												<span class="text-white font-weight-600 d-block font-size-16">
 													@if($summary->todayPrice == 'No Data')
-                                                       Loading...
+                                                       Not Update..
 													@else
 													Rs. {{ number_format($summary->todayPrice , 2) }}
 													@endif
@@ -527,7 +527,7 @@
 											<td>
 												<span class="text-white font-weight-600 d-block font-size-16">
 													@if($summary->yesterdayPrice == 'No Data')
-                                                       Loading...
+                                                       Not Update...
 													@else
                             Rs. {{ number_format($summary->yesterdayPrice , 2) }}
 													@endif
@@ -548,7 +548,7 @@
 												<h3 class="text-danger"><i class="fa fa-caret-down"></i>{{number_format((-($summary->todayPrice-$summary->yesterdayPrice)/$summary->todayPrice)*100,2)}}%</h3>
 												@endif
 												@else
-												<h3 class="text-danger">Loading...</h3>
+												<h3 class="text-danger">Not Update...</h3>
 												@endif
 											</td>
 										</tr>
